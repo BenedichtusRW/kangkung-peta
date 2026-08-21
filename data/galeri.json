@@ -1,0 +1,8 @@
+[
+  { "id": 1, "judul": "Kerja Bakti Warga", "kategori": "kegiatan", "gambar": "assets/img/galeri/placeholder-1.jpg" },
+  { "id": 2, "judul": "Pelatihan UMKM Digital", "kategori": "kegiatan", "gambar": "assets/img/galeri/placeholder-2.jpg" },
+  { "id": 3, "judul": "Suasana Kantor Kelurahan", "kategori": "fasilitas", "gambar": "assets/img/galeri/placeholder-3.jpg" },
+  { "id": 4, "judul": "Posyandu Balita", "kategori": "kegiatan", "gambar": "assets/img/galeri/placeholder-4.jpg" },
+  { "id": 5, "judul": "Gerbang Kelurahan Kangkung", "kategori": "fasilitas", "gambar": "assets/img/galeri/placeholder-5.jpg" },
+  { "id": 6, "judul": "Rapat Koordinasi Aparatur", "kategori": "kegiatan", "gambar": "assets/img/galeri/placeholder-6.jpg" }
+]

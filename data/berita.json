@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "slug": "kerja-bakti-lingkungan-1",
+    "judul": "Kerja Bakti Bersih Lingkungan di Lingkungan 1",
+    "ringkasan": "Contoh data — warga bersama mahasiswa KKN mengadakan kerja bakti membersihkan saluran air dan area publik.",
+    "konten": "Contoh data berita. Ganti dengan laporan kegiatan asli di Kelurahan Kangkung.\n\nKegiatan kerja bakti ini diikuti oleh warga dan aparat kelurahan sebagai bagian dari program kebersihan lingkungan rutin.\n\nKegiatan seperti ini diharapkan dapat terus berlanjut untuk menjaga kebersihan dan kenyamanan lingkungan bersama.",
+    "gambar": "assets/img/berita/placeholder-1.jpg",
+    "penulis": "Admin Kelurahan",
+    "tanggal": "2026-08-10"
+  },
+  {
+    "id": 2,
+    "slug": "sosialisasi-umkm-digital",
+    "judul": "Sosialisasi Pemasaran Digital untuk Pelaku UMKM",
+    "ringkasan": "Contoh data — mahasiswa KKN UNILA mengadakan pelatihan pemasaran online bagi pelaku UMKM setempat.",
+    "konten": "Contoh data berita. Ganti dengan laporan kegiatan asli.\n\nPelatihan ini membahas cara memanfaatkan media sosial dan marketplace untuk memperluas jangkauan usaha kecil menengah di wilayah kelurahan.\n\nPeserta antusias mengikuti sesi praktik langsung pembuatan konten promosi.",
+    "gambar": "assets/img/berita/placeholder-2.jpg",
+    "penulis": "Tim KKN UNILA",
+    "tanggal": "2026-08-05"
+  },
+  {
+    "id": 3,
+    "slug": "posyandu-rutin-bulan-ini",
+    "judul": "Kegiatan Posyandu Rutin Bulan Ini Berjalan Lancar",
+    "ringkasan": "Contoh data — kegiatan pemeriksaan kesehatan ibu dan anak di posyandu lingkungan berjalan lancar.",
+    "konten": "Contoh data berita. Ganti dengan laporan kegiatan asli.\n\nKegiatan posyandu meliputi penimbangan balita, pemberian vitamin, dan konsultasi kesehatan bagi ibu hamil dan menyusui.\n\nKader posyandu setempat turut berperan aktif dalam kelancaran kegiatan ini.",
+    "gambar": "assets/img/berita/placeholder-3.jpg",
+    "penulis": "Admin Kelurahan",
+    "tanggal": "2026-07-28"
+  }
+]

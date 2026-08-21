@@ -1,0 +1,8 @@
+[
+  { "id": 1, "nama": "Nama Ketua", "jabatan": "Ketua Kelompok KKN", "foto": "assets/img/tim-kkn/placeholder.jpg" },
+  { "id": 2, "nama": "Nama Wakil", "jabatan": "Wakil Ketua", "foto": "assets/img/tim-kkn/placeholder.jpg" },
+  { "id": 3, "nama": "Nama Sekretaris", "jabatan": "Sekretaris", "foto": "assets/img/tim-kkn/placeholder.jpg" },
+  { "id": 4, "nama": "Nama Bendahara", "jabatan": "Bendahara", "foto": "assets/img/tim-kkn/placeholder.jpg" },
+  { "id": 5, "nama": "Nama Anggota 1", "jabatan": "Anggota - Divisi Teknologi", "foto": "assets/img/tim-kkn/placeholder.jpg" },
+  { "id": 6, "nama": "Nama Anggota 2", "jabatan": "Anggota - Divisi Publikasi", "foto": "assets/img/tim-kkn/placeholder.jpg" }
+]

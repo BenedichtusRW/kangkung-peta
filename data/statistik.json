@@ -1,0 +1,15 @@
+{
+  "jumlah_penduduk": 4820,
+  "jumlah_kk": 1240,
+  "jumlah_wiraswasta": 610,
+  "lingkungan": [
+    { "nama": "Lingkungan 1", "jumlah_rt": 6 },
+    { "nama": "Lingkungan 2", "jumlah_rt": 5 },
+    { "nama": "Lingkungan 3", "jumlah_rt": 7 }
+  ],
+  "penduduk_per_jenis_kelamin": {
+    "laki_laki": 2410,
+    "perempuan": 2410
+  },
+  "terakhir_diperbarui": "2026-08-21"
+}

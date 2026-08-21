@@ -1,0 +1,8 @@
+[
+  { "id": 1, "nama": "Nama Lurah", "jabatan": "Lurah Kangkung", "foto": "assets/img/aparatur/placeholder.jpg" },
+  { "id": 2, "nama": "Nama Sekretaris", "jabatan": "Sekretaris Lurah", "foto": "assets/img/aparatur/placeholder.jpg" },
+  { "id": 3, "nama": "Nama Kasi 1", "jabatan": "Kasi Pemerintahan", "foto": "assets/img/aparatur/placeholder.jpg" },
+  { "id": 4, "nama": "Nama Kasi 2", "jabatan": "Kasi Kesejahteraan Sosial", "foto": "assets/img/aparatur/placeholder.jpg" },
+  { "id": 5, "nama": "Nama Kasi 3", "jabatan": "Kasi Pelayanan Umum", "foto": "assets/img/aparatur/placeholder.jpg" },
+  { "id": 6, "nama": "Nama Staf", "jabatan": "Staf Administrasi", "foto": "assets/img/aparatur/placeholder.jpg" }
+]

@@ -43,7 +43,7 @@ if (!empty($header_berita)) {
 </section>
 
 <section class="submission-cta" style="background: var(--surface-muted); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-top: 40px; margin-bottom: 20px;">
-  <div class="container">
+  <div class="container" style="flex-direction: column; align-items: stretch; gap: 0;">
     <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; padding-bottom: 24px; margin-bottom: 24px; border-bottom: 1px solid var(--line);">
       <div style="flex: 1; min-width: 280px;">
         <span class="eyebrow" style="color: var(--teal-700);">Dokumentasi Visual</span>

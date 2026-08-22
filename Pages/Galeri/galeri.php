@@ -66,7 +66,7 @@ if (!empty($header_galeri)) {
 </section>
 
 <section class="submission-cta" style="background: var(--surface-muted); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-bottom: 40px; margin-top: 40px;">
-  <div class="container">
+  <div class="container" style="flex-direction: column; align-items: stretch; gap: 0;">
     <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px;">
       <div style="flex: 1; min-width: 280px;">
         <span class="eyebrow" style="color: var(--teal-700);">Kabar & Informasi</span>

@@ -196,46 +196,7 @@ if (!empty($header_beranda)) {
     </div>
     
     <div class="quicklinks-grid" data-reveal>
-      
-      <a href="VisiMisi/visi-misi.php" class="quicklink-card-modern">
-        <div class="icon-box">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-        </div>
-        <div class="card-content">
-          <h3>Visi &amp; Misi</h3>
-          <p>Arah kebijakan dan cita-cita pembangunan wilayah.</p>
-        </div>
-      </a>
 
-      <a href="Sejarah/sejarah.php" class="quicklink-card-modern">
-        <div class="icon-box">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        </div>
-        <div class="card-content">
-          <h3>Sejarah</h3>
-          <p>Asal-usul dan rekam jejak perkembangan wilayah.</p>
-        </div>
-      </a>
-
-      <a href="Data-Aparatur/aparatur.php" class="quicklink-card-modern">
-        <div class="icon-box">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-        </div>
-        <div class="card-content">
-          <h3>Aparatur</h3>
-          <p>Struktur organisasi dan pengurus kelurahan.</p>
-        </div>
-      </a>
-
-      <a href="Tim-KKN/tim-kkn.php" class="quicklink-card-modern">
-        <div class="icon-box">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 01-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
-        </div>
-        <div class="card-content">
-          <h3>Tim KKN</h3>
-          <p>Profil mahasiswa pengabdi Kelompok 31 UIN RIL.</p>
-        </div>
-      </a>
 
       <a href="Peta/peta.php" class="quicklink-card-modern">
         <div class="icon-box">

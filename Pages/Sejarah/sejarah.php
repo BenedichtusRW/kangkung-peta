@@ -78,67 +78,57 @@ include __DIR__ . '/../includes/header.php';
 
 ?>
 
-<!-- HERO SECTION -->
-<section class="page-hero">
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="<?= htmlspecialchars($navPrefix) ?>index.php">Beranda</a>
-            <span>/</span>
-            <span>Profile</span>
-            <span>/</span>
-            <span>Sejarah Kelurahan</span>
-        </div>
-
-        <h1>Sejarah Kelurahan Kangkung</h1>
-
-        <p>
-            Perjalanan terbentuknya 
-            <?= htmlspecialchars(defined('NAMA_KELURAHAN') ? NAMA_KELURAHAN : 'Kelurahan Kangkung') ?> 
-            hingga menjadi bagian penting dari kawasan pesisir Kota Bandar Lampung.
-        </p>
-    </div>
-</section>
-
-<!-- CONTENT SECTION -->
-<section class="page-section">
-    <div class="container container-md">
-        <?php if (!empty($sejarahTeks)): ?>
-
-            <div class="section-head section-head-full">
-                <span class="eyebrow">Latar Belakang</span>
-                <h2>Asal Usul Nama &amp; Wilayah</h2>
-                <p class="section-desc">
-                    Mengenal perjalanan sejarah, perkembangan masyarakat, serta perubahan administratif Kelurahan Kangkung.
-                </p>
-            </div>
-
-            <article class="prose-text history-card">
-                <?php
-                $paragraphs = array_filter(
-                    array_map(
-                        'trim',
-                        preg_split("/\R{2,}/", $sejarahTeks)
-                    )
-                );
-
-                foreach ($paragraphs as $paragraph):
-                ?>
-                    <p><?= nl2br(htmlspecialchars($paragraph)) ?></p>
-                <?php endforeach; ?>
-            </article>
-
-        <?php else: ?>
-
-            <div class="empty-state">
-                <strong>Data sejarah belum tersedia.</strong>
-                <span>Silakan tambahkan informasi sejarah melalui halaman pengelolaan konten.</span>
-            </div>
-
-        <?php endif; ?>
-    </div>
-</section>
-
 <style>
+/* Style Hero khusus agar Rata Tengah Presisi */
+.page-hero {
+  padding-top: 120px !important;
+  padding-bottom: 40px !important;
+  text-align: center !important;
+  background-color: #064e3b;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-hero .breadcrumb {
+  display: flex;
+  justify-content: center !important;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+  color: #a7f3d0;
+  text-align: center !important;
+}
+
+.page-hero .breadcrumb a {
+  color: #a7f3d0;
+  text-decoration: none;
+}
+
+.page-hero .breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.page-hero h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0 auto 12px auto;
+  color: #ffffff;
+  text-align: center !important;
+}
+
+.page-hero p {
+  max-width: 650px;
+  margin: 0 auto;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #e2e8f0;
+  text-align: center !important;
+}
+
 /* Utilities & Helper Layout */
 .container-md {
   max-width: 860px;
@@ -150,11 +140,12 @@ include __DIR__ . '/../includes/header.php';
 .section-head-full {
   max-width: 100%;
   margin-bottom: 28px;
+  text-align: center;
 }
 
 .section-desc {
   max-width: 680px;
-  margin-top: 10px;
+  margin: 10px auto 0 auto;
   color: #64748b;
   line-height: 1.7;
 }
@@ -168,6 +159,7 @@ include __DIR__ . '/../includes/header.php';
   color: #374151;
   font-size: 15.5px;
   line-height: 1.9;
+  text-align: justify;
 }
 
 .history-card p {
@@ -201,6 +193,66 @@ include __DIR__ . '/../includes/header.php';
   }
 }
 </style>
+
+<!-- HERO SECTION -->
+<section class="page-hero">
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="<?= htmlspecialchars($navPrefix) ?>index.php">Beranda</a>
+            <span>/</span>
+            <span>Profile</span>
+            <span>/</span>
+            <strong style="color: #ffffff;">Sejarah Kelurahan</strong>
+        </div>
+
+        <h1>Sejarah Kelurahan Kangkung</h1>
+
+        <p>
+            Perjalanan terbentuknya 
+            <?= htmlspecialchars(defined('NAMA_KELURAHAN') ? NAMA_KELURAHAN : 'Kelurahan Kangkung') ?> 
+            hingga menjadi bagian penting dari kawasan pesisir Kota Bandar Lampung.
+        </p>
+    </div>
+</section>
+
+<!-- CONTENT SECTION -->
+<section class="page-section" style="padding: 40px 0;">
+    <div class="container container-md">
+        <?php if (!empty($sejarahTeks)): ?>
+
+            <div class="section-head section-head-full">
+                <span class="eyebrow" style="color: #d97706; font-weight: 600;">LATAR BELAKANG</span>
+                <h2 style="color: #064e3b; font-size: 2rem; font-weight: 700; margin-top: 6px;">Asal Usul Nama &amp; Wilayah</h2>
+                <p class="section-desc">
+                    Mengenal perjalanan sejarah, perkembangan masyarakat, serta perubahan administratif Kelurahan Kangkung.
+                </p>
+            </div>
+
+            <article class="prose-text history-card">
+                <?php
+                $paragraphs = array_filter(
+                    array_map(
+                        'trim',
+                        preg_split("/\R{2,}/", $sejarahTeks)
+                    )
+                );
+
+                foreach ($paragraphs as $paragraph):
+                ?>
+                    <p><?= nl2br(htmlspecialchars($paragraph)) ?></p>
+                <?php endforeach; ?>
+            </article>
+
+        <?php else: ?>
+
+            <div class="empty-state">
+                <strong>Data sejarah belum tersedia.</strong>
+                <span>Silakan tambahkan informasi sejarah melalui halaman pengelolaan konten.</span>
+            </div>
+
+        <?php endif; ?>
+    </div>
+</section>
 
 <?php
 /*

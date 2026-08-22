@@ -1,82 +1,115 @@
-<?php require_once __DIR__ . '/../../config.php'; ?>
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Peta Kelurahan | <?= NAMA_KELURAHAN ?></title>
-<meta name="description" content="Peta interaktif titik lokasi penting di <?= NAMA_KELURAHAN ?>: tugu, pemerintahan, kuliner, jasa, tempat ibadah, sekolah, dan kesehatan.">
+<?php 
+require_once __DIR__ . '/../../config.php';
 
+$assetPrefix = '../../assets/';
+$navPrefix   = '../';
+$activeNav   = 'peta';
+$pageTitle   = 'Peta Kelurahan';
+
+include __DIR__ . '/../includes/header.php';
+?>
+
+<!-- Include CSS Leaflet khusus halaman peta -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../assets/css/style.css?v=<?= time() ?>">
-<link rel="stylesheet" href="../../assets/css/chatbot.css?v=<?= time() ?>">
-</head>
-<body>
 
-<!-- ===================== HEADER ===================== -->
-<header class="site-header">
-  <div class="container header-inner">
-    <a href="../index.php" class="brand">
-      <img src="../../assets/img/logo-kkn.png" alt="Logo KKN" class="brand-logo" onerror="this.style.display='none'">
-      <div class="brand-text">
-        <strong><?= NAMA_KELURAHAN ?></strong>
-        <span>Oleh Mahasiswa KKN UIN RIL</span>
-      </div>
-    </a>
+<style>
+/* Style Hero khusus agar Rata Tengah Presisi */
+.peta-hero {
+  padding-top: 120px !important;
+  padding-bottom: 40px !important;
+  text-align: center !important;
+  background-color: #064e3b; /* Hijau Kangkung */
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
-    <button class="nav-toggle" id="navToggle" aria-label="Buka menu">
-      <span></span><span></span><span></span>
-    </button>
+.peta-hero .breadcrumb {
+  display: flex;
+  justify-content: center !important;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+  color: #a7f3d0;
+  text-align: center !important;
+}
 
-    <nav class="main-nav" id="mainNav">
-      <a href="../index.php">Beranda</a>
-      <div class="nav-dropdown">
-        <button class="nav-dropdown-btn">Profile <i class="chev">▾</i></button>
-        <div class="nav-dropdown-menu">
-          <a href="../VisiMisi/visi-misi.php">Visi &amp; Misi</a>
-          <a href="../Sejarah/sejarah.php">Sejarah Kelurahan</a>
-          <a href="../Data-Aparatur/aparatur.php">Data Aparatur</a>
-          <a href="../Tim-KKN/tim-kkn.php">Tim KKN</a>
-        </div>
-      </div>
-      <a href="peta.php" class="active">Peta Kelurahan</a>
-      <a href="../Chatbot/chatbot.php">Chatbot AI</a>
-      <a href="../Statistik/statistik.php">Statistik Kelurahan</a>
-      <a href="../Berita/berita.php">Berita</a>
-      <a href="../Galeri/galeri.php">Galeri</a>
-    </nav>
-  </div>
-</header>
+.peta-hero .breadcrumb a {
+  color: #a7f3d0;
+  text-decoration: none;
+}
+
+.peta-hero .breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.peta-hero .eyebrow {
+  display: inline-block;
+  color: #f59e0b;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.peta-hero h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0 auto 12px auto;
+  color: #ffffff;
+  text-align: center !important;
+}
+
+.peta-hero p {
+  max-width: 680px;
+  margin: 0 auto;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #e2e8f0;
+  text-align: center !important;
+}
+
+/* Modal Detail Adjustments */
+.detail-overlay {
+  z-index: 1000;
+}
+</style>
 
 <!-- ===================== HERO ===================== -->
 <section class="peta-hero">
   <div class="container">
-    <span class="eyebrow">Peta Interaktif</span>
-    <h1>Peta Kelurahan <?= explode(' ', NAMA_KELURAHAN)[1] ?? NAMA_KELURAHAN ?></h1>
-    <p>Temukan tugu, kantor pemerintahan, kuliner, jasa, tempat ibadah, sekolah, dan fasilitas kesehatan di area <?= NAMA_KELURAHAN ?>.</p>
+    <div class="breadcrumb">
+      <a href="<?= $navPrefix ?>index.php">Beranda</a> <span>/</span> <strong style="color: #ffffff;">Peta Kelurahan</strong>
+    </div>
+    <span class="eyebrow">PETA INTERAKTIF</span>
+    <h1>Peta Kelurahan <?= htmlspecialchars(explode(' ', NAMA_KELURAHAN)[1] ?? NAMA_KELURAHAN) ?></h1>
+    <p>
+      Temukan tugu, kantor pemerintahan, kuliner, jasa, tempat ibadah, sekolah, dan fasilitas kesehatan di area <?= htmlspecialchars(NAMA_KELURAHAN) ?>.
+    </p>
   </div>
 </section>
 
 <!-- ===================== KONTEN PETA ===================== -->
-<section class="peta-section">
+<section class="peta-section" style="padding: 32px 0 60px 0;">
   <div class="container">
 
-    <!-- Filter kategori -->
+    <!-- Filter Kategori -->
     <div class="filter-bar" id="filterBar">
       <?php foreach ($KATEGORI_PETA as $key => $kat): ?>
         <button
           class="filter-chip<?= $key === 'semua' ? ' active' : '' ?>"
-          data-kategori="<?= $key ?>"
-          style="--chip-color: <?= $kat['warna'] ?>">
-          <i class="<?= $kat['icon'] ?>"></i> <?= htmlspecialchars($kat['label']) ?>
+          data-kategori="<?= htmlspecialchars($key) ?>"
+          style="--chip-color: <?= htmlspecialchars($kat['warna']) ?>">
+          <i class="<?= htmlspecialchars($kat['icon']) ?>"></i> <?= htmlspecialchars($kat['label']) ?>
         </button>
       <?php endforeach; ?>
     </div>
 
-    <!-- Toolbar: lokasi saya, sedang buka, urutkan, cari -->
+    <!-- Toolbar Interaktif -->
     <div class="toolbar">
       <div class="toolbar-left">
         <button id="btnLokasiSaya" class="btn btn-outline"><i class="fa-solid fa-location-crosshairs"></i> Lokasi Saya</button>
@@ -92,7 +125,7 @@
       </div>
     </div>
 
-    <!-- Map + sidebar -->
+    <!-- Map & Sidebar -->
     <div class="map-layout">
       <div class="map-wrap">
         <div id="map"></div>
@@ -101,7 +134,7 @@
       <aside class="place-list">
         <div class="place-list-head">
           <h3>Daftar Tempat</h3>
-          <span id="placeCount" class="place-count">Area <?= NAMA_KELURAHAN ?></span>
+          <span id="placeCount" class="place-count">Area <?= htmlspecialchars(NAMA_KELURAHAN) ?></span>
         </div>
         <div id="placeListItems" class="place-list-items">
           <p class="loading-text">Memuat data...</p>
@@ -122,6 +155,7 @@
     <div class="detail-body">
       <h2 id="detailNama">Nama Tempat</h2>
       <p id="detailDeskripsi" class="detail-desc">Deskripsi...</p>
+      
       <div class="detail-row" id="detailJarakRow" style="display:none;">
         <i class="fa-solid fa-location-arrow detail-icon" style="color:var(--teal-600);"></i>
         <div class="detail-text">
@@ -129,6 +163,7 @@
           <div id="detailJarak" class="detail-value" style="color:var(--teal-700); font-weight:700;">-</div>
         </div>
       </div>
+      
       <div class="detail-row">
         <i class="fa-solid fa-location-dot detail-icon"></i>
         <div class="detail-text">
@@ -136,6 +171,7 @@
           <div id="detailAlamat" class="detail-value">-</div>
         </div>
       </div>
+      
       <div class="detail-row">
         <i class="fa-solid fa-phone detail-icon"></i>
         <div class="detail-text">
@@ -143,6 +179,7 @@
           <div id="detailKontak" class="detail-value">-</div>
         </div>
       </div>
+      
       <div class="detail-row">
         <i class="fa-solid fa-clock detail-icon"></i>
         <div class="detail-text">
@@ -159,88 +196,7 @@
   </div>
 </div>
 
-<!-- ===================== FOOTER ===================== -->
-<footer class="site-footer">
-  <div class="container footer-grid">
-    <div>
-      <h4><?= NAMA_KELURAHAN ?></h4>
-      <p>Melayani dengan sepenuh hati untuk masyarakat yang lebih baik dan sejahtera.</p>
-      <div class="social-links">
-        <a href="#" title="Facebook">FB</a>
-        <a href="#" title="Instagram">IG</a>
-        <a href="#" title="YouTube">YT</a>
-      </div>
-      
-      <div class="kkn-attribution" style="margin-top: 24px;">
-        <span style="font-size: 11px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px;">Dipersembahkan Oleh</span>
-        <div style="display: flex; gap: 12px; align-items: center;">
-          <img src="../../assets/img/logo-uin.png" alt="Logo UIN" style="height: 48px; width: 48px; object-fit: contain; background: #fff; border-radius: 50%; padding: 4px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));" onerror="this.style.display='none'">
-          <img src="../../assets/img/logo-kkn.png" alt="Logo KKN 31" style="height: 48px; width: 48px; object-fit: contain; background: #fff; border-radius: 50%; padding: 2px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));" onerror="this.style.display='none'">
-        </div>
-      </div>
-    </div>
-
-    <div>
-      <h5>Kontak Kami</h5>
-      <ul class="footer-list">
-        <li><?= ALAMAT_KANTOR ?></li>
-        <li><?= KONTAK_TELEPON ?></li>
-        <li><?= KONTAK_EMAIL ?></li>
-        <li><?= JAM_LAYANAN ?></li>
-      </ul>
-    </div>
-
-    <div>
-      <h5>Link Cepat</h5>
-      <ul class="footer-list">
-        <li><a href="../index.php">Beranda</a></li>
-        <li><a href="../VisiMisi/visi-misi.php">Visi &amp; Misi</a></li>
-        <li><a href="../Statistik/statistik.php">Statistik Kelurahan</a></li>
-        <li><a href="../Galeri/galeri.php">Galeri</a></li>
-        <li><a href="../Chatbot/chatbot.php">Chatbot AI</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    &copy; <?= date('Y') ?> <?= NAMA_KELURAHAN ?>. All rights reserved.
-  </div>
-</footer>
-
-<?php 
-$assetPrefix = '../../assets/';
-include __DIR__ . '/../includes/chatbot.php'; 
-?>
-
-<script>
-  (() => {
-    const toggle = document.getElementById('navToggle');
-    const nav = document.getElementById('mainNav');
-    const siteHeader = document.querySelector('.site-header');
-
-    if (siteHeader) {
-      const handleScroll = () => {
-        if (window.scrollY > 20) {
-          siteHeader.classList.add('scrolled');
-        } else {
-          siteHeader.classList.remove('scrolled');
-        }
-      };
-      window.addEventListener('scroll', handleScroll, {passive: true});
-      handleScroll();
-    }
-
-    if (toggle && nav) {
-      toggle.addEventListener('click', () => nav.classList.toggle('open'));
-    }
-    document.querySelectorAll('.nav-dropdown-btn').forEach((button) => {
-      button.addEventListener('click', () => {
-        if (window.matchMedia('(max-width: 1100px)').matches) {
-          button.closest('.nav-dropdown').classList.toggle('open');
-        }
-      });
-    });
-  })();
-</script>
+<!-- Scripts Khusus Leaflet & Peta -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
   window.PETA_CONFIG = {
@@ -253,5 +209,5 @@ include __DIR__ . '/../includes/chatbot.php';
   };
 </script>
 <script src="../../assets/js/peta.js"></script>
-</body>
-</html>
+
+<?php include __DIR__ . '/../includes/footer.php'; ?>

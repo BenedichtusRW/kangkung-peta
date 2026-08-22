@@ -34,17 +34,45 @@ include __DIR__ . '/../includes/header.php';
 <style>
   /* Perbaikan Spasi Hero agar tidak menabrak Navbar Fixed */
   .page-hero {
-    padding-top: 120px !important; /* Memberikan jarak dari Navbar */
+    padding-top: 120px !important;
     padding-bottom: 40px !important;
     text-align: center;
+    background-color: #064e3b; /* Hijau Kangkung */
+    color: #ffffff;
   }
   
   .page-hero .breadcrumb {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 6px;
-    margin-bottom: 12px;
+    gap: 8px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+    color: #a7f3d0;
+  }
+
+  .page-hero .breadcrumb a {
+    color: #a7f3d0;
+    text-decoration: none;
+  }
+
+  .page-hero .breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .page-hero h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0 0 12px 0;
+    color: #ffffff;
+  }
+
+  .page-hero p {
+    max-width: 650px;
+    margin: 0 auto;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #e2e8f0;
   }
 
   .center-section {
@@ -102,16 +130,23 @@ include __DIR__ . '/../includes/header.php';
   }
 </style>
 
-<section class="page-hero">
-  <div class="container">
-    <div class="breadcrumb">
-      <a href="<?= $navPrefix ?>index.php">Beranda</a> / Profile / Tim KKN
+<!-- Section Hero (Rata Tengah Presisi) -->
+<section class="page-hero" style="text-align: center !important; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+  <div class="container" style="text-align: center !important; width: 100%;">
+    
+    <div class="breadcrumb" style="justify-content: center !important; text-align: center !important; margin: 0 auto 12px auto;">
+      <a href="<?= $navPrefix ?>index.php">Beranda</a> <span>/</span> <span>Profile</span> <span>/</span> <strong style="color: #fff;">Tim KKN</strong>
     </div>
-    <h1>Tim KKN UIN RIL</h1>
-    <p style="max-width: 600px; margin: 10px auto 0;">Mahasiswa KKN UIN Raden Intan Lampung Kelompok 31 yang bertugas membangun portal digital dan program kerja di <?= defined('NAMA_KELURAHAN') ? NAMA_KELURAHAN : 'Kelurahan Kangkung' ?>.</p>
+
+    <h1 style="text-align: center !important; width: 100%; margin: 0 auto 12px auto;">Tim KKN UIN RIL</h1>
+
+    <p style="text-align: center !important; max-width: 650px; margin: 0 auto;">
+      Mahasiswa KKN UIN Raden Intan Lampung Kelompok 31 yang bertugas membangun portal digital dan program kerja di <?= defined('NAMA_KELURAHAN') ? NAMA_KELURAHAN : 'Kelurahan Kangkung' ?>.
+    </p>
+
   </div>
 </section>
-
+<!-- Section Anggota Tim -->
 <section class="page-section" style="padding: 40px 0;">
   <div class="container">
 

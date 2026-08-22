@@ -2,57 +2,152 @@
 require_once __DIR__ . '/../../config.php';
 
 $assetPrefix = '../../assets/';
-$navPrefix = '../';
-$activeNav = 'chatbot';
-$pageTitle = 'Chatbot AI';
+$navPrefix   = '../';
+$activeNav   = 'chatbot';
+$pageTitle   = 'Chatbot AI';
 
 include __DIR__ . '/../includes/header.php';
 ?>
 
+<style>
+  /* Style Hero khusus agar Rata Tengah Presisi */
+  .page-hero {
+    padding-top: 120px !important;
+    padding-bottom: 40px !important;
+    text-align: center !important;
+    background-color: #064e3b; /* Hijau Kangkung */
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .page-hero .breadcrumb {
+    display: flex;
+    justify-content: center !important;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+    color: #a7f3d0;
+    text-align: center !important;
+  }
+
+  .page-hero .breadcrumb a {
+    color: #a7f3d0;
+    text-decoration: none;
+  }
+
+  .page-hero .breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .page-hero h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0 auto 12px auto;
+    color: #ffffff;
+    text-align: center !important;
+  }
+
+  .page-hero p {
+    max-width: 650px;
+    margin: 0 auto;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #e2e8f0;
+    text-align: center !important;
+  }
+
+  /* Custom Chatbot Animations & Elements */
+  .typing-indicator-full {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+    padding: 12px 20px !important;
+  }
+
+  .typing-indicator-full .dot {
+    width: 6px;
+    height: 6px;
+    background: var(--teal-700, #0f766e);
+    border-radius: 50%;
+    animation: typingBounce 1.4s infinite;
+    opacity: 0.6;
+  }
+
+  .typing-indicator-full .dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-indicator-full .dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes typingBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+
+  .chat-bubble.bot a {
+    color: var(--teal-900, #134e4a);
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 4px;
+  }
+
+  .chat-bubble.bot a:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<!-- Hero Section -->
 <section class="page-hero">
   <div class="container">
-    <div class="breadcrumb"><a href="<?= $navPrefix ?>index.php">Beranda</a> / Chatbot AI</div>
+    <div class="breadcrumb">
+      <a href="<?= $navPrefix ?>index.php">Beranda</a> <span>/</span> <strong style="color: #ffffff;">Chatbot AI</strong>
+    </div>
     <h1>Chatbot Informasi Kelurahan</h1>
     <p>Tanya seputar layanan, jam operasional, kontak, atau data kelurahan — dijawab otomatis.</p>
   </div>
 </section>
 
-<section class="page-section">
+<!-- Chatbot Interface Section -->
+<section class="page-section" style="padding: 40px 0;">
   <div class="container">
     <div class="chatbot-wrap">
       <div class="chatbot-header">
         <div class="avatar">🤖</div>
         <div>
-          <strong>Asisten Kangkung</strong>
+          <strong>Asisten <?= htmlspecialchars(defined('NAMA_KELURAHAN') ? NAMA_KELURAHAN : 'Kangkung') ?></strong>
           <span>Online • Jawaban otomatis</span>
         </div>
       </div>
 
       <div class="chat-window" id="chatWindow">
         <div class="chat-bubble bot">
-        Tabik Pun! Selamat datang di Pusat Informasi Kelurahan Kangkung. Saya adalah Asisten Cerdas Kangkung yang siap membantu Bapak/Ibu. Ingin tahu soal surat pengantar, data penduduk, atau nama aparatur kami? 👇
-      </div>
-    </div>
-    <div class="chat-input-area">
-      <div class="chat-suggestions">
-        <button class="chat-chip" data-q="Jam layanan kelurahan?">Jam layanan?</button>
-        <button class="chat-chip" data-q="Siapa nama Pak Lurah saat ini?">Siapa Pak Lurah?</button>
-        <button class="chat-chip" data-q="Berapa total penduduk kangkung?">Jumlah penduduk?</button>
-        <button class="chat-chip" data-q="Ada berita terbaru apa minggu ini?">Berita terbaru?</button>
+          Tabik Pun! Selamat datang di Pusat Informasi Kelurahan <?= htmlspecialchars(defined('NAMA_KELURAHAN') ? NAMA_KELURAHAN : 'Kangkung') ?>. Saya adalah Asisten Cerdas yang siap membantu Bapak/Ibu. Ingin tahu soal surat pengantar, data penduduk, atau nama aparatur kami? 👇
+        </div>
       </div>
 
-      <form class="chat-input-row" id="chatForm">
-        <input type="text" id="chatInput" placeholder="Tulis pertanyaan lu di sini..." autocomplete="off">
-        <button type="submit">➤</button>
-      </form>
+      <div class="chat-input-area">
+        <div class="chat-suggestions">
+          <button class="chat-chip" data-q="Jam layanan kelurahan?">Jam layanan?</button>
+          <button class="chat-chip" data-q="Siapa nama Pak Lurah saat ini?">Siapa Pak Lurah?</button>
+          <button class="chat-chip" data-q="Berapa total penduduk kangkung?">Jumlah penduduk?</button>
+          <button class="chat-chip" data-q="Ada berita terbaru apa minggu ini?">Berita terbaru?</button>
+        </div>
+
+        <form class="chat-input-row" id="chatForm">
+          <input type="text" id="chatInput" placeholder="Tulis pertanyaan Anda di sini..." autocomplete="off">
+          <button type="submit" aria-label="Kirim Pesan">➤</button>
+        </form>
+      </div>
     </div>
   </div>
 </section>
 
 <script>
   const chatWindow = document.getElementById('chatWindow');
-  const chatForm = document.getElementById('chatForm');
-  const chatInput = document.getElementById('chatInput');
+  const chatForm   = document.getElementById('chatForm');
+  const chatInput  = document.getElementById('chatInput');
 
   function addBubble(text, who) {
     const div = document.createElement('div');
@@ -63,12 +158,12 @@ include __DIR__ . '/../includes/header.php';
   }
   
   function addTypingIndicator() {
-      const div = document.createElement('div');
-      div.className = 'chat-bubble bot typing-indicator-full';
-      div.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
-      chatWindow.appendChild(div);
-      chatWindow.scrollTop = chatWindow.scrollHeight;
-      return div;
+    const div = document.createElement('div');
+    div.className = 'chat-bubble bot typing-indicator-full';
+    div.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+    chatWindow.appendChild(div);
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+    return div;
   }
   
   async function respond(text) {
@@ -76,30 +171,30 @@ include __DIR__ . '/../includes/header.php';
     const indicator = addTypingIndicator();
     
     try {
-        const formData = new FormData();
-        formData.append('message', text);
+      const formData = new FormData();
+      formData.append('message', text);
 
-        const response = await fetch('../../api/chatbot.php', {
-            method: 'POST',
-            body: formData
-        });
-        
-        const data = await response.json();
-        
-        setTimeout(() => {
-            indicator.remove();
-            if (data.status === 'success') {
-                addBubble(data.reply, 'bot');
-            } else {
-                addBubble('Maaf, saya sedang mengalami gangguan. Coba lagi.', 'bot');
-            }
-        }, 1500);
+      const response = await fetch('../../api/chatbot.php', {
+        method: 'POST',
+        body: formData
+      });
+      
+      const data = await response.json();
+      
+      setTimeout(() => {
+        indicator.remove();
+        if (data.status === 'success') {
+          addBubble(data.reply, 'bot');
+        } else {
+          addBubble('Maaf, saya sedang mengalami gangguan. Coba lagi beberapa saat lagi.', 'bot');
+        }
+      }, 1000);
         
     } catch (e) {
-        setTimeout(() => {
-            indicator.remove();
-            addBubble('Maaf, koneksi terputus.', 'bot');
-        }, 1500);
+      setTimeout(() => {
+        indicator.remove();
+        addBubble('Maaf, koneksi terputus. Silakan periksa jaringan Anda.', 'bot');
+      }, 1000);
     }
   }
 
@@ -115,39 +210,5 @@ include __DIR__ . '/../includes/header.php';
     chip.addEventListener('click', () => respond(chip.dataset.q));
   });
 </script>
-
-<style>
-.typing-indicator-full {
-    display: inline-flex;
-    gap: 4px;
-    align-items: center;
-    padding: 12px 20px !important;
-}
-.typing-indicator-full .dot {
-    width: 6px;
-    height: 6px;
-    background: var(--teal-700);
-    border-radius: 50%;
-    animation: typingBounce 1.4s infinite;
-    opacity: 0.6;
-}
-.typing-indicator-full .dot:nth-child(2) { animation-delay: 0.2s; }
-.typing-indicator-full .dot:nth-child(3) { animation-delay: 0.4s; }
-
-@keyframes typingBounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
-}
-.chat-bubble.bot a {
-    color: var(--teal-900);
-    font-weight: 700;
-    text-decoration: none;
-    display: inline-block;
-    margin-top: 4px;
-}
-.chat-bubble.bot a:hover {
-    text-decoration: underline;
-}
-</style>
 
 <?php include __DIR__ . '/../includes/footer.php'; ?>

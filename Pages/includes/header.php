@@ -23,7 +23,7 @@
 </head>
 <body>
 
-<header class="site-header">
+<header class="site-header <?= (isset($forceSolidHeader) && $forceSolidHeader) ? 'force-solid' : '' ?>">
   <div class="container header-inner">
     <a href="<?= $navPrefix ?>index.php" class="brand">
       <img src="<?= $assetPrefix ?>img/logo-kkn.png" alt="Logo KKN" class="brand-logo" onerror="this.style.display='none'">

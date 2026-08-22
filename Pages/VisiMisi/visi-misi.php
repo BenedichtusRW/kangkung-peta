@@ -39,6 +39,7 @@ try {
     $misiArray = $defaultMisi;
 }
 
+$forceSolidHeader = true;
 include __DIR__ . '/../includes/header.php';
 ?>
 

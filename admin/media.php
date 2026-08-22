@@ -166,7 +166,7 @@ $activeTab = $_GET['tab'] ?? 'header';
                   <label for="<?= $key ?>_input" class="upload-btn" style="padding: 8px 16px; font-size: 0.85rem;">
                     <i class="fa-solid fa-camera"></i> Ganti
                   </label>
-                  <input type="file" id="<?= $key ?>_input" name="header_foto" accept=".jpg,.jpeg,.png,.webp" required onchange="this.form.submit()">
+                  <input type="file" id="<?= $key ?>_input" name="header_foto" accept=".jpg,.jpeg,.png,.webp" required onchange="this.form.submit()" style="display: none;">
               </div>
             </div>
           </form>

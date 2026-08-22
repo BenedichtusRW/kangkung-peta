@@ -33,6 +33,7 @@ $slides = $stmt->fetchAll();
 $stmt = $pdo->query("SELECT * FROM pois");
 $pois = $stmt->fetchAll();
 
+$forceSolidHeader = true;
 include __DIR__ . '/includes/header.php';
 ?>
 
@@ -137,7 +138,7 @@ if (!empty($header_beranda)) {
     text-shadow: 0 4px 25px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,0.6);
 }
 </style>
-<section class="hero-home" style="padding-top: 100px; <?= $bgStyle ?>">
+<section class="hero-home" style="<?= $bgStyle ?>">
   <div class="container hero-home-grid">
     <div class="hero-copy" data-reveal>
       <span class="eyebrow">Portal Digital Warga</span>

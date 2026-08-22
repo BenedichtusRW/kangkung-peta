@@ -42,14 +42,25 @@ if (!empty($header_berita)) {
   </div>
 </section>
 
-<section class="submission-cta">
-  <div class="container">
-    <div>
-      <span class="eyebrow">Partisipasi warga</span>
-      <h2>Punya kabar atau kegiatan di lingkungan Anda?</h2>
-      <p>Kirim berita dan foto kegiatan untuk ditinjau oleh admin kelurahan.</p>
+<section class="submission-cta" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%); margin-bottom: 20px;">
+  <div class="container" style="display: flex; flex-direction: column; gap: 24px;">
+    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.2);">
+      <div>
+        <span class="eyebrow" style="color: rgba(255,255,255,0.8);">Dokumentasi Visual</span>
+        <h2 style="color: #ffffff; margin-bottom: 8px;">Ingin melihat foto & video kegiatan?</h2>
+        <p style="color: rgba(255,255,255,0.9); margin: 0;">Kunjungi halaman Galeri untuk melihat kumpulan dokumentasi momen-momen penting kelurahan.</p>
+      </div>
+      <a href="../Galeri/galeri.php" class="btn btn-outline" style="border-color: rgba(255,255,255,0.4); color: #ffffff;">Jelajahi Galeri &rarr;</a>
     </div>
-    <a href="ajukan.php" class="btn btn-primary">Ajukan berita <span aria-hidden="true">→</span></a>
+
+    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px;">
+      <div>
+        <span class="eyebrow" style="color: rgba(255,255,255,0.8);">Partisipasi warga</span>
+        <h2 style="color: #ffffff; margin-bottom: 8px;">Punya kabar atau kegiatan di lingkungan Anda?</h2>
+        <p style="color: rgba(255,255,255,0.9); margin: 0;">Kirim berita dan foto kegiatan untuk ditinjau oleh admin kelurahan.</p>
+      </div>
+      <a href="ajukan.php" class="btn" style="background: #ffffff; color: var(--primary);">Ajukan berita &rarr;</a>
+    </div>
   </div>
 </section>
 

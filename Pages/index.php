@@ -146,6 +146,7 @@ if (!empty($header_beranda)) {
       <div class="hero-actions">
         <a href="Peta/peta.php" class="btn btn-primary">Jelajahi Peta</a>
         <a href="Chatbot/chatbot.php" class="btn btn-on-dark">Tanya Asisten</a>
+        <a href="Galeri/galeri.php" class="btn btn-outline" style="border-color: rgba(255,255,255,0.3); color: #ffffff;">Lihat Galeri</a>
       </div>
     </div>
 

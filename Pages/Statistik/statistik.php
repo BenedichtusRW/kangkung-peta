@@ -42,6 +42,7 @@ $pctPerempuan   = round($perempuan / $totalGender * 100, 1);
 include __DIR__ . '/../includes/header.php';
 ?>
 
+<<<<<<< HEAD
 <style>
   /* Style Hero khusus agar Rata Tengah Presisi */
   .page-hero {
@@ -117,6 +118,20 @@ include __DIR__ . '/../includes/header.php';
 
 <!-- Hero Section -->
 <section class="page-hero">
+=======
+<!-- =================== HERO =================== -->
+<?php
+$stmt = $pdo->prepare("SELECT key_value FROM settings WHERE key_name = 'header_statistik'");
+$stmt->execute();
+$header_statistik = $stmt->fetchColumn();
+$bgStyle = '';
+if (!empty($header_statistik)) {
+    $header_statistik = htmlspecialchars((string)$header_statistik, ENT_QUOTES, 'UTF-8');
+    $bgStyle = 'background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url(\'../../' . $header_statistik . '\') center/cover; color: #ffffff;';
+}
+?>
+<section class="page-hero" style="<?= $bgStyle ?>">
+>>>>>>> e8b5ffee368934b8f0a1fe53437987be8017a4f8
   <div class="container">
     <div class="breadcrumb">
       <a href="<?= $navPrefix ?>index.php">Beranda</a> <span>/</span> <strong style="color: #ffffff;">Statistik Kelurahan</strong>

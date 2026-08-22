@@ -286,12 +286,9 @@
 
 </footer>
 
-<?php include __DIR__ . '/chatbot.php'; ?>
-=======
 <?php if (isset($activeNav) && $activeNav !== 'chatbot'): ?>
-<?php include __DIR__ . '/chatbot.php'; ?>
+    <?php include __DIR__ . '/chatbot.php'; ?>
 <?php endif; ?>
->>>>>>> ba9b9d66773f6c63786af7f5b09c441d95de9c16
 
 
 

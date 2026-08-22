@@ -9,6 +9,7 @@ $pageTitle   = 'Chatbot AI';
 include __DIR__ . '/../includes/header.php';
 ?>
 
+<<<<<<< HEAD
 <style>
   /* Style Hero khusus agar Rata Tengah Presisi */
   .page-hero {
@@ -100,6 +101,21 @@ include __DIR__ . '/../includes/header.php';
 
 <!-- Hero Section -->
 <section class="page-hero">
+=======
+<?php
+require_once __DIR__ . '/../../config_db.php';
+$pdo = getDB();
+$stmt = $pdo->prepare("SELECT key_value FROM settings WHERE key_name = 'header_chatbot'");
+$stmt->execute();
+$header_chatbot = $stmt->fetchColumn();
+$bgStyle = '';
+if (!empty($header_chatbot)) {
+    $header_chatbot = htmlspecialchars((string)$header_chatbot, ENT_QUOTES, 'UTF-8');
+    $bgStyle = 'background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url(\'../../' . $header_chatbot . '\') center/cover; color: #ffffff;';
+}
+?>
+<section class="page-hero" style="<?= $bgStyle ?>">
+>>>>>>> e8b5ffee368934b8f0a1fe53437987be8017a4f8
   <div class="container">
     <div class="breadcrumb">
       <a href="<?= $navPrefix ?>index.php">Beranda</a> <span>/</span> <strong style="color: #ffffff;">Chatbot AI</strong>

@@ -65,15 +65,15 @@ if (!empty($header_galeri)) {
   </div>
 </section>
 
-<section class="submission-cta" style="background: linear-gradient(135deg, var(--teal-700) 0%, var(--teal-900) 100%); margin-bottom: 40px; margin-top: 20px;">
+<section class="submission-cta" style="background: var(--surface-muted); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-bottom: 40px; margin-top: 40px;">
   <div class="container" style="display: flex; flex-direction: column; gap: 24px;">
     <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px;">
       <div>
-        <span class="eyebrow" style="color: rgba(255,255,255,0.8);">Kabar & Informasi</span>
-        <h2 style="color: #ffffff; margin-bottom: 8px;">Ingin tahu cerita di balik dokumentasi ini?</h2>
-        <p style="color: rgba(255,255,255,0.9); margin: 0;">Baca rincian acara, pengumuman, dan kabar terbaru lainnya di halaman Berita & Kegiatan.</p>
+        <span class="eyebrow" style="color: var(--teal-700);">Kabar & Informasi</span>
+        <h2 style="color: var(--teal-900); margin-bottom: 8px;">Ingin tahu cerita di balik dokumentasi ini?</h2>
+        <p style="color: var(--ink-soft); margin: 0;">Baca rincian acara, pengumuman, dan kabar terbaru lainnya di halaman Berita & Kegiatan.</p>
       </div>
-      <a href="../Berita/berita.php" class="btn" style="background: #ffffff; color: var(--teal-900);">Baca Berita &rarr;</a>
+      <a href="../Berita/berita.php" class="btn" style="background: var(--teal-700); color: #ffffff;">Baca Berita &rarr;</a>
     </div>
   </div>
 </section>

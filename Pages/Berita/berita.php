@@ -42,24 +42,24 @@ if (!empty($header_berita)) {
   </div>
 </section>
 
-<section class="submission-cta" style="background: linear-gradient(135deg, var(--teal-700) 0%, var(--teal-900) 100%); margin-top: 40px; margin-bottom: 20px;">
+<section class="submission-cta" style="background: var(--surface-muted); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-top: 40px; margin-bottom: 20px;">
   <div class="container" style="display: flex; flex-direction: column; gap: 24px;">
-    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.2);">
+    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--line);">
       <div>
-        <span class="eyebrow" style="color: rgba(255,255,255,0.8);">Dokumentasi Visual</span>
-        <h2 style="color: #ffffff; margin-bottom: 8px;">Ingin melihat foto & video kegiatan?</h2>
-        <p style="color: rgba(255,255,255,0.9); margin: 0;">Kunjungi halaman Galeri untuk melihat kumpulan dokumentasi momen-momen penting kelurahan.</p>
+        <span class="eyebrow" style="color: var(--teal-700);">Dokumentasi Visual</span>
+        <h2 style="color: var(--teal-900); margin-bottom: 8px;">Ingin melihat foto & video kegiatan?</h2>
+        <p style="color: var(--ink-soft); margin: 0;">Kunjungi halaman Galeri untuk melihat kumpulan dokumentasi momen-momen penting kelurahan.</p>
       </div>
-      <a href="../Galeri/galeri.php" class="btn btn-outline" style="border-color: rgba(255,255,255,0.4); color: #ffffff;">Jelajahi Galeri &rarr;</a>
+      <a href="../Galeri/galeri.php" class="btn btn-outline" style="border-color: var(--teal-700); color: var(--teal-700);">Jelajahi Galeri &rarr;</a>
     </div>
 
     <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px;">
       <div>
-        <span class="eyebrow" style="color: rgba(255,255,255,0.8);">Partisipasi warga</span>
-        <h2 style="color: #ffffff; margin-bottom: 8px;">Punya kabar atau kegiatan di lingkungan Anda?</h2>
-        <p style="color: rgba(255,255,255,0.9); margin: 0;">Kirim berita dan foto kegiatan untuk ditinjau oleh admin kelurahan.</p>
+        <span class="eyebrow" style="color: var(--teal-700);">Partisipasi warga</span>
+        <h2 style="color: var(--teal-900); margin-bottom: 8px;">Punya kabar atau kegiatan di lingkungan Anda?</h2>
+        <p style="color: var(--ink-soft); margin: 0;">Kirim berita dan foto kegiatan untuk ditinjau oleh admin kelurahan.</p>
       </div>
-      <a href="ajukan.php" class="btn" style="background: #ffffff; color: var(--teal-900);">Ajukan berita &rarr;</a>
+      <a href="ajukan.php" class="btn" style="background: var(--teal-700); color: #ffffff;">Ajukan berita &rarr;</a>
     </div>
   </div>
 </section>

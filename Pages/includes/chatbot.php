@@ -51,6 +51,7 @@
     </div>
 </div>
 
+<<<<<<< HEAD
 <!-- Styling Widget Chatbot -->
 <style>
 /* Base Variables & Container */
@@ -275,3 +276,9 @@
 </style>
 
 <script src="<?= $assetPrefix ?>js/chatbot.js?v=<?= time() ?>"></script>
+=======
+<script>
+    window.CHATBOT_API_URL = "<?= $assetPrefix ?>../api/chatbot.php";
+</script>
+<script src="<?= $assetPrefix ?>js/chatbot.js?v=<?= time() ?>"></script>
+>>>>>>> ba9b9d66773f6c63786af7f5b09c441d95de9c16

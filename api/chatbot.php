@@ -120,6 +120,9 @@ elseif (strpos($lower_msg, 'kontak') !== false || strpos($lower_msg, 'telepon') 
 } 
 elseif (strpos($lower_msg, 'surat') !== false || strpos($lower_msg, 'pengantar') !== false || strpos($lower_msg, 'syarat') !== false) {
     $reply = "Tabik Pun! Untuk pembuatan surat pengantar atau administrasi lainnya, silakan datang langsung ke Kantor Kelurahan pada <b>" . JAM_LAYANAN . "</b> dengan membawa KTP dan KK asli serta fotokopi secukupnya.";
+} 
+elseif (strpos($lower_msg, 'website') !== false || strpos($lower_msg, 'situs') !== false || strpos($lower_msg, 'web') !== false || strpos($lower_msg, 'aplikasi') !== false || strpos($lower_msg, 'peta') !== false) {
+    $reply = "Tabik Pun! Website ini adalah platform Pusat Informasi dan Peta Interaktif " . NAMA_KELURAHAN . ". Di sini Bapak/Ibu bisa melihat letak fasilitas umum di peta, statistik kependudukan, berita terbaru, dan informasi aparatur kelurahan.";
 }
 else {
     $reply = "Tabik Pun! Maaf Bapak/Ibu, saya adalah Asisten Virtual " . NAMA_KELURAHAN . ". Saya hanya bisa menjawab seputar jam layanan, jumlah penduduk, aparatur kelurahan, kontak, tim KKN, dan berita kelurahan. Untuk pertanyaan lain, silakan datang langsung ke kantor ya!";

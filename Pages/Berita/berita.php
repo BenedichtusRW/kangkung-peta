@@ -43,23 +43,23 @@ if (!empty($header_berita)) {
 </section>
 
 <section class="submission-cta" style="background: var(--surface-muted); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-top: 40px; margin-bottom: 20px;">
-  <div class="container" style="display: flex; flex-direction: column; gap: 24px;">
-    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--line);">
-      <div>
+  <div class="container">
+    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; padding-bottom: 24px; margin-bottom: 24px; border-bottom: 1px solid var(--line);">
+      <div style="flex: 1; min-width: 280px;">
         <span class="eyebrow" style="color: var(--teal-700);">Dokumentasi Visual</span>
         <h2 style="color: var(--teal-900); margin-bottom: 8px;">Ingin melihat foto & video kegiatan?</h2>
         <p style="color: var(--ink-soft); margin: 0;">Kunjungi halaman Galeri untuk melihat kumpulan dokumentasi momen-momen penting kelurahan.</p>
       </div>
-      <a href="../Galeri/galeri.php" class="btn btn-outline" style="border-color: var(--teal-700); color: var(--teal-700);">Jelajahi Galeri &rarr;</a>
+      <a href="../Galeri/galeri.php" class="btn btn-outline" style="border-color: var(--teal-700); color: var(--teal-700); white-space: nowrap;">Jelajahi Galeri &rarr;</a>
     </div>
 
     <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px;">
-      <div>
+      <div style="flex: 1; min-width: 280px;">
         <span class="eyebrow" style="color: var(--teal-700);">Partisipasi warga</span>
         <h2 style="color: var(--teal-900); margin-bottom: 8px;">Punya kabar atau kegiatan di lingkungan Anda?</h2>
         <p style="color: var(--ink-soft); margin: 0;">Kirim berita dan foto kegiatan untuk ditinjau oleh admin kelurahan.</p>
       </div>
-      <a href="ajukan.php" class="btn" style="background: var(--teal-700); color: #ffffff;">Ajukan berita &rarr;</a>
+      <a href="ajukan.php" class="btn" style="background: var(--teal-700); color: #ffffff; white-space: nowrap;">Ajukan berita &rarr;</a>
     </div>
   </div>
 </section>

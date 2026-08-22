@@ -30,7 +30,7 @@ async function handleChatSubmit(e) {
         formData.append('message', message);
 
         // Fetch response from backend
-        const response = await fetch(`${window.location.origin}/api/chatbot.php`, {
+        const response = await fetch(window.CHATBOT_API_URL, {
             method: 'POST',
             body: formData
         });

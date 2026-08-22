@@ -12,6 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../assets/css/style.css?v=<?= time() ?>">
+<link rel="stylesheet" href="../../assets/css/chatbot.css?v=<?= time() ?>">
 </head>
 <body>
 
@@ -204,6 +205,11 @@
     &copy; <?= date('Y') ?> <?= NAMA_KELURAHAN ?>. All rights reserved.
   </div>
 </footer>
+
+<?php 
+$assetPrefix = '../../assets/';
+include __DIR__ . '/../includes/chatbot.php'; 
+?>
 
 <script>
   (() => {

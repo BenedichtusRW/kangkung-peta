@@ -51,4 +51,7 @@
     </div>
 </div>
 
+<script>
+    window.CHATBOT_API_URL = "<?= $assetPrefix ?>../api/chatbot.php";
+</script>
 <script src="<?= $assetPrefix ?>js/chatbot.js?v=<?= time() ?>"></script>

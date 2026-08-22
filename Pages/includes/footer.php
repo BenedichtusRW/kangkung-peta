@@ -45,7 +45,9 @@
   </div>
 </footer>
 
-<?php include __DIR__ . '/chatbot.php'; ?>
+<?php if (isset($activeNav) && $activeNav !== 'chatbot'): ?>
+  <?php include __DIR__ . '/chatbot.php'; ?>
+<?php endif; ?>
 
 <script>
   const navToggle = document.getElementById('navToggle');

@@ -7,13 +7,30 @@ $navPrefix = '../';
 $activeNav = 'profile';
 $pageTitle = 'Sejarah Kelurahan';
 
-// Ambil dari database, fallback ke teks hardcode
+// Teks Sejarah default (Fallback jika database belum terisi)
+$defaultSejarah = <<<EOD
+Nama Kangkung berasal dari tanaman kangkung. Menurut sumber sejarah masyarakat setempat, dahulu wilayah Kangkung terdiri atas daratan dan rawa kecil. Di kawasan rawa tersebut banyak tumbuh tanaman kangkung, sehingga masyarakat kemudian menyebut daerah tersebut sebagai Kampung Kangkung.
+
+Pada masa awal, wilayah Kangkung dihuni oleh masyarakat Lampung Pesisir sebagai penduduk asli. Karena letaknya berada di kawasan pesisir Teluk Lampung, kehidupan masyarakat sejak dahulu banyak berkaitan dengan aktivitas laut dan perikanan.
+
+Sekitar tahun 1952, datang rombongan menggunakan perahu besar dari Jawa Barat/Cirebon. Mereka datang ke kawasan pesisir Lampung untuk menangkap ikan dan kemudian menetap. Kehadiran masyarakat pendatang tersebut turut membentuk perkembangan masyarakat pesisir Kangkung yang sampai sekarang dikenal memiliki kehidupan yang erat dengan aktivitas nelayan.
+
+Kawasan Kangkung juga dikenal dengan nama Ujung Bom. Nama tersebut berkaitan dengan kawasan dermaga di pesisir yang pada masa kolonial Belanda digunakan sebagai tempat pendaratan kapal. Karena sejarah kawasan ini, Ujung Bom kemudian menjadi salah satu bagian penting dari identitas kawasan pesisir Kangkung.
+
+Dalam perkembangan pemerintahannya, Kangkung pada awalnya merupakan perkampungan, kemudian pada sekitar tahun 1960-an pemerintahan dipimpin oleh seorang Kepala Kampung. Selanjutnya sistem pemerintahan berubah menjadi pemerintahan kelurahan yang dipimpin oleh lurah.
+
+Secara administratif, Kangkung dahulu termasuk wilayah Kecamatan Teluk Betung Selatan. Setelah dilakukan penataan wilayah Kota Bandar Lampung melalui Peraturan Daerah Kota Bandar Lampung Nomor 04 Tahun 2012, terbentuk Kecamatan Bumi Waras. Kangkung kemudian menjadi salah satu kelurahan yang berada di Kecamatan Bumi Waras.
+
+Saat ini, berdasarkan portal resmi Pemerintah Kota Bandar Lampung, Kelurahan Kangkung merupakan bagian dari Kecamatan Bumi Waras dan terdiri atas 3 Lingkungan serta 27 RT.
+EOD;
+
+// Ambil dari database, jika kosong / error pakai defaultSejarah
 $pdo = getDB();
 try {
     $row = $pdo->query("SELECT key_value FROM konten WHERE key_name = 'sejarah'")->fetch();
-    $sejarahTeks = $row ? $row['key_value'] : '';
+    $sejarahTeks = ($row && !empty($row['key_value'])) ? $row['key_value'] : $defaultSejarah;
 } catch(Exception $e) {
-    $sejarahTeks = '';
+    $sejarahTeks = $defaultSejarah;
 }
 
 include __DIR__ . '/../includes/header.php';
@@ -23,7 +40,7 @@ include __DIR__ . '/../includes/header.php';
   <div class="container">
     <div class="breadcrumb"><a href="<?= $navPrefix ?>index.php">Beranda</a> / Profile / Sejarah Kelurahan</div>
     <h1>Sejarah Kelurahan Kangkung</h1>
-    <p>Perjalanan terbentuknya <?= NAMA_KELURAHAN ?> hingga menjadi seperti sekarang.</p>
+    <p>Perjalanan terbentuknya <?= defined('NAMA_KELURAHAN') ? NAMA_KELURAHAN : 'Kelurahan Kangkung' ?> hingga menjadi seperti sekarang.</p>
   </div>
 </section>
 
@@ -44,35 +61,6 @@ include __DIR__ . '/../includes/header.php';
         ?>
       </div>
     <?php endif; ?>
-
-    <div class="timeline" style="margin-top: 48px;">
-      <div class="timeline-item">
-        <div class="year">Awal</div>
-        <h4>Kampung Kangkung — Asal Mula Nama</h4>
-        <p>Wilayah ini terdiri atas daratan dan rawa kecil yang dipenuhi tanaman kangkung. Masyarakat Lampung Pesisir sebagai penduduk asli menghuni wilayah pesisir Teluk Lampung dan menjalani kehidupan nelayan.</p>
-      </div>
-      <div class="timeline-item">
-        <div class="year">1952</div>
-        <h4>Kedatangan Perantau dari Cirebon</h4>
-        <p>Rombongan nelayan dari Jawa Barat/Cirebon datang menggunakan perahu besar dan menetap di wilayah pesisir Kangkung, turut membentuk karakter masyarakat nelayan yang kuat hingga saat ini.</p>
-      </div>
-      <div class="timeline-item">
-        <div class="year">1960-an</div>
-        <h4>Berdirinya Pemerintahan Kampung</h4>
-        <p>Kangkung mulai memiliki pemerintahan resmi dengan dipimpin oleh seorang Kepala Kampung, yang kemudian berkembang menjadi sistem pemerintahan kelurahan yang dipimpin oleh Lurah.</p>
-      </div>
-      <div class="timeline-item">
-        <div class="year">2012</div>
-        <h4>Masuk Kecamatan Bumi Waras</h4>
-        <p>Melalui Peraturan Daerah Kota Bandar Lampung Nomor 04 Tahun 2012, dibentuk Kecamatan Bumi Waras. Kelurahan Kangkung resmi menjadi bagian dari kecamatan baru ini, terdiri atas 3 Lingkungan dan 27 RT.</p>
-      </div>
-      <div class="timeline-item">
-        <div class="year">2026</div>
-        <h4>Digitalisasi Layanan Kelurahan</h4>
-        <p>Kelurahan Kangkung mulai memiliki portal informasi digital, dibangun oleh mahasiswa KKN UIN RIL Kelompok 31, untuk mempermudah akses layanan dan informasi bagi seluruh warga Kangkung.</p>
-      </div>
-    </div>
-  </div>
 </section>
 
 <?php include __DIR__ . '/../includes/footer.php'; ?>

@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/../admin/includes/functions.php';
 
-// Helper function untuk sanitasi string output HTML (XSS Protection)
+// Helper function untuk sanitasi string output HTML
 if (!function_exists('e')) {
     function e($string) {
         return htmlspecialchars((string)$string, ENT_QUOTES, 'UTF-8');
@@ -36,7 +36,93 @@ $pois = $stmt->fetchAll();
 include __DIR__ . '/includes/header.php';
 ?>
 
-<section class="hero-home">
+<style>
+/* CSS Modern Quicklinks / Services */
+.quicklinks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.quicklink-card-modern {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  position: relative;
+  overflow: hidden;
+}
+
+.quicklink-card-modern::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #059669, #10b981);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.quicklink-card-modern:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -8px rgba(5, 150, 105, 0.15);
+  border-color: #a7f3d0;
+}
+
+.quicklink-card-modern:hover::before {
+  opacity: 1;
+}
+
+.icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #ecfdf5;
+  color: #059669;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.25s ease;
+}
+
+.quicklink-card-modern:hover .icon-box {
+  background: #059669;
+  color: #ffffff;
+}
+
+.icon-box svg {
+  width: 24px;
+  height: 24px;
+  stroke-width: 2;
+}
+
+.card-content h3 {
+  margin: 0 0 4px 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.card-content p {
+  margin: 0;
+  font-size: 0.825rem;
+  color: #6b7280;
+  line-height: 1.4;
+}
+</style>
+
+<section class="hero-home" style="padding-top: 100px;">
   <div class="container hero-home-grid">
     <div class="hero-copy" data-reveal>
       <span class="eyebrow">Portal Digital Warga</span>
@@ -59,7 +145,6 @@ include __DIR__ . '/includes/header.php';
         </div>
       <?php else: ?>
         <?php foreach ($slides as $index => $slide): 
-          // Cek path gambar agar tidak dobel prefix
           $imgPath = $slide['gambar'] ?? '';
           if (!empty($imgPath) && strpos($imgPath, 'http') !== 0 && strpos($imgPath, '/') !== 0 && strpos($imgPath, '../') !== 0) {
               $imgPath = '../' . $imgPath;
@@ -86,28 +171,112 @@ include __DIR__ . '/includes/header.php';
   </div>
 </section>
 
-<section class="page-section">
+<!-- Section Jelajahi Layanan -->
+<section class="page-section" style="background-color: #f9fafb; padding: 60px 0;">
   <div class="container">
-    <div class="section-head" data-reveal>
-      <span class="eyebrow">Jelajahi Layanan</span>
-      <h2>Semua kebutuhan warga dalam satu portal</h2>
-      <p>Pilih halaman yang ingin Anda kunjungi untuk memperoleh informasi dengan cepat.</p>
+    <div class="section-head" data-reveal style="margin-bottom: 32px;">
+      <span class="eyebrow" style="color: #d97706; font-weight: 600;">JELAJAHI LAYANAN</span>
+      <h2 style="font-size: 2.2rem; font-weight: 700; color: #064e3b; margin-top: 4px;">Semua kebutuhan warga dalam satu portal</h2>
+      <p style="color: #6b7280;">Pilih halaman yang ingin Anda kunjungi untuk memperoleh informasi dengan cepat.</p>
     </div>
     
-    <div class="quicklinks" data-reveal>
-      <a href="VisiMisi/visi-misi.php" class="quicklink-card"><span class="ico">01</span><span class="label">Visi &amp; Misi</span></a>
-      <a href="Sejarah/sejarah.php" class="quicklink-card"><span class="ico">02</span><span class="label">Sejarah</span></a>
-      <a href="Data-Aparatur/aparatur.php" class="quicklink-card"><span class="ico">03</span><span class="label">Aparatur</span></a>
-      <a href="Tim-KKN/tim-kkn.php" class="quicklink-card"><span class="ico">04</span><span class="label">Tim KKN</span></a>
-      <a href="Peta/peta.php" class="quicklink-card"><span class="ico">05</span><span class="label">Peta Wilayah</span></a>
-      <a href="Chatbot/chatbot.php" class="quicklink-card"><span class="ico">06</span><span class="label">Asisten AI</span></a>
-      <a href="Statistik/statistik.php" class="quicklink-card"><span class="ico">07</span><span class="label">Statistik</span></a>
-      <a href="Berita/berita.php" class="quicklink-card"><span class="ico">08</span><span class="label">Berita</span></a>
-      <a href="Galeri/galeri.php" class="quicklink-card"><span class="ico">09</span><span class="label">Galeri</span></a>
+    <div class="quicklinks-grid" data-reveal>
+      
+      <a href="VisiMisi/visi-misi.php" class="quicklink-card-modern">
+        <div class="icon-box">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        </div>
+        <div class="card-content">
+          <h3>Visi &amp; Misi</h3>
+          <p>Arah kebijakan dan cita-cita pembangunan wilayah.</p>
+        </div>
+      </a>
+
+      <a href="Sejarah/sejarah.php" class="quicklink-card-modern">
+        <div class="icon-box">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div class="card-content">
+          <h3>Sejarah</h3>
+          <p>Asal-usul dan rekam jejak perkembangan wilayah.</p>
+        </div>
+      </a>
+
+      <a href="Data-Aparatur/aparatur.php" class="quicklink-card-modern">
+        <div class="icon-box">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        </div>
+        <div class="card-content">
+          <h3>Aparatur</h3>
+          <p>Struktur organisasi dan pengurus kelurahan.</p>
+        </div>
+      </a>
+
+      <a href="Tim-KKN/tim-kkn.php" class="quicklink-card-modern">
+        <div class="icon-box">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 01-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
+        </div>
+        <div class="card-content">
+          <h3>Tim KKN</h3>
+          <p>Profil mahasiswa pengabdi Kelompok 31 UIN RIL.</p>
+        </div>
+      </a>
+
+      <a href="Peta/peta.php" class="quicklink-card-modern">
+        <div class="icon-box">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+        </div>
+        <div class="card-content">
+          <h3>Peta Wilayah</h3>
+          <p>Peta interaktif titik fasilitas dan potensi daerah.</p>
+        </div>
+      </a>
+
+      <a href="Chatbot/chatbot.php" class="quicklink-card-modern">
+        <div class="icon-box">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+        </div>
+        <div class="card-content">
+          <h3>Asisten AI</h3>
+          <p>Tanya jawab cepat terkait pelayanan publik.</p>
+        </div>
+      </a>
+
+      <a href="Statistik/statistik.php" class="quicklink-card-modern">
+        <div class="icon-box">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 012 2h2a2 2 0 012-2z"/></svg>
+        </div>
+        <div class="card-content">
+          <h3>Statistik</h3>
+          <p>Data demografi kependudukan dan statistik wilayah.</p>
+        </div>
+      </a>
+
+      <a href="Berita/berita.php" class="quicklink-card-modern">
+        <div class="icon-box">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+        </div>
+        <div class="card-content">
+          <h3>Berita</h3>
+          <p>Informasi terbaru seputar kegiatan kelurahan.</p>
+        </div>
+      </a>
+
+      <a href="Galeri/galeri.php" class="quicklink-card-modern">
+        <div class="icon-box">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        </div>
+        <div class="card-content">
+          <h3>Galeri</h3>
+          <p>Kumpulan foto dokumentasi momen kelurahan.</p>
+        </div>
+      </a>
+
     </div>
   </div>
 </section>
 
+<!-- Section Kabar Terkini -->
 <section class="page-section alt">
   <div class="container">
     <div class="section-head section-head-row" data-reveal>

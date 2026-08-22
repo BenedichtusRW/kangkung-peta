@@ -67,6 +67,10 @@ try {
             key_name VARCHAR(100) PRIMARY KEY,
             key_value TEXT
         )",
+        "CREATE TABLE IF NOT EXISTS konten (
+            key_name VARCHAR(100) PRIMARY KEY,
+            key_value TEXT
+        )",
         "CREATE TABLE IF NOT EXISTS settings (
             key_name VARCHAR(100) PRIMARY KEY,
             key_value TEXT

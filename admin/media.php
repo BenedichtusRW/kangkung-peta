@@ -56,6 +56,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         header('Location: media.php?tab=header');
         exit;
+    } elseif ($action === 'reset_header') {
+        $page = $_POST['page'] ?? '';
+        $allowed = ['header_beranda', 'header_peta', 'header_chatbot', 'header_statistik', 'header_berita', 'header_galeri'];
+        if (in_array($page, $allowed)) {
+            $settings[$page] = '';
+            updateSetting($pdo, $page, '');
+            $_SESSION['flash'] = ['type' => 'success', 'message' => "Banner dikembalikan ke warna default (Hijau)."];
+        }
+        header('Location: media.php?tab=header');
+        exit;
     }
     // --- Slider ---
     elseif ($action === 'upload_slider') {
@@ -149,7 +159,7 @@ $activeTab = $_GET['tab'] ?? 'header';
               <?php if (!empty($img)): ?>
                   <img src="../<?= htmlspecialchars($img) ?>" class="header-preview-img" alt="<?= $label ?>" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
               <?php else: ?>
-                  <div class="header-preview-empty" style="height: 100%; display: flex; align-items: center; justify-content: center; background: #f1f5f9; border-radius: 8px; color: #94a3b8; font-size: 0.85rem; border: 2px dashed #cbd5e1;">Belum ada banner.</div>
+                  <div class="header-preview-empty" style="height: 100%; display: flex; align-items: center; justify-content: center; background: #ecfdf5; border-radius: 8px; color: #059669; font-size: 0.85rem; border: 2px dashed #a7f3d0;"><i class="fa-solid fa-check-circle" style="margin-right: 6px;"></i> Background Default (Hijau)</div>
               <?php endif; ?>
               
               <div class="upload-overlay" style="border-radius: 8px;">
@@ -160,6 +170,15 @@ $activeTab = $_GET['tab'] ?? 'header';
               </div>
             </div>
           </form>
+          <?php if (!empty($img)): ?>
+          <form method="POST" action="media.php" style="padding: 0 16px 16px; margin: 0;">
+            <input type="hidden" name="action" value="reset_header">
+            <input type="hidden" name="page" value="<?= $key ?>">
+            <button type="submit" style="width: 100%; padding: 8px; background: #fee2e2; color: #ef4444; border: 1px solid #fca5a5; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.2s;" onmouseover="this.style.background='#fecaca'" onmouseout="this.style.background='#fee2e2'">
+                <i class="fa-solid fa-rotate-left"></i> Gunakan Background Default
+            </button>
+          </form>
+          <?php endif; ?>
         </div>
         <?php endforeach; ?>
         </div>

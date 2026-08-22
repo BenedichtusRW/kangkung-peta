@@ -42,7 +42,7 @@ if (!empty($header_berita)) {
   </div>
 </section>
 
-<section class="submission-cta" style="background: linear-gradient(135deg, var(--teal-700) 0%, var(--teal-900) 100%); margin-bottom: 20px;">
+<section class="submission-cta" style="background: linear-gradient(135deg, var(--teal-700) 0%, var(--teal-900) 100%); margin-top: 40px; margin-bottom: 20px;">
   <div class="container" style="display: flex; flex-direction: column; gap: 24px;">
     <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.2);">
       <div>

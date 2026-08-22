@@ -65,16 +65,16 @@ if (!empty($header_peta)) {
 }
 ?>
 <style>
-.peta-hero h1, .peta-hero p, .peta-hero .eyebrow, .peta-hero .breadcrumb {
+.page-hero h1, .page-hero p, .page-hero .eyebrow, .page-hero .breadcrumb {
     text-shadow: 0 4px 25px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,0.6);
 }
 </style>
-<section class="peta-hero" style="<?= $bgStyle ?>">
-  <div class="container">
+<section class="page-hero" style="<?= $bgStyle ?>">
+  <div class="container" data-aos="fade-down" data-aos-duration="800">
     <div class="breadcrumb">
       <a href="../index.php">Beranda</a> <span>/</span> <strong style="color: #ffffff;">Peta Kelurahan</strong>
     </div>
-    <span class="eyebrow">PETA INTERAKTIF</span>
+    <span class="eyebrow" style="color: var(--gold-500); display: block; margin-bottom: 8px; font-weight: 700; letter-spacing: 0.1em;">PETA INTERAKTIF</span>
     <h1>Peta Kelurahan <?= htmlspecialchars(explode(' ', NAMA_KELURAHAN)[1] ?? NAMA_KELURAHAN) ?></h1>
     <p>
       Temukan tugu, kantor pemerintahan, kuliner, jasa, tempat ibadah, sekolah, dan fasilitas kesehatan di area <?= htmlspecialchars(NAMA_KELURAHAN) ?>.

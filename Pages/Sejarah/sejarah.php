@@ -1,13 +1,25 @@
 <?php
+
 require_once __DIR__ . '/../../config.php';
 require_once __DIR__ . '/../../config_db.php';
 
-$assetPrefix = '../../assets/';
-$navPrefix = '../';
-$activeNav = 'profile';
-$pageTitle = 'Sejarah Kelurahan';
+/*
+|--------------------------------------------------------------------------
+| Konfigurasi Halaman
+|--------------------------------------------------------------------------
+*/
 
-// Teks Sejarah default (Fallback jika database belum terisi)
+$assetPrefix = '../../assets/';
+$navPrefix   = '../';
+$activeNav   = 'profile';
+$pageTitle   = 'Sejarah Kelurahan';
+
+/*
+|--------------------------------------------------------------------------
+| Data Sejarah Default
+|--------------------------------------------------------------------------
+*/
+
 $defaultSejarah = <<<EOD
 Nama Kangkung berasal dari tanaman kangkung. Menurut sumber sejarah masyarakat setempat, dahulu wilayah Kangkung terdiri atas daratan dan rawa kecil. Di kawasan rawa tersebut banyak tumbuh tanaman kangkung, sehingga masyarakat kemudian menyebut daerah tersebut sebagai Kampung Kangkung.
 
@@ -24,43 +36,178 @@ Secara administratif, Kangkung dahulu termasuk wilayah Kecamatan Teluk Betung Se
 Saat ini, berdasarkan portal resmi Pemerintah Kota Bandar Lampung, Kelurahan Kangkung merupakan bagian dari Kecamatan Bumi Waras dan terdiri atas 3 Lingkungan serta 27 RT.
 EOD;
 
-// Ambil dari database, jika kosong / error pakai defaultSejarah
-$pdo = getDB();
+/*
+|--------------------------------------------------------------------------
+| Ambil Data Sejarah dari Database
+|--------------------------------------------------------------------------
+*/
+
+$sejarahTeks = $defaultSejarah;
+
 try {
-    $row = $pdo->query("SELECT key_value FROM konten WHERE key_name = 'sejarah'")->fetch();
-    $sejarahTeks = ($row && !empty($row['key_value'])) ? $row['key_value'] : $defaultSejarah;
-} catch(Exception $e) {
+    $pdo = getDB();
+
+    $stmt = $pdo->prepare("
+        SELECT key_value
+        FROM konten
+        WHERE key_name = :key_name
+        LIMIT 1
+    ");
+
+    $stmt->execute([
+        'key_name' => 'sejarah'
+    ]);
+
+    $row = $stmt->fetch();
+
+    if ($row && !empty(trim($row['key_value']))) {
+        $sejarahTeks = $row['key_value'];
+    }
+} catch (Exception $e) {
+    // Jika database bermasalah, gunakan data sejarah default.
     $sejarahTeks = $defaultSejarah;
 }
 
+/*
+|--------------------------------------------------------------------------
+| Header
+|--------------------------------------------------------------------------
+*/
+
 include __DIR__ . '/../includes/header.php';
+
 ?>
 
+<!-- HERO SECTION -->
 <section class="page-hero">
-  <div class="container">
-    <div class="breadcrumb"><a href="<?= $navPrefix ?>index.php">Beranda</a> / Profile / Sejarah Kelurahan</div>
-    <h1>Sejarah Kelurahan Kangkung</h1>
-    <p>Perjalanan terbentuknya <?= defined('NAMA_KELURAHAN') ? NAMA_KELURAHAN : 'Kelurahan Kangkung' ?> hingga menjadi seperti sekarang.</p>
-  </div>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="<?= htmlspecialchars($navPrefix) ?>index.php">Beranda</a>
+            <span>/</span>
+            <span>Profile</span>
+            <span>/</span>
+            <span>Sejarah Kelurahan</span>
+        </div>
+
+        <h1>Sejarah Kelurahan Kangkung</h1>
+
+        <p>
+            Perjalanan terbentuknya 
+            <?= htmlspecialchars(defined('NAMA_KELURAHAN') ? NAMA_KELURAHAN : 'Kelurahan Kangkung') ?> 
+            hingga menjadi bagian penting dari kawasan pesisir Kota Bandar Lampung.
+        </p>
+    </div>
 </section>
 
+<!-- CONTENT SECTION -->
 <section class="page-section">
-  <div class="container" style="max-width:820px;">
+    <div class="container container-md">
+        <?php if (!empty($sejarahTeks)): ?>
 
-    <?php if ($sejarahTeks): ?>
-      <div class="section-head" style="max-width:100%;">
-        <span class="eyebrow">Latar Belakang</span>
-        <h2>Asal Usul Nama &amp; Wilayah</h2>
-      </div>
-      <div class="prose-text" style="line-height:1.9; color:#374151; font-size:15.5px;">
-        <?php
-          $paragraphs = array_filter(array_map('trim', explode("\n\n", $sejarahTeks)));
-          foreach ($paragraphs as $p) {
-              echo '<p>' . nl2br(htmlspecialchars($p)) . '</p>';
-          }
-        ?>
-      </div>
-    <?php endif; ?>
+            <div class="section-head section-head-full">
+                <span class="eyebrow">Latar Belakang</span>
+                <h2>Asal Usul Nama &amp; Wilayah</h2>
+                <p class="section-desc">
+                    Mengenal perjalanan sejarah, perkembangan masyarakat, serta perubahan administratif Kelurahan Kangkung.
+                </p>
+            </div>
+
+            <article class="prose-text history-card">
+                <?php
+                $paragraphs = array_filter(
+                    array_map(
+                        'trim',
+                        preg_split("/\R{2,}/", $sejarahTeks)
+                    )
+                );
+
+                foreach ($paragraphs as $paragraph):
+                ?>
+                    <p><?= nl2br(htmlspecialchars($paragraph)) ?></p>
+                <?php endforeach; ?>
+            </article>
+
+        <?php else: ?>
+
+            <div class="empty-state">
+                <strong>Data sejarah belum tersedia.</strong>
+                <span>Silakan tambahkan informasi sejarah melalui halaman pengelolaan konten.</span>
+            </div>
+
+        <?php endif; ?>
+    </div>
 </section>
 
-<?php include __DIR__ . '/../includes/footer.php'; ?>
+<style>
+/* Utilities & Helper Layout */
+.container-md {
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Section Head & Article */
+.section-head-full {
+  max-width: 100%;
+  margin-bottom: 28px;
+}
+
+.section-desc {
+  max-width: 680px;
+  margin-top: 10px;
+  color: #64748b;
+  line-height: 1.7;
+}
+
+.history-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 34px 38px;
+  box-shadow: 0 8px 24px rgba(15, 61, 54, 0.06);
+  color: #374151;
+  font-size: 15.5px;
+  line-height: 1.9;
+}
+
+.history-card p {
+  margin: 0 0 20px;
+}
+
+.history-card p:last-child {
+  margin-bottom: 0;
+}
+
+/* Empty State */
+.empty-state {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 40px;
+  text-align: center;
+  color: #64748b;
+}
+
+.empty-state strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #334155;
+}
+
+/* Responsive adjustment */
+@media (max-width: 768px) {
+  .history-card {
+    padding: 20px 24px;
+  }
+}
+</style>
+
+<?php
+/*
+|--------------------------------------------------------------------------
+| Footer
+|--------------------------------------------------------------------------
+*/
+
+include __DIR__ . '/../includes/footer.php';
+?>

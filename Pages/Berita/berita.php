@@ -17,7 +17,17 @@ include __DIR__ . '/../includes/header.php';
 <!-- Library Animasi CSS (bisa dipindah ke header.php) -->
 <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
-<section class="page-hero">
+<?php
+$stmt = $pdo->prepare("SELECT key_value FROM settings WHERE key_name = 'header_berita'");
+$stmt->execute();
+$header_berita = $stmt->fetchColumn();
+$bgStyle = '';
+if (!empty($header_berita)) {
+    $header_berita = htmlspecialchars((string)$header_berita, ENT_QUOTES, 'UTF-8');
+    $bgStyle = 'background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url(\'../../' . $header_berita . '\') center/cover; color: #ffffff;';
+}
+?>
+<section class="page-hero" style="<?= $bgStyle ?>">
   <div class="container" data-aos="fade-down" data-aos-duration="800">
     <div class="breadcrumb"><a href="<?= $navPrefix ?>index.php">Beranda</a> / Berita</div>
     <h1>Berita &amp; Kegiatan</h1>

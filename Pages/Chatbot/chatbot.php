@@ -9,7 +9,19 @@ $pageTitle = 'Chatbot AI';
 include __DIR__ . '/../includes/header.php';
 ?>
 
-<section class="page-hero">
+<?php
+require_once __DIR__ . '/../../config_db.php';
+$pdo = getDB();
+$stmt = $pdo->prepare("SELECT key_value FROM settings WHERE key_name = 'header_chatbot'");
+$stmt->execute();
+$header_chatbot = $stmt->fetchColumn();
+$bgStyle = '';
+if (!empty($header_chatbot)) {
+    $header_chatbot = htmlspecialchars((string)$header_chatbot, ENT_QUOTES, 'UTF-8');
+    $bgStyle = 'background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url(\'../../' . $header_chatbot . '\') center/cover; color: #ffffff;';
+}
+?>
+<section class="page-hero" style="<?= $bgStyle ?>">
   <div class="container">
     <div class="breadcrumb"><a href="<?= $navPrefix ?>index.php">Beranda</a> / Chatbot AI</div>
     <h1>Chatbot Informasi Kelurahan</h1>

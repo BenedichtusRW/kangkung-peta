@@ -15,7 +15,17 @@ $kategoriList = array_values(array_unique(array_column($galeri, 'kategori')));
 include __DIR__ . '/../includes/header.php';
 ?>
 
-<section class="page-hero">
+<?php
+$stmt = $pdo->prepare("SELECT key_value FROM settings WHERE key_name = 'header_galeri'");
+$stmt->execute();
+$header_galeri = $stmt->fetchColumn();
+$bgStyle = '';
+if (!empty($header_galeri)) {
+    $header_galeri = htmlspecialchars((string)$header_galeri, ENT_QUOTES, 'UTF-8');
+    $bgStyle = 'background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url(\'../../' . $header_galeri . '\') center/cover; color: #ffffff;';
+}
+?>
+<section class="page-hero" style="<?= $bgStyle ?>">
   <div class="container">
     <div class="breadcrumb"><a href="<?= $navPrefix ?>index.php">Beranda</a> / Galeri</div>
     <h1>Galeri Kegiatan</h1>

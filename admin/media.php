@@ -32,15 +32,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // --- Header ---
     if ($action === 'update_header') {
-        $uploaded = handle_image_upload('header_foto');
-        if ($uploaded) {
-            $settings['header_image'] = $uploaded;
-            updateSetting($pdo, 'header_image', $settings['header_image']);
-            $_SESSION['flash'] = ['type' => 'success', 'message' => 'Foto header berhasil diperbarui.'];
+        $page = $_POST['page'] ?? '';
+        $allowed = ['header_beranda', 'header_peta', 'header_chatbot', 'header_statistik', 'header_berita', 'header_galeri'];
+        if (in_array($page, $allowed)) {
+            $uploaded = handle_image_upload('header_foto');
+            if ($uploaded) {
+                $settings[$page] = $uploaded;
+                updateSetting($pdo, $page, $settings[$page]);
+                
+                // Buat label ramah manusia
+                $labels = [
+                    'header_beranda' => 'Beranda',
+                    'header_peta' => 'Peta Kelurahan',
+                    'header_chatbot' => 'Chatbot AI',
+                    'header_statistik' => 'Statistik Kelurahan',
+                    'header_berita' => 'Berita',
+                    'header_galeri' => 'Galeri'
+                ];
+                $labelName = $labels[$page] ?? 'Banner';
+                
+                $_SESSION['flash'] = ['type' => 'success', 'message' => "Foto banner $labelName berhasil diperbarui."];
+            }
         }
         header('Location: media.php?tab=header');
         exit;
-    } 
+    }
     // --- Slider ---
     elseif ($action === 'upload_slider') {
         $uploaded = handle_image_upload('slider_foto');
@@ -105,28 +121,48 @@ $activeTab = $_GET['tab'] ?? 'header';
     <!-- TAB 1: HEADER -->
     <div id="tab-header" class="tab-content <?= $activeTab === 'header' ? 'active' : '' ?>">
       <div class="section-card">
-        <h2><i class="fa-solid fa-panorama"></i> Gambar Header Utama (Hero Section)</h2>
-        <p>Gambar ukuran besar yang pertama kali dilihat pengunjung di halaman utama.</p>
+        <h2><i class="fa-solid fa-panorama"></i> Gambar Banner Khusus Halaman</h2>
+        <p>Kelola gambar latar belakang khusus (banner/hero) untuk masing-masing halaman utama di situs publik. Rasio terbaik: 21:9 atau 16:9 (Lebar min. 1200px).</p>
         
-        <form method="POST" action="media.php" enctype="multipart/form-data" class="media-form">
-          <input type="hidden" name="action" value="update_header">
-          
-          <div class="header-preview-container">
-            <?php if (!empty($settings['header_image'])): ?>
-                <img src="../<?= htmlspecialchars($settings['header_image']) ?>" class="header-preview-img" alt="Header">
-            <?php else: ?>
-                <div class="header-preview-empty">Belum ada gambar header.</div>
-            <?php endif; ?>
-            
-            <div class="upload-overlay">
-                <label for="header_foto_input" class="upload-btn">
-                  <i class="fa-solid fa-camera"></i> Ganti Gambar Header
-                </label>
-                <input type="file" id="header_foto_input" name="header_foto" accept=".jpg,.jpeg,.png,.webp" required onchange="this.form.submit()">
-            </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; margin-top: 24px;">
+        <?php
+        $banners = [
+            'header_beranda' => 'Banner Beranda',
+            'header_peta' => 'Banner Peta Kelurahan',
+            'header_chatbot' => 'Banner Chatbot AI',
+            'header_statistik' => 'Banner Statistik',
+            'header_berita' => 'Banner Berita',
+            'header_galeri' => 'Banner Galeri',
+        ];
+        foreach ($banners as $key => $label): 
+            $img = $settings[$key] ?? '';
+        ?>
+        <div class="banner-card" style="border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; background: #fff;">
+          <div style="padding: 14px 16px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-image" style="color: var(--teal-600);"></i> <?= $label ?>
           </div>
-          <p class="help-text"><i class="fa-solid fa-circle-info"></i> Rasio terbaik: 21:9 atau 16:9 (Lebar min. 1200px). Gambar akan otomatis terganti saat Anda memilih file baru.</p>
-        </form>
+          <form method="POST" action="media.php" enctype="multipart/form-data" class="media-form" style="margin: 0; padding: 16px;">
+            <input type="hidden" name="action" value="update_header">
+            <input type="hidden" name="page" value="<?= $key ?>">
+            
+            <div class="header-preview-container" style="height: 160px; margin-bottom: 0;">
+              <?php if (!empty($img)): ?>
+                  <img src="../<?= htmlspecialchars($img) ?>" class="header-preview-img" alt="<?= $label ?>" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+              <?php else: ?>
+                  <div class="header-preview-empty" style="height: 100%; display: flex; align-items: center; justify-content: center; background: #f1f5f9; border-radius: 8px; color: #94a3b8; font-size: 0.85rem; border: 2px dashed #cbd5e1;">Belum ada banner.</div>
+              <?php endif; ?>
+              
+              <div class="upload-overlay" style="border-radius: 8px;">
+                  <label for="<?= $key ?>_input" class="upload-btn" style="padding: 8px 16px; font-size: 0.85rem;">
+                    <i class="fa-solid fa-camera"></i> Ganti
+                  </label>
+                  <input type="file" id="<?= $key ?>_input" name="header_foto" accept=".jpg,.jpeg,.png,.webp" required onchange="this.form.submit()">
+              </div>
+            </div>
+          </form>
+        </div>
+        <?php endforeach; ?>
+        </div>
       </div>
     </div>
 

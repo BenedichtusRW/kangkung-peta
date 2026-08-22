@@ -43,7 +43,17 @@ include __DIR__ . '/../includes/header.php';
 ?>
 
 <!-- =================== HERO =================== -->
-<section class="page-hero">
+<?php
+$stmt = $pdo->prepare("SELECT key_value FROM settings WHERE key_name = 'header_statistik'");
+$stmt->execute();
+$header_statistik = $stmt->fetchColumn();
+$bgStyle = '';
+if (!empty($header_statistik)) {
+    $header_statistik = htmlspecialchars((string)$header_statistik, ENT_QUOTES, 'UTF-8');
+    $bgStyle = 'background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url(\'../../' . $header_statistik . '\') center/cover; color: #ffffff;';
+}
+?>
+<section class="page-hero" style="<?= $bgStyle ?>">
   <div class="container">
     <div class="breadcrumb"><a href="<?= $navPrefix ?>index.php">Beranda</a> / Statistik Kelurahan</div>
     <h1>Potret <?= NAMA_KELURAHAN ?></h1>

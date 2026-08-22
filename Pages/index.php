@@ -122,7 +122,13 @@ include __DIR__ . '/includes/header.php';
 }
 </style>
 
-<section class="hero-home" style="padding-top: 100px;">
+<?php
+$bgStyle = '';
+if (!empty($statistik['header_beranda'])) {
+    $bgStyle = 'background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(\'' . e($assetPrefix . $statistik['header_beranda']) . '\') center/cover; color: #ffffff;';
+}
+?>
+<section class="hero-home" style="padding-top: 100px; <?= $bgStyle ?>">
   <div class="container hero-home-grid">
     <div class="hero-copy" data-reveal>
       <span class="eyebrow">Portal Digital Warga</span>

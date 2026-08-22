@@ -126,13 +126,38 @@ include __DIR__ . '/includes/header.php';
 $stmt = $pdo->prepare("SELECT key_value FROM settings WHERE key_name = 'header_beranda'");
 $stmt->execute();
 $header_beranda = $stmt->fetchColumn();
-
-$bgStyle = '';
-if (!empty($header_beranda)) {
-    $bgStyle = 'background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(\'../' . e($header_beranda) . '\') center/cover; color: #ffffff;';
-}
 ?>
-<section class="hero-home" style="padding-top: 100px; <?= $bgStyle ?>">
+<?php if (!empty($header_beranda)): ?>
+<style>
+.hero-home {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    color: #ffffff;
+}
+.hero-home::before {
+    content: '';
+    position: absolute;
+    inset: -20px; /* Slight overflow to prevent blurred edges from showing background color */
+    background: url('../<?= e($header_beranda) ?>') center/cover;
+    filter: blur(8px);
+    z-index: -2;
+}
+.hero-home::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.75));
+    z-index: -1;
+}
+.hero-copy h1, .hero-copy p, .hero-copy .eyebrow {
+    text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+}
+</style>
+<section class="hero-home" style="padding-top: 100px;">
+<?php else: ?>
+<section class="hero-home" style="padding-top: 100px;">
+<?php endif; ?>
   <div class="container hero-home-grid">
     <div class="hero-copy" data-reveal>
       <span class="eyebrow">Portal Digital Warga</span>

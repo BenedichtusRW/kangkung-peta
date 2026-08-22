@@ -15,13 +15,38 @@ $pdo = getDB();
 $stmt = $pdo->prepare("SELECT key_value FROM settings WHERE key_name = 'header_chatbot'");
 $stmt->execute();
 $header_chatbot = $stmt->fetchColumn();
-$bgStyle = '';
-if (!empty($header_chatbot)) {
-    $header_chatbot = htmlspecialchars((string)$header_chatbot, ENT_QUOTES, 'UTF-8');
-    $bgStyle = 'background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url(\'../../' . $header_chatbot . '\') center/cover; color: #ffffff;';
-}
 ?>
-<section class="page-hero" style="<?= $bgStyle ?>">
+<?php if (!empty($header_chatbot)): ?>
+<style>
+.page-hero {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    color: #ffffff;
+}
+.page-hero::before {
+    content: '';
+    position: absolute;
+    inset: -20px;
+    background: url('../../<?= htmlspecialchars((string)$header_chatbot, ENT_QUOTES, 'UTF-8') ?>') center/cover;
+    filter: blur(8px);
+    z-index: -2;
+}
+.page-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.75));
+    z-index: -1;
+}
+.page-hero h1, .page-hero p, .page-hero .eyebrow, .page-hero .breadcrumb {
+    text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+}
+</style>
+<section class="page-hero">
+<?php else: ?>
+<section class="page-hero">
+<?php endif; ?>
   <div class="container">
     <div class="breadcrumb"><a href="<?= $navPrefix ?>index.php">Beranda</a> / Chatbot AI</div>
     <h1>Chatbot Informasi Kelurahan</h1>

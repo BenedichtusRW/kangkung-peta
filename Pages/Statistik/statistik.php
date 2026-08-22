@@ -47,13 +47,38 @@ include __DIR__ . '/../includes/header.php';
 $stmt = $pdo->prepare("SELECT key_value FROM settings WHERE key_name = 'header_statistik'");
 $stmt->execute();
 $header_statistik = $stmt->fetchColumn();
-$bgStyle = '';
-if (!empty($header_statistik)) {
-    $header_statistik = htmlspecialchars((string)$header_statistik, ENT_QUOTES, 'UTF-8');
-    $bgStyle = 'background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url(\'../../' . $header_statistik . '\') center/cover; color: #ffffff;';
-}
 ?>
-<section class="page-hero" style="<?= $bgStyle ?>">
+<?php if (!empty($header_statistik)): ?>
+<style>
+.page-hero {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    color: #ffffff;
+}
+.page-hero::before {
+    content: '';
+    position: absolute;
+    inset: -20px;
+    background: url('../../<?= htmlspecialchars((string)$header_statistik, ENT_QUOTES, 'UTF-8') ?>') center/cover;
+    filter: blur(8px);
+    z-index: -2;
+}
+.page-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.75));
+    z-index: -1;
+}
+.page-hero h1, .page-hero p, .page-hero .eyebrow, .page-hero .breadcrumb {
+    text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+}
+</style>
+<section class="page-hero">
+<?php else: ?>
+<section class="page-hero">
+<?php endif; ?>
   <div class="container">
     <div class="breadcrumb"><a href="<?= $navPrefix ?>index.php">Beranda</a> / Statistik Kelurahan</div>
     <h1>Potret <?= NAMA_KELURAHAN ?></h1>

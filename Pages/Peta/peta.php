@@ -58,14 +58,38 @@ $pdo = getDB();
 $stmt = $pdo->prepare("SELECT key_value FROM settings WHERE key_name = 'header_peta'");
 $stmt->execute();
 $header_peta = $stmt->fetchColumn();
-$bgStyle = '';
-if (!empty($header_peta)) {
-    // Escape string just in case
-    $header_peta = htmlspecialchars((string)$header_peta, ENT_QUOTES, 'UTF-8');
-    $bgStyle = 'background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url(\'../../' . $header_peta . '\') center/cover; color: #ffffff;';
-}
 ?>
-<section class="peta-hero" style="<?= $bgStyle ?>">
+<?php if (!empty($header_peta)): ?>
+<style>
+.peta-hero {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    color: #ffffff;
+}
+.peta-hero::before {
+    content: '';
+    position: absolute;
+    inset: -20px;
+    background: url('../../<?= htmlspecialchars((string)$header_peta, ENT_QUOTES, 'UTF-8') ?>') center/cover;
+    filter: blur(8px);
+    z-index: -2;
+}
+.peta-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.75));
+    z-index: -1;
+}
+.peta-hero h1, .peta-hero p, .peta-hero .eyebrow, .peta-hero .breadcrumb {
+    text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+}
+</style>
+<section class="peta-hero">
+<?php else: ?>
+<section class="peta-hero">
+<?php endif; ?>
   <div class="container">
     <span class="eyebrow">Peta Interaktif</span>
     <h1>Peta Kelurahan <?= explode(' ', NAMA_KELURAHAN)[1] ?? NAMA_KELURAHAN ?></h1>

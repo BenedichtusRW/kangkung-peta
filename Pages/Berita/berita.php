@@ -42,7 +42,7 @@ if (!empty($header_berita)) {
   </div>
 </section>
 
-<section class="submission-cta" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%); margin-bottom: 20px;">
+<section class="submission-cta" style="background: linear-gradient(135deg, var(--teal-700) 0%, var(--teal-900) 100%); margin-bottom: 20px;">
   <div class="container" style="display: flex; flex-direction: column; gap: 24px;">
     <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.2);">
       <div>
@@ -59,7 +59,7 @@ if (!empty($header_berita)) {
         <h2 style="color: #ffffff; margin-bottom: 8px;">Punya kabar atau kegiatan di lingkungan Anda?</h2>
         <p style="color: rgba(255,255,255,0.9); margin: 0;">Kirim berita dan foto kegiatan untuk ditinjau oleh admin kelurahan.</p>
       </div>
-      <a href="ajukan.php" class="btn" style="background: #ffffff; color: var(--primary);">Ajukan berita &rarr;</a>
+      <a href="ajukan.php" class="btn" style="background: #ffffff; color: var(--teal-900);">Ajukan berita &rarr;</a>
     </div>
   </div>
 </section>

@@ -65,7 +65,7 @@ if (!empty($header_galeri)) {
   </div>
 </section>
 
-<section class="submission-cta" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%); margin-bottom: 40px; margin-top: 20px;">
+<section class="submission-cta" style="background: linear-gradient(135deg, var(--teal-700) 0%, var(--teal-900) 100%); margin-bottom: 40px; margin-top: 20px;">
   <div class="container" style="display: flex; flex-direction: column; gap: 24px;">
     <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px;">
       <div>
@@ -73,7 +73,7 @@ if (!empty($header_galeri)) {
         <h2 style="color: #ffffff; margin-bottom: 8px;">Ingin tahu cerita di balik dokumentasi ini?</h2>
         <p style="color: rgba(255,255,255,0.9); margin: 0;">Baca rincian acara, pengumuman, dan kabar terbaru lainnya di halaman Berita & Kegiatan.</p>
       </div>
-      <a href="../Berita/berita.php" class="btn" style="background: #ffffff; color: var(--primary);">Baca Berita &rarr;</a>
+      <a href="../Berita/berita.php" class="btn" style="background: #ffffff; color: var(--teal-900);">Baca Berita &rarr;</a>
     </div>
   </div>
 </section>

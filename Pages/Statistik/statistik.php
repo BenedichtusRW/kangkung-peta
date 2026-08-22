@@ -43,14 +43,20 @@ include __DIR__ . '/../includes/header.php';
 ?>
 
 <!-- =================== HERO =================== -->
-<section class="page-hero" style="padding-bottom: 80px; text-align: center;">
+<section class="page-hero">
   <div class="container">
-    <div class="breadcrumb" style="justify-content: center;"><a href="<?= $navPrefix ?>index.php">Beranda</a> / Statistik Kelurahan</div>
+    <div class="breadcrumb"><a href="<?= $navPrefix ?>index.php">Beranda</a> / Statistik Kelurahan</div>
     <h1>Potret <?= NAMA_KELURAHAN ?></h1>
     <p>Visualisasi data kependudukan dan wilayah yang informatif. Terakhir diperbarui <?= isset($stat['terakhir_diperbarui']) ? date('d M Y', strtotime($stat['terakhir_diperbarui'])) : '-' ?>.</p>
+  </div>
+</section>
+
+<!-- =================== DASHBOARD =================== -->
+<section style="background: #F4F6F5; padding:48px 0 80px;">
+  <div class="container">
     
-    <!-- 1. COUNTER CARDS (Moved up to Hero) -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:20px;margin-top:40px;">
+    <!-- 1. COUNTER CARDS -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:20px;margin-bottom:60px;">
       <?php
         $counters = [
           ['val'=>$jumlahPenduduk, 'label'=>'Total Penduduk', 'icon'=>'fa-users', 'color'=>'#0F3D36'],
@@ -62,7 +68,7 @@ include __DIR__ . '/../includes/header.php';
         ];
         foreach ($counters as $c):
       ?>
-      <div style="background:#fff; padding:20px; border-radius:12px; text-align:center; box-shadow:0 8px 24px rgba(0,0,0,0.1);">
+      <div style="background:#fff; padding:20px; border-radius:12px; text-align:center; box-shadow:0 8px 24px rgba(0,0,0,0.06); border: 1px solid var(--line);">
         <div style="font-size:24px; color:<?= $c['color'] ?>; margin-bottom:12px;"><i class="fa-solid <?= $c['icon'] ?>"></i></div>
         <div class="counter-val" data-target="<?= $c['val'] ?>" style="font-size:28px; font-weight:800; color:#1C2622; margin-bottom:4px; font-family:'Sora', sans-serif;">
             0
@@ -73,12 +79,8 @@ include __DIR__ . '/../includes/header.php';
       </div>
       <?php endforeach; ?>
     </div>
-  </div>
-</section>
 
-<!-- =================== DASHBOARD =================== -->
-<section style="background: #F4F6F5; padding:48px 0 80px;">
-  <div class="container">
+
 
     <!-- 2. GENDER & PEKERJAAN BARS -->
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:30px;margin-bottom:60px;">

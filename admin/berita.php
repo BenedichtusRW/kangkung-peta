@@ -78,7 +78,7 @@ unset($_SESSION['flash']);
 <title>Manajemen Berita | <?= NAMA_KELURAHAN ?></title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-<link rel="stylesheet" href="../assets/css/admin.css">
+<link rel="stylesheet" href="../assets/css/admin.css?v=<?= time() ?>">
 <style>
 .berita-list { display: flex; flex-direction: column; gap: 16px; }
 .berita-item { display: flex; gap: 20px; background: var(--white); padding: 16px; border-radius: var(--radius-md); border: 1px solid var(--line); align-items:center;}
@@ -246,3 +246,4 @@ function editBerita(data) {
 </script>
 </body>
 </html>
+

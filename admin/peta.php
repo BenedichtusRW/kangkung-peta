@@ -65,7 +65,7 @@ unset($_SESSION['flash']);
 <title>Dashboard Admin | <?= NAMA_KELURAHAN ?></title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-<link rel="stylesheet" href="../assets/css/admin.css">
+<link rel="stylesheet" href="../assets/css/admin.css?v=<?= time() ?>">
 </head>
 <body>
 <div class="admin-shell">
@@ -78,7 +78,6 @@ unset($_SESSION['flash']);
         <h1>Daftar Tempat</h1>
         <p>Kelola titik lokasi yang tampil di Peta Interaktif <?= NAMA_KELURAHAN ?>.</p>
       </div>
-      <button type="button" class="btn btn-primary" onclick="openModal()">+ Tambah Tempat</button>
     </div>
 
     <?php if ($flash): ?>
@@ -109,8 +108,11 @@ unset($_SESSION['flash']);
     </div>
 
     <div class="table-card">
-      <div class="table-toolbar">
-        <input type="search" id="tableSearch" placeholder="Cari nama tempat...">
+      <div class="table-toolbar" style="display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+        <div style="display: flex; gap: 12px; align-items: center; flex: 1;">
+          <input type="search" id="tableSearch" placeholder="Cari nama tempat..." style="flex: 1; max-width: 300px;">
+          <button type="button" class="btn btn-primary" onclick="openModal()" style="padding: 9px 16px;">+ Tambah Tempat</button>
+        </div>
         <span style="font-size:12.5px;color:var(--ink-soft)"><?= count($pois) ?> data</span>
       </div>
       <table id="poiTable">
@@ -252,6 +254,7 @@ unset($_SESSION['flash']);
   const modal = document.getElementById('poiModal');
   
   function openModal(poi = null) {
+    document.body.style.overflow = 'hidden';
     modal.classList.add('open');
     if (poi) {
       document.getElementById('modalTitle').textContent = 'Edit Tempat';
@@ -281,6 +284,7 @@ unset($_SESSION['flash']);
   }
 
   function closeModal() {
+    document.body.style.overflow = '';
     modal.classList.remove('open');
   }
 
@@ -291,3 +295,4 @@ unset($_SESSION['flash']);
 </script>
 </body>
 </html>
+

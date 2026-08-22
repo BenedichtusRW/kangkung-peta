@@ -52,7 +52,10 @@ $flash = $_SESSION['flash'] ?? null; unset($_SESSION['flash']);
 <!DOCTYPE html>
 <html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pengajuan Berita | <?= NAMA_KELURAHAN ?></title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="../assets/css/admin.css"></head>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<link rel="stylesheet" href="../assets/css/admin.css?v=<?= time() ?>">
+</head>
 <body><div class="admin-shell"><?php include __DIR__ . '/includes/sidebar.php'; ?><main class="admin-main">
 <div class="admin-topbar"><div><h1>Pengajuan Berita Warga</h1><p>Tinjau berita dan foto sebelum diterbitkan ke halaman publik.</p></div><a href="../Pages/Berita/ajukan.php" class="btn btn-outline" target="_blank">Lihat Form Warga</a></div>
 <?php if ($flash): ?><div class="alert alert-<?= htmlspecialchars($flash['type']) ?>"><?= htmlspecialchars($flash['message']) ?></div><?php endif; ?>
@@ -65,3 +68,4 @@ $flash = $_SESSION['flash'] ?? null; unset($_SESSION['flash']);
 <details><summary>Baca isi berita &amp; kontak pengaju</summary><p><?= nl2br(htmlspecialchars($item['konten'] ?? '')) ?></p><p><strong>Pengaju:</strong> <?= htmlspecialchars($item['penulis'] ?? '-') ?></p></details>
 <?php if (($item['status'] ?? '') === 'pending'): ?><form method="post" class="row-actions"><input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['admin_berita_csrf']) ?>"><input type="hidden" name="id" value="<?= (int) $item['id'] ?>"><button name="action" value="setujui" class="btn btn-primary" type="submit">Setujui &amp; Terbitkan</button><button name="action" value="tolak" class="btn btn-danger" type="submit" onclick="return confirm('Tolak pengajuan berita ini?')">Tolak</button></form><?php endif; ?>
 </div></article><?php endforeach; endif; ?></div></main></div></body></html>
+

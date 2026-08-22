@@ -54,7 +54,7 @@ unset($_SESSION['flash']);
 <title>Tim KKN | <?= NAMA_KELURAHAN ?></title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-<link rel="stylesheet" href="../assets/css/admin.css">
+<link rel="stylesheet" href="../assets/css/admin.css?v=<?= time() ?>">
 <style>
 .person-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
 .person-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; text-align: center; position: relative; }
@@ -174,3 +174,4 @@ function editPerson(data) {
 </script>
 </body>
 </html>
+

@@ -52,14 +52,38 @@ $isProfileOpen = in_array($currentPage, ['profile.php', 'aparatur.php', 'tim-kkn
       <i class="fa-solid fa-chart-pie"></i> Statistik Kelurahan
     </a>
 
+    <?php
+    $pdoSidebar = getDB();
+    $pendingCount = 0;
+    try {
+        $pendingCount = $pdoSidebar->query("SELECT COUNT(*) FROM berita WHERE status = 'pending'")->fetchColumn();
+    } catch(Exception $e) {}
+    $isBeritaOpen = in_array($currentPage, ['berita.php', 'pengajuan-berita.php']);
+    ?>
+    <div class="nav-accordion <?= $isBeritaOpen ? 'open' : '' ?>">
+      <div class="nav-accordion-btn">
+        <div style="display:flex; align-items:center; gap: 12px; width:100%;">
+          <i class="fa-regular fa-newspaper"></i> Berita
+          <?php if($pendingCount > 0): ?>
+            <span style="background:var(--primary); color:white; font-size:10px; padding:2px 6px; border-radius:10px; font-weight:bold; margin-left:auto; margin-right:8px;"><?= $pendingCount ?></span>
+          <?php endif; ?>
+        </div>
+        <i class="fa-solid fa-chevron-down arrow"></i>
+      </div>
+      <div class="nav-accordion-content" style="<?= $isBeritaOpen ? 'display:block;' : 'display:none;' ?>">
+        <a href="berita.php" class="sub-nav-item <?= $currentPage === 'berita.php' ? 'active' : '' ?>">Semua Berita</a>
+        <a href="pengajuan-berita.php" class="sub-nav-item <?= $currentPage === 'pengajuan-berita.php' ? 'active' : '' ?>" style="display:flex; justify-content:space-between; align-items:center;">
+            Tinjau Pengajuan
+            <?php if($pendingCount > 0): ?>
+                <span style="background:var(--primary); color:white; font-size:10px; padding:2px 6px; border-radius:10px; font-weight:bold;"><?= $pendingCount ?> Baru</span>
+            <?php endif; ?>
+        </a>
+      </div>
+    </div>
+
     <!-- Galeri -->
     <a href="galeri.php" class="nav-item <?= $currentPage === 'galeri.php' ? 'active' : '' ?>">
       <i class="fa-solid fa-camera-retro"></i> Galeri
-    </a>
-
-    <!-- Berita -->
-    <a href="berita.php" class="nav-item <?= ($currentPage === 'berita.php' || $currentPage === 'pengajuan-berita.php') ? 'active' : '' ?>">
-      <i class="fa-regular fa-newspaper"></i> Berita
     </a>
 
   </nav>

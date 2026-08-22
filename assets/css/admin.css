@@ -79,7 +79,7 @@ a { color: inherit; text-decoration: none; }
   border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.04);
   padding: 32px 24px; height: calc(100vh - 48px); position: sticky; top: 24px;
 }
-.admin-brand { display: flex; align-items: center; gap: 14px; margin-bottom: 40px; }
+.admin-brand { display: flex; align-items: center; gap: 14px; margin-bottom: 40px; flex-shrink: 0; }
 .brand-avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--teal-100); display:flex; align-items:center; justify-content:center; overflow:hidden;}
 .brand-avatar img { width: 100%; height: 100%; object-fit: contain; }
 .admin-brand .brand-text { display: flex; flex-direction: column; }
@@ -87,8 +87,9 @@ a { color: inherit; text-decoration: none; }
 .admin-brand .brand-text strong { color: var(--ink); font-family: var(--font-display); font-size: 15px; }
 
 .admin-nav { 
-  display: flex; flex-direction: column; gap: 6px; flex: 1; 
+  display: block; flex: 1; 
   overflow-y: auto; padding-right: 4px; margin-right: -8px; padding-bottom: 20px;
+  min-height: 0;
 }
 .admin-nav::-webkit-scrollbar { width: 4px; }
 .admin-nav::-webkit-scrollbar-track { background: transparent; }
@@ -96,11 +97,13 @@ a { color: inherit; text-decoration: none; }
 .admin-nav::-webkit-scrollbar-thumb:hover { background: #a0aba6; }
 
 .nav-divider { font-size: 10.5px; font-weight: 700; color: #a0aba6; letter-spacing: 0.08em; margin: 24px 0 12px; padding-left: 12px; }
+.admin-nav a.nav-item, .nav-accordion { margin-bottom: 6px; }
 .admin-nav a.nav-item, .nav-accordion-btn {
   padding: 12px 14px; border-radius: 12px; font-size: 11.5px; font-weight: 700; color: var(--ink-soft);
   display: flex; align-items: center; cursor: pointer; transition: 0.2s; text-decoration: none; gap: 12px;
-  text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; overflow: hidden;
+  text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; overflow: hidden; flex-shrink: 0;
 }
+.nav-accordion { flex-shrink: 0; }
 .admin-nav a.nav-item i, .nav-accordion-btn i { width: 18px; font-size: 14.5px; text-align: center; }
 .admin-nav a.nav-item:hover, .nav-accordion-btn:hover { background: #f4f6f5; color: var(--teal-900); }
 .admin-nav a.nav-item.active { background: var(--teal-100); color: var(--teal-900); }
@@ -115,7 +118,7 @@ a { color: inherit; text-decoration: none; }
 .nav-accordion.open .arrow { transform: rotate(180deg); }
 .nav-accordion .arrow { transition: transform 0.3s; font-size: 12px; }
 
-.admin-sidebar-footer { margin-top: 16px; padding-top: 20px; border-top: 1px solid var(--paper); }
+.admin-sidebar-footer { margin-top: 16px; padding-top: 20px; border-top: 1px solid var(--paper); flex-shrink: 0; }
 .admin-sidebar .logout-link {
   font-size: 11.5px; font-weight: 700; color: var(--danger); padding: 12px; display: flex; align-items: center; gap: 8px; justify-content: center;
   border-radius: 12px; border: 1.5px solid var(--danger-bg); background: var(--white); transition: 0.2s; width: 100%; white-space: nowrap;
@@ -187,10 +190,10 @@ tbody tr:hover { background: var(--teal-100); }
 .current-image { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
 .current-image img { width: 70px; height: 70px; border-radius: 10px; object-fit: cover; border: 1px solid var(--line); }
 
-.stat-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 24px; }
-.stat-card { background: var(--white); border-radius: var(--radius-lg); box-shadow: var(--shadow-soft); padding: 18px 20px; }
-.stat-card .num { font-family: var(--font-display); font-size: 28px; color: var(--teal-900); }
-.stat-card .label { font-size: 12.5px; color: var(--ink-soft); font-weight: 600; margin-top: 2px; }
+.stat-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 24px; }
+.stat-card { background: var(--white); border-radius: 12px; box-shadow: var(--shadow-soft); padding: 14px 16px; border: 1px solid var(--line); }
+.stat-card .num { font-family: var(--font-display); font-size: 22px; font-weight: 800; color: var(--teal-900); display: flex; align-items: center; }
+.stat-card .label { font-size: 11.5px; color: var(--ink-soft); font-weight: 600; margin-top: 2px; }
 
 @media (max-width: 800px) {
   .admin-shell { grid-template-columns: 1fr; }
@@ -223,26 +226,27 @@ tbody tr:hover { background: var(--teal-100); }
 /* ---------- Admin Modal ---------- */
 .admin-modal-overlay {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(15,25,22,0.6); z-index: 9999;
-  display: none; justify-content: center; align-items: flex-start;
-  padding: 40px 20px; overflow-y: auto; backdrop-filter: blur(4px);
+  background: rgba(15,25,22,0.85); z-index: 9999;
+  display: none; justify-content: center; align-items: center;
+  padding: 20px; overflow: hidden;
 }
 .admin-modal-overlay.open { display: flex; }
 .admin-modal-card {
   background: var(--white); width: 100%; max-width: 600px;
   border-radius: var(--radius-lg); box-shadow: 0 20px 60px rgba(0,0,0,0.15);
   animation: slideDown 0.3s cubic-bezier(0.16,1,0.3,1);
+  display: flex; flex-direction: column; max-height: calc(100vh - 40px);
 }
 .admin-modal-header {
   display: flex; justify-content: space-between; align-items: center;
-  padding: 24px; border-bottom: 1px solid var(--line);
+  padding: 24px; border-bottom: 1px solid var(--line); flex-shrink: 0;
 }
 .admin-modal-header h2 { font-size: 18px; color: var(--teal-900); }
 .admin-modal-close {
   background: none; border: none; font-size: 24px; color: var(--ink-soft);
   cursor: pointer; line-height: 1;
 }
-.admin-modal-body { padding: 24px; }
+.admin-modal-body { padding: 24px; overflow-y: auto; }
 @keyframes slideDown {
   from { opacity: 0; transform: translateY(-20px); }
   to { opacity: 1; transform: translateY(0); }

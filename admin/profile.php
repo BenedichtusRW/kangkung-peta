@@ -57,7 +57,7 @@ unset($_SESSION['flash']);
 <title>Profile Kelurahan | Admin <?= NAMA_KELURAHAN ?></title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-<link rel="stylesheet" href="../assets/css/admin.css">
+<link rel="stylesheet" href="../assets/css/admin.css?v=<?= time() ?>">
 <style>
 .form-group textarea {
     width: 100%;
@@ -132,3 +132,4 @@ unset($_SESSION['flash']);
 </div>
 </body>
 </html>
+

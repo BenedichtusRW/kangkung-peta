@@ -126,40 +126,29 @@ include __DIR__ . '/includes/header.php';
 $stmt = $pdo->prepare("SELECT key_value FROM settings WHERE key_name = 'header_beranda'");
 $stmt->execute();
 $header_beranda = $stmt->fetchColumn();
+
+$bgStyle = '';
+if (!empty($header_beranda)) {
+    $bgStyle = 'background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4)), url(\'../' . e($header_beranda) . '\') center/cover; color: #ffffff;';
+}
 ?>
-<?php if (!empty($header_beranda)): ?>
 <style>
-.hero-home {
-    position: relative;
-    z-index: 1;
-    overflow: hidden;
-    color: #ffffff;
-}
-.hero-home::before {
-    content: '';
-    position: absolute;
-    inset: -20px; /* Slight overflow to prevent blurred edges from showing background color */
-    background: url('../<?= e($header_beranda) ?>') center/cover;
-    filter: blur(8px);
-    z-index: -2;
-}
-.hero-home::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.75));
-    z-index: -1;
+.hero-copy.glass-box {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 32px;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 .hero-copy h1, .hero-copy p, .hero-copy .eyebrow {
-    text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
 }
 </style>
-<section class="hero-home" style="padding-top: 100px;">
-<?php else: ?>
-<section class="hero-home" style="padding-top: 100px;">
-<?php endif; ?>
+<section class="hero-home" style="padding-top: 100px; <?= $bgStyle ?>">
   <div class="container hero-home-grid">
-    <div class="hero-copy" data-reveal>
+    <div class="hero-copy <?= !empty($header_beranda) ? 'glass-box' : '' ?>" data-reveal>
       <span class="eyebrow">Portal Digital Warga</span>
       <h1>Informasi kelurahan, lebih dekat dengan warga.</h1>
       <p class="lead">Akses layanan, data wilayah, peta fasilitas, dan kabar terbaru dari <?= e(defined('NAMA_KELURAHAN') ? NAMA_KELURAHAN : 'Kelurahan') ?> dalam satu tempat.</p>

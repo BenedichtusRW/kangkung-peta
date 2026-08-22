@@ -19,42 +19,37 @@ include __DIR__ . '/../includes/header.php';
 $stmt = $pdo->prepare("SELECT key_value FROM settings WHERE key_name = 'header_galeri'");
 $stmt->execute();
 $header_galeri = $stmt->fetchColumn();
+$bgStyle = '';
+if (!empty($header_galeri)) {
+    $header_galeri = htmlspecialchars((string)$header_galeri, ENT_QUOTES, 'UTF-8');
+    $bgStyle = 'background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url(\'../../' . $header_galeri . '\') center/cover; color: #ffffff;';
+}
 ?>
-<?php if (!empty($header_galeri)): ?>
 <style>
-.page-hero {
-    position: relative;
-    z-index: 1;
-    overflow: hidden;
-    color: #ffffff;
-}
-.page-hero::before {
-    content: '';
-    position: absolute;
-    inset: -20px;
-    background: url('../../<?= htmlspecialchars((string)$header_galeri, ENT_QUOTES, 'UTF-8') ?>') center/cover;
-    filter: blur(8px);
-    z-index: -2;
-}
-.page-hero::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.75));
-    z-index: -1;
+.hero-glass {
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 32px 24px;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    max-width: 800px;
+    margin: 0 auto;
 }
 .page-hero h1, .page-hero p, .page-hero .eyebrow, .page-hero .breadcrumb {
-    text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
 }
 </style>
-<section class="page-hero">
-<?php else: ?>
-<section class="page-hero">
-<?php endif; ?>
+<section class="page-hero" style="<?= $bgStyle ?>">
   <div class="container">
-    <div class="breadcrumb"><a href="<?= $navPrefix ?>index.php">Beranda</a> / Galeri</div>
-    <h1>Galeri Kegiatan</h1>
-    <p>Dokumentasi kegiatan &amp; fasilitas di <?= NAMA_KELURAHAN ?>.</p>
+    <div class="<?= !empty($header_galeri) ? 'hero-glass' : '' ?>">
+      <div class="breadcrumb">
+        <a href="<?= $navPrefix ?>index.php">Beranda</a> <span>/</span> <strong style="color: #ffffff;">Galeri</strong>
+      </div>
+      <h1>Galeri Kegiatan</h1>
+      <p>Dokumentasi foto dan video dari berbagai acara serta pembangunan di kelurahan kami.</p>
+    </div>
   </div>
 </section>
 

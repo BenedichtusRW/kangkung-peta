@@ -58,42 +58,40 @@ $pdo = getDB();
 $stmt = $pdo->prepare("SELECT key_value FROM settings WHERE key_name = 'header_peta'");
 $stmt->execute();
 $header_peta = $stmt->fetchColumn();
+$bgStyle = '';
+if (!empty($header_peta)) {
+    $header_peta = htmlspecialchars((string)$header_peta, ENT_QUOTES, 'UTF-8');
+    $bgStyle = 'background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url(\'../../' . $header_peta . '\') center/cover; color: #ffffff;';
+}
 ?>
-<?php if (!empty($header_peta)): ?>
 <style>
-.peta-hero {
-    position: relative;
-    z-index: 1;
-    overflow: hidden;
-    color: #ffffff;
-}
-.peta-hero::before {
-    content: '';
-    position: absolute;
-    inset: -20px;
-    background: url('../../<?= htmlspecialchars((string)$header_peta, ENT_QUOTES, 'UTF-8') ?>') center/cover;
-    filter: blur(8px);
-    z-index: -2;
-}
-.peta-hero::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.75));
-    z-index: -1;
+.hero-glass {
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 32px 24px;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    max-width: 800px;
+    margin: 0 auto;
 }
 .peta-hero h1, .peta-hero p, .peta-hero .eyebrow, .peta-hero .breadcrumb {
-    text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
 }
 </style>
-<section class="peta-hero">
-<?php else: ?>
-<section class="peta-hero">
-<?php endif; ?>
+<section class="peta-hero" style="<?= $bgStyle ?>">
   <div class="container">
-    <span class="eyebrow">Peta Interaktif</span>
-    <h1>Peta Kelurahan <?= explode(' ', NAMA_KELURAHAN)[1] ?? NAMA_KELURAHAN ?></h1>
-    <p>Temukan tugu, kantor pemerintahan, kuliner, jasa, tempat ibadah, sekolah, dan fasilitas kesehatan di area <?= NAMA_KELURAHAN ?>.</p>
+    <div class="<?= !empty($header_peta) ? 'hero-glass' : '' ?>">
+      <div class="breadcrumb">
+        <a href="../index.php">Beranda</a> <span>/</span> <strong style="color: #ffffff;">Peta Kelurahan</strong>
+      </div>
+      <span class="eyebrow">PETA INTERAKTIF</span>
+      <h1>Peta Kelurahan <?= htmlspecialchars(explode(' ', NAMA_KELURAHAN)[1] ?? NAMA_KELURAHAN) ?></h1>
+      <p>
+        Temukan tugu, kantor pemerintahan, kuliner, jasa, tempat ibadah, sekolah, dan fasilitas kesehatan di area <?= htmlspecialchars(NAMA_KELURAHAN) ?>.
+      </p>
+    </div>
   </div>
 </section>
 

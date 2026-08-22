@@ -26,30 +26,17 @@ if (!empty($header_galeri)) {
 }
 ?>
 <style>
-.hero-glass {
-    background: rgba(0, 0, 0, 0.45);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    padding: 32px 24px;
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    max-width: 800px;
-    margin: 0 auto;
-}
 .page-hero h1, .page-hero p, .page-hero .eyebrow, .page-hero .breadcrumb {
-    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    text-shadow: 0 4px 25px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,0.6);
 }
 </style>
 <section class="page-hero" style="<?= $bgStyle ?>">
   <div class="container">
-    <div class="<?= !empty($header_galeri) ? 'hero-glass' : '' ?>">
-      <div class="breadcrumb">
-        <a href="<?= $navPrefix ?>index.php">Beranda</a> <span>/</span> <strong style="color: #ffffff;">Galeri</strong>
-      </div>
-      <h1>Galeri Kegiatan</h1>
-      <p>Dokumentasi foto dan video dari berbagai acara serta pembangunan di kelurahan kami.</p>
+    <div class="breadcrumb">
+      <a href="<?= $navPrefix ?>index.php">Beranda</a> <span>/</span> <strong style="color: #ffffff;">Galeri</strong>
     </div>
+    <h1>Galeri Kegiatan</h1>
+    <p>Dokumentasi foto dan video dari berbagai acara serta pembangunan di kelurahan kami.</p>
   </div>
 </section>
 

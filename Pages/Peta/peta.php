@@ -65,33 +65,20 @@ if (!empty($header_peta)) {
 }
 ?>
 <style>
-.hero-glass {
-    background: rgba(0, 0, 0, 0.45);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    padding: 32px 24px;
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    max-width: 800px;
-    margin: 0 auto;
-}
 .peta-hero h1, .peta-hero p, .peta-hero .eyebrow, .peta-hero .breadcrumb {
-    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    text-shadow: 0 4px 25px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,0.6);
 }
 </style>
 <section class="peta-hero" style="<?= $bgStyle ?>">
   <div class="container">
-    <div class="<?= !empty($header_peta) ? 'hero-glass' : '' ?>">
-      <div class="breadcrumb">
-        <a href="../index.php">Beranda</a> <span>/</span> <strong style="color: #ffffff;">Peta Kelurahan</strong>
-      </div>
-      <span class="eyebrow">PETA INTERAKTIF</span>
-      <h1>Peta Kelurahan <?= htmlspecialchars(explode(' ', NAMA_KELURAHAN)[1] ?? NAMA_KELURAHAN) ?></h1>
-      <p>
-        Temukan tugu, kantor pemerintahan, kuliner, jasa, tempat ibadah, sekolah, dan fasilitas kesehatan di area <?= htmlspecialchars(NAMA_KELURAHAN) ?>.
-      </p>
+    <div class="breadcrumb">
+      <a href="../index.php">Beranda</a> <span>/</span> <strong style="color: #ffffff;">Peta Kelurahan</strong>
     </div>
+    <span class="eyebrow">PETA INTERAKTIF</span>
+    <h1>Peta Kelurahan <?= htmlspecialchars(explode(' ', NAMA_KELURAHAN)[1] ?? NAMA_KELURAHAN) ?></h1>
+    <p>
+      Temukan tugu, kantor pemerintahan, kuliner, jasa, tempat ibadah, sekolah, dan fasilitas kesehatan di area <?= htmlspecialchars(NAMA_KELURAHAN) ?>.
+    </p>
   </div>
 </section>
 

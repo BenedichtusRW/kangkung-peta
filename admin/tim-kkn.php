@@ -263,8 +263,8 @@ unset($_SESSION['flash']);
           <input type="file" name="foto" id="formFoto" accept="image/*" style="width:100%; padding:10px; border:1px dashed var(--line); border-radius:6px;">
         </div>
         
-        <div style="margin-top:20px; display:flex; justify-content:flex-end;">
-            <button type="submit" class="btn btn-primary">Simpan Data</button>
+        <div style="margin-top:20px;">
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Simpan Data</button>
         </div>
       </form>
     </div>

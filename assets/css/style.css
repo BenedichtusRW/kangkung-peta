@@ -504,8 +504,9 @@ button {
   position: relative;
   background: linear-gradient(135deg, var(--teal-950) 0%, var(--teal-700) 100%);
   color: var(--white);
-  padding: 0 20px;
-  height: 300px;
+  padding: 80px 20px 40px;
+  min-height: 260px;
+  height: 260px;
   text-align: center;
   overflow: clip;
   display: flex;
@@ -1858,8 +1859,9 @@ button {
   }
 
   .page-hero, .peta-hero {
-    height: 240px;
-    padding: 0 16px;
+    height: 260px;
+    min-height: 260px;
+    padding: 70px 16px 32px;
   }
 
   .toolbar {

@@ -140,53 +140,45 @@ $activeTab = $_GET['tab'] ?? 'header';
 
     <!-- TAB 1: HEADER -->
     <div id="tab-header" class="tab-content <?= $activeTab === 'header' ? 'active' : '' ?>">
-      <div class="section-card">
-        <h2><i class="fa-solid fa-panorama"></i> Gambar Banner Khusus Halaman</h2>
-        <p>Kelola gambar latar belakang khusus (banner/hero) untuk masing-masing halaman utama di situs publik. Rasio terbaik: 21:9 atau 16:9 (Lebar min. 1200px).</p>
-        
-        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; margin-top: 24px;">
-        <?php
-        $banners = [
-            'header_beranda' => 'Banner Beranda',
-        ];
-        foreach ($banners as $key => $label): 
-            $img = $settings[$key] ?? '';
-        ?>
-        <div class="banner-card" style="border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; background: #fff;">
-          <div style="padding: 14px 16px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;">
-            <i class="fa-solid fa-image" style="color: var(--teal-600);"></i> <?= $label ?>
-          </div>
-          <form method="POST" action="media.php" enctype="multipart/form-data" class="media-form" style="margin: 0; padding: 16px;">
-            <input type="hidden" name="action" value="update_header">
-            <input type="hidden" name="page" value="<?= $key ?>">
-            
-            <div class="header-preview-container" style="height: 160px; margin-bottom: 0;">
-              <?php if (!empty($img)): ?>
-                  <img src="../<?= htmlspecialchars($img) ?>" class="header-preview-img" alt="<?= $label ?>" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
-              <?php else: ?>
-                  <div class="header-preview-empty" style="height: 100%; display: flex; align-items: center; justify-content: center; background: #ecfdf5; border-radius: 8px; color: #059669; font-size: 0.85rem; border: 2px dashed #a7f3d0;"><i class="fa-solid fa-check-circle" style="margin-right: 6px;"></i> Background Default (Hijau)</div>
-              <?php endif; ?>
-              
-              <div class="upload-overlay" style="border-radius: 8px;">
-                  <label for="<?= $key ?>_input" class="upload-btn" style="padding: 8px 16px; font-size: 0.85rem;">
-                    <i class="fa-solid fa-camera"></i> Ganti
-                  </label>
-                  <input type="file" id="<?= $key ?>_input" name="header_foto" accept=".jpg,.jpeg,.png,.webp" required onchange="this.form.submit()" style="display: none;">
+      <?php $img = $settings['header_beranda'] ?? ''; ?>
+      <!-- Banner Header -->
+      <div class="section-card" style="margin-bottom: 24px;">
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px;">
+              <div>
+                  <h2 style="font-size: 1.1rem; margin: 0 0 4px 0;"><i class="fa-solid fa-image" style="color: var(--teal-600);"></i> Banner Header Beranda</h2>
+                  <p style="margin: 0; font-size: 0.85rem; color: var(--ink-soft);">Ganti foto latar belakang khusus (banner/hero) untuk halaman Utama Beranda publik.</p>
               </div>
-            </div>
-          </form>
-          <?php if (!empty($img)): ?>
-          <form method="POST" action="media.php" style="padding: 0 16px 16px; margin: 0;">
-            <input type="hidden" name="action" value="reset_header">
-            <input type="hidden" name="page" value="<?= $key ?>">
-            <button type="submit" style="width: 100%; padding: 8px; background: #fee2e2; color: #ef4444; border: 1px solid #fca5a5; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.2s;" onmouseover="this.style.background='#fecaca'" onmouseout="this.style.background='#fee2e2'">
-                <i class="fa-solid fa-rotate-left"></i> Gunakan Background Default
-            </button>
-          </form>
-          <?php endif; ?>
-        </div>
-        <?php endforeach; ?>
-        </div>
+          </div>
+
+          <div style="margin-top: 16px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center;">
+              <div style="flex: 1; min-width: 260px; height: 130px; border-radius: 12px; overflow: hidden; background: #ecfdf5; border: 1px solid #e2e8f0; position: relative;">
+                  <?php if (!empty($img)): ?>
+                      <img src="../<?= htmlspecialchars($img) ?>" style="width: 100%; height: 100%; object-fit: cover;" alt="Banner Beranda">
+                  <?php else: ?>
+                      <div style="height: 100%; display: flex; align-items: center; justify-content: center; color: #059669; font-weight: 600; font-size: 0.85rem; border: 2px dashed #a7f3d0;"><i class="fa-solid fa-check-circle" style="margin-right: 6px;"></i> Background Default (Hijau Kangkung)</div>
+                  <?php endif; ?>
+              </div>
+
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                  <form method="POST" action="media.php" enctype="multipart/form-data" style="margin:0;">
+                      <input type="hidden" name="action" value="update_header">
+                      <input type="hidden" name="page" value="header_beranda">
+                      <label class="btn btn-primary" style="cursor: pointer; display: inline-flex; align-items: center; gap: 8px; width: 100%; justify-content: center;">
+                          <i class="fa-solid fa-camera"></i> Ganti Banner
+                          <input type="file" name="header_foto" accept=".jpg,.jpeg,.png,.webp" required onchange="this.form.submit()" style="display: none;">
+                      </label>
+                  </form>
+                  <?php if (!empty($img)): ?>
+                  <form method="POST" action="media.php" style="margin:0;">
+                      <input type="hidden" name="action" value="reset_header">
+                      <input type="hidden" name="page" value="header_beranda">
+                      <button type="submit" class="btn btn-outline" style="color: #ef4444; border-color: #fca5a5; background: #fee2e2; width: 100%;">
+                          <i class="fa-solid fa-rotate-left"></i> Reset ke Default
+                      </button>
+                  </form>
+                  <?php endif; ?>
+              </div>
+          </div>
       </div>
 
       <!-- Card Teks Pengumuman Berjalan -->

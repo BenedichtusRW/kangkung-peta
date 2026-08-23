@@ -147,6 +147,7 @@ unset($_SESSION['flash']);
 .btn-sm-remove { background: #fee2e2; color: #b91c1c; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; }
 .btn-rt-remove { position: absolute; top: 16px; right: 16px; background: #fee2e2; color: #b91c1c; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; }
 </style>
+<link rel="icon" type="image/png" href="../assets/img/favicon.png">
 </head>
 <body>
 <div class="admin-shell">

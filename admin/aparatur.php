@@ -51,22 +51,31 @@ unset($_SESSION['flash']);
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Struktur Organisasi | <?= NAMA_KELURAHAN ?></title>
+<title>Data Aparatur | <?= NAMA_KELURAHAN ?></title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 <link rel="stylesheet" href="../assets/css/admin.css?v=<?= time() ?>">
 <style>
 .person-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
 .person-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; text-align: center; position: relative; }
-.person-photo { width: 100%; aspect-ratio: 3/4; object-fit: cover; background: var(--paper); }
+.person-photo { width: 100%; height: 220px; object-fit: cover; }
 .person-info { padding: 16px; }
-.person-info h3 { margin: 0 0 4px 0; font-size: 16px; color: var(--teal-900); }
-.person-info p { margin: 0; font-size: 13px; color: var(--ink-soft); }
-.person-actions { position: absolute; top: 8px; right: 8px; display: flex; gap: 4px; opacity: 0; transition: opacity 0.2s; }
+.person-info h3 { font-size: 1.1rem; color: var(--ink); margin: 0 0 4px 0; }
+.person-info p { font-size: 0.9rem; color: var(--ink-soft); margin: 0; }
+.person-actions { position: absolute; top: 12px; right: 12px; display: flex; gap: 8px; opacity: 0; transition: opacity 0.2s; }
 .person-card:hover .person-actions { opacity: 1; }
-.add-person { display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--teal-100); border: 2px dashed var(--teal-300); color: var(--teal-800); cursor: pointer; aspect-ratio: unset; height: 100%; min-height: 250px; }
-.add-person:hover { background: var(--teal-200); }
-.add-person i { font-size: 32px; margin-bottom: 8px; }
+
+.add-person { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 280px; border: 2px dashed var(--line); cursor: pointer; transition: all 0.2s; color: var(--teal-600); }
+.add-person:hover { border-color: var(--teal-600); background: #f0fdf4; }
+.add-person i { font-size: 2.5rem; margin-bottom: 12px; }
+
+/* Modal */
+.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center; }
+.modal.active { display: flex; }
+.modal-content { background: var(--white); padding: 32px; border-radius: var(--radius-lg); width: 100%; max-width: 500px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+.modal-header h2 { margin: 0; font-size: 1.3rem; }
+.close-modal { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--ink-soft); }
 </style>
 </head>
 <body>
@@ -76,7 +85,7 @@ unset($_SESSION['flash']);
   <main class="admin-main">
     <div class="admin-topbar">
       <div>
-        <h1>Struktur Organisasi (Aparatur)</h1>
+        <h1>Data Aparatur</h1>
         <p>Kelola data aparatur dan perangkat desa kelurahan.</p>
       </div>
     </div>

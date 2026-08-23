@@ -110,7 +110,7 @@ unset($_SESSION['flash']);
               <div class="gallery-item galeri-card">
                   <img src="../<?= htmlspecialchars($g['gambar']) ?>" alt="Galeri">
                   <div class="overlay-actions" style="display:flex; gap: 6px;">
-                      <button type="button" class="icon-btn edit" title="Edit" style="background:#f59e0b; color:white; border:none; width:36px; height:36px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;" data-id="<?= $g['id'] ?>" data-judul="<?= htmlspecialchars($g['judul'], ENT_QUOTES, 'UTF-8') ?>" data-kategori="<?= htmlspecialchars($g['kategori'], ENT_QUOTES, 'UTF-8') ?>">
+                      <button type="button" class="icon-btn edit" title="Edit" data-id="<?= $g['id'] ?>" data-judul="<?= htmlspecialchars($g['judul'], ENT_QUOTES, 'UTF-8') ?>" data-kategori="<?= htmlspecialchars($g['kategori'], ENT_QUOTES, 'UTF-8') ?>">
                           <i class="fa-solid fa-pen"></i>
                       </button>
                       <form method="POST" action="galeri.php" onsubmit="return confirm('Hapus foto dari galeri?');" style="margin:0;">

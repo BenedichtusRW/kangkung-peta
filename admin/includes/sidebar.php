@@ -1,7 +1,7 @@
 <?php
 $currentPage = basename($_SERVER['PHP_SELF']);
 // Determine if a submenu should be open
-$isProfileOpen = in_array($currentPage, ['profile.php', 'aparatur.php', 'tim-kkn.php']);
+$isProfileOpen = in_array($currentPage, ['sejarah.php', 'visi-misi.php', 'aparatur.php', 'tim-kkn.php']);
 ?>
 <aside class="admin-sidebar">
   <div class="admin-brand">
@@ -36,7 +36,8 @@ $isProfileOpen = in_array($currentPage, ['profile.php', 'aparatur.php', 'tim-kkn
         <i class="fa-solid fa-chevron-down arrow" style="margin-left: auto;"></i>
       </div>
       <div class="nav-accordion-content" style="<?= $isProfileOpen ? 'display:block;' : 'display:none;' ?>">
-        <a href="profile.php" class="sub-nav-item <?= $currentPage === 'profile.php' ? 'active' : '' ?>">Sejarah & Visi Misi</a>
+        <a href="sejarah.php" class="sub-nav-item <?= $currentPage === 'sejarah.php' ? 'active' : '' ?>">Sejarah Kelurahan</a>
+        <a href="visi-misi.php" class="sub-nav-item <?= $currentPage === 'visi-misi.php' ? 'active' : '' ?>">Visi Misi</a>
         <a href="aparatur.php" class="sub-nav-item <?= $currentPage === 'aparatur.php' ? 'active' : '' ?>">Pengurus Organisasi</a>
         <a href="tim-kkn.php" class="sub-nav-item <?= $currentPage === 'tim-kkn.php' ? 'active' : '' ?>">Tim KKN</a>
       </div>

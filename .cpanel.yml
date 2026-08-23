@@ -2,5 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/petc6698/public_html/
-    - rm -f config_db.php
-    - /bin/cp -R * $DEPLOYPATH
+    - rsync -a --exclude 'config_db.php' --exclude '.git' ./ $DEPLOYPATH

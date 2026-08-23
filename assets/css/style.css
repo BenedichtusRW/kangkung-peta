@@ -357,7 +357,7 @@ button {
   color: var(--white);
   padding: 120px 0 80px;
   overflow: hidden;
-  min-height: calc(100vh - 80px);
+  min-height: 100vh;
   display: flex;
   align-items: center;
 }

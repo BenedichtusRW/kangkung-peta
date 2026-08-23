@@ -167,7 +167,7 @@ textarea { width: 100%; padding: 10px; border: 1px solid var(--line); border-rad
             </div>
 
             <div style="margin-top: 24px;">
-                <button type="submit" class="btn btn-primary" style="padding: 12px 24px;"><i class="fas fa-save"></i> Simpan Pengaturan</button>
+                <button type="submit" class="btn btn-primary" style="padding: 12px 24px; width: auto;"><i class="fas fa-save"></i> Simpan Pengaturan</button>
             </div>
         </form>
     </div>
@@ -179,7 +179,7 @@ textarea { width: 100%; padding: 10px; border: 1px solid var(--line); border-rad
                 <h2 style="font-size: 1.1rem; margin: 0 0 4px 0;"><i class="fa-solid fa-list-check" style="color: var(--teal-600);"></i> Kelola Pertanyaan & Jawaban (Q&A)</h2>
                 <p style="margin: 0; font-size: 0.85rem; color: var(--ink-soft);">Atur kata kunci dan jawaban kustom. Bot akan memeriksa kata kunci ini terlebih dahulu.</p>
             </div>
-            <button class="btn btn-primary" onclick="openQaModal()"><i class="fa-solid fa-plus"></i> Tambah Q&A</button>
+            <button class="btn btn-primary" style="width: auto; padding: 10px 16px;" onclick="openQaModal()"><i class="fa-solid fa-plus"></i> Tambah Q&A</button>
         </div>
 
         <div style="overflow-x:auto;">

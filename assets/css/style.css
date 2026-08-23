@@ -325,6 +325,11 @@ button {
   margin-bottom: 8px;
 }
 
+.hero-home .eyebrow {
+  color: #FFB84D; /* Brighter gold/orange for better contrast on images */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
 .hero-home {
   position: relative;
   background: linear-gradient(135deg, var(--teal-950) 0%, var(--teal-700) 100%);

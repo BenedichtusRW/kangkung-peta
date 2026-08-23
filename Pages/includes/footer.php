@@ -99,12 +99,12 @@
                         alt="Logo KKN"
                         style="
                             display: block;
-                            width: 48px;
+                            width: auto;
                             height: 48px;
                             object-fit: contain;
                             background: #ffffff;
-                            border-radius: 50%;
-                            padding: 3px;
+                            border-radius: 8px;
+                            padding: 3px 6px;
                             box-sizing: border-box;
                             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
                         "

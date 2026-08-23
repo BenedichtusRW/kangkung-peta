@@ -109,7 +109,8 @@ $teksPengumuman = !empty($pengumuman_teks) ? $pengumuman_teks : $defaultPengumum
 <div class="announcement-ticker-bar">
   <div class="announcement-track-wrap">
     <div class="announcement-track">
-      <span><?= e($teksPengumuman) ?></span>
+      <span><?= e($teksPengumuman) ?> &nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;</span>
+      <span><?= e($teksPengumuman) ?> &nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;</span>
     </div>
   </div>
 </div>

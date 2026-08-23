@@ -505,12 +505,14 @@ button {
   background: linear-gradient(135deg, var(--teal-950) 0%, var(--teal-700) 100%);
   color: var(--white);
   padding: 120px 0 44px;
+  min-height: 300px;
   text-align: center;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
 }
 
 .page-hero::after, .peta-hero::after {

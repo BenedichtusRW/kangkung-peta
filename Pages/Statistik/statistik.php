@@ -42,75 +42,6 @@ $pctPerempuan   = round($perempuan / $totalGender * 100, 1);
 include __DIR__ . '/../includes/header.php';
 ?>
 
-<style>
-  .page-hero {
-    padding-top: 120px !important;
-    padding-bottom: 40px !important;
-    text-align: center !important;
-    background-color: #064e3b;
-    color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .page-hero::after {
-    content: "";
-    position: absolute;
-    width: 260px;
-    height: 260px;
-    border-radius: 50%;
-    right: -90px;
-    top: -110px;
-    background: rgba(214, 162, 76, 0.14);
-    pointer-events: none;
-  }
-
-  .page-hero .container {
-    position: relative;
-    z-index: 1;
-  }
-
-  .page-hero .breadcrumb {
-    display: flex;
-    justify-content: center !important;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
-    font-size: 0.9rem;
-    color: #d1fae5;
-    text-align: center !important;
-  }
-
-  .page-hero .breadcrumb a {
-    color: #d1fae5;
-    text-decoration: none;
-  }
-
-  .page-hero .breadcrumb a:hover {
-    text-decoration: underline;
-  }
-
-  .page-hero h1 {
-    font-size: clamp(2.1rem, 4vw, 3.2rem);
-    font-weight: 800;
-    margin: 0 auto 12px auto;
-    color: #ffffff;
-    text-align: center !important;
-    line-height: 1.2;
-  }
-
-  .page-hero p {
-    max-width: 650px;
-    margin: 0 auto;
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #e2e8f0;
-    text-align: center !important;
-  }
 
   .stat-dashboard {
     background: #f8fafc;
@@ -155,25 +86,6 @@ include __DIR__ . '/../includes/header.php';
   }
 
   @media (max-width: 560px) {
-    .page-hero {
-      padding-top: 100px !important;
-      padding-bottom: 28px !important;
-    }
-
-    .page-hero .breadcrumb {
-      flex-wrap: wrap;
-      row-gap: 4px;
-      font-size: 0.8rem;
-    }
-
-    .page-hero h1 {
-      font-size: clamp(2rem, 9vw, 2.7rem);
-    }
-
-    .page-hero p {
-      font-size: 0.96rem;
-    }
-
     .stat-grid-counter {
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 14px;

@@ -107,15 +107,9 @@ $teksPengumuman = !empty($pengumuman_teks) ? $pengumuman_teks : $defaultPengumum
 ?>
 
 <div class="announcement-ticker-bar">
-  <div class="container announcement-inner">
-    <div class="announcement-badge">
-      <i class="fa-solid fa-bullhorn"></i>
-      <span>PENGUMUMAN</span>
-    </div>
-    <div class="announcement-track-wrap">
-      <div class="announcement-track">
-        <span><?= e($teksPengumuman) ?></span>
-      </div>
+  <div class="announcement-track-wrap">
+    <div class="announcement-track">
+      <span><?= e($teksPengumuman) ?></span>
     </div>
   </div>
 </div>

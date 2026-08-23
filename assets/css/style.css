@@ -285,35 +285,8 @@ button {
   box-shadow: 0 4px 12px rgba(8, 47, 43, 0.2);
 }
 
-.announcement-inner {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.announcement-badge {
-  background: var(--gold-500);
-  color: var(--teal-950);
-  font-family: var(--font-display);
-  font-size: 11.5px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  padding: 6px 14px;
-  border-radius: 999px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(214, 162, 76, 0.4);
-  white-space: nowrap;
-}
-
-.announcement-badge i {
-  font-size: 13px;
-}
-
 .announcement-track-wrap {
-  flex: 1;
+  width: 100%;
   overflow: hidden;
   position: relative;
   mask-image: linear-gradient(to right, transparent, black 20px, black calc(100% - 20px), transparent);
@@ -357,7 +330,7 @@ button {
   color: var(--white);
   padding: 120px 0 80px;
   overflow: hidden;
-  min-height: calc(100vh - 54px);
+  min-height: calc(100vh - 44px);
   display: flex;
   align-items: center;
 }

@@ -83,7 +83,7 @@ unset($_SESSION['flash']);
 }
 .help-text { font-size: 12px; color: var(--ink-soft); margin-top: 6px; display: block; }
 </style>
-<link rel="icon" type="image/png" href="../assets/img/favicon.png?v=2">
+<link rel="icon" type="image/png" href="../assets/img/lambang-kota.png">
 </head>
 <body>
 <div class="admin-shell">

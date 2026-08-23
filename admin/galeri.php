@@ -102,7 +102,7 @@ unset($_SESSION['flash']);
 }
 .btn-add-foto:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(15, 61, 54, 0.3); }
 </style>
-<link rel="icon" type="image/png" href="../assets/img/favicon.png?v=2">
+<link rel="icon" type="image/png" href="../assets/img/lambang-kota.png">
 </head>
 <body>
 <div class="admin-shell">

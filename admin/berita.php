@@ -115,7 +115,7 @@ unset($_SESSION['flash']);
 .admin-modal-card.wide { max-width: 700px; }
 textarea { width: 100%; padding: 10px; border: 1px solid var(--line); border-radius: 6px; font-family: inherit; font-size: 14px; }
 </style>
-<link rel="icon" type="image/png" href="../assets/img/favicon.png?v=2">
+<link rel="icon" type="image/png" href="../assets/img/lambang-kota.png">
 </head>
 <body>
 <div class="admin-shell">

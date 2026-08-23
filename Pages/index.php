@@ -109,8 +109,9 @@ $teksPengumuman = !empty($pengumuman_teks) ? $pengumuman_teks : $defaultPengumum
 <div class="announcement-ticker-bar">
   <div class="announcement-track-wrap">
     <div class="announcement-track">
-      <span><?= e($teksPengumuman) ?><span style="padding: 0 40px; color: var(--gold-500);">&bull;</span></span>
-      <span><?= e($teksPengumuman) ?><span style="padding: 0 40px; color: var(--gold-500);">&bull;</span></span>
+      <?php for ($i = 0; $i < 10; $i++): ?>
+        <span><?= e($teksPengumuman) ?><span style="padding: 0 40px; color: var(--gold-500);">&bull;</span></span>
+      <?php endfor; ?>
     </div>
   </div>
 </div>

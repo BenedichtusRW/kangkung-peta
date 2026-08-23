@@ -2,7 +2,7 @@
 require_once __DIR__ . '/includes/auth.php';
 require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/../config_db.php';
-require_once __DIR__ . '/../helpers.php'; // For handle_image_upload
+require_once __DIR__ . '/includes/functions.php'; // For handle_image_upload
 
 $pdo = getDB();
 

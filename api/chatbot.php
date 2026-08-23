@@ -105,9 +105,19 @@ function formatList($arr, $keyLabel, $valLabel) {
 foreach ($custom_qa as $qa) {
     $kunci_array = array_map('trim', explode(',', strtolower($qa['kata_kunci'])));
     foreach ($kunci_array as $k) {
-        if (!empty($k) && preg_match("/\b" . preg_quote($k, '/') . "\b/i", $lower_msg)) {
-            $reply = $qa['jawaban'];
-            break 2; // Hentikan pengecekan jika sudah ada yang cocok
+        if (!empty($k)) {
+            $words = array_filter(explode(' ', $k));
+            $all_words_found = true;
+            foreach ($words as $w) {
+                if (!preg_match("/\b" . preg_quote($w, '/') . "\b/i", $lower_msg)) {
+                    $all_words_found = false;
+                    break;
+                }
+            }
+            if ($all_words_found) {
+                $reply = $qa['jawaban'];
+                break 2; // Hentikan pengecekan jika sudah ada yang cocok
+            }
         }
     }
 }

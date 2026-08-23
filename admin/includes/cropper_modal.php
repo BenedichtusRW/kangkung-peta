@@ -1,4 +1,20 @@
 <!-- Modal Cropper -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />
+<style>
+/* Modal Cropper Styles */
+.cropper-modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 9999;
+  display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease;
+}
+.cropper-modal-overlay.active { display: flex; opacity: 1; }
+.cropper-modal-content {
+  background: white; padding: 20px; border-radius: 12px; max-width: 90vw; width: 800px;
+  display: flex; flex-direction: column; gap: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+.cropper-img-container {
+  width: 100%; height: 60vh; max-height: 500px; background: #eee; border-radius: 8px; overflow: hidden;
+}
+</style>
 <div class="cropper-modal-overlay" id="globalCropperModal">
   <div class="cropper-modal-content">
     <h3 style="margin: 0; font-family: var(--font-display); color: var(--teal-900);">Sesuaikan Ukuran Banner</h3>
@@ -19,7 +35,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+(function() {
   let cropper;
   let currentFileInput = null;
   let currentForm = null;
@@ -76,9 +92,9 @@ document.addEventListener('DOMContentLoaded', function() {
     currentForm = null;
   }
 
-  btnCancelCrop.addEventListener('click', closeCropper);
+  if(btnCancelCrop) btnCancelCrop.addEventListener('click', closeCropper);
 
-  btnSaveCrop.addEventListener('click', function() {
+  if(btnSaveCrop) btnSaveCrop.addEventListener('click', function() {
     if (!cropper || !currentFileInput || !currentForm) return;
     
     // Tampilkan loading (ubah teks tombol)
@@ -119,5 +135,5 @@ document.addEventListener('DOMContentLoaded', function() {
       
     }, 'image/jpeg', 0.85);
   });
-});
+})();
 </script>

@@ -105,7 +105,7 @@ function formatList($arr, $keyLabel, $valLabel) {
 foreach ($custom_qa as $qa) {
     $kunci_array = array_map('trim', explode(',', strtolower($qa['kata_kunci'])));
     foreach ($kunci_array as $k) {
-        if (!empty($k) && strpos($lower_msg, $k) !== false) {
+        if (!empty($k) && preg_match("/\b" . preg_quote($k, '/') . "\b/i", $lower_msg)) {
             $reply = $qa['jawaban'];
             break 2; // Hentikan pengecekan jika sudah ada yang cocok
         }

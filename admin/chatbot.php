@@ -75,6 +75,9 @@ if (!$welcome_message) {
 
 $stmtFallback = $pdo->query("SELECT key_value FROM settings WHERE key_name = 'chatbot_fallback'");
 $fallback_msg = $stmtFallback->fetchColumn();
+if (!$fallback_msg) {
+    $fallback_msg = "Tabik Pun! Maaf Bapak/Ibu, saya adalah Asisten Virtual " . (defined('NAMA_KELURAHAN') ? NAMA_KELURAHAN : 'Kangkung') . ". Saya hanya bisa menjawab seputar jam layanan, jumlah penduduk, aparatur kelurahan, kontak, tim KKN, dan berita kelurahan. Untuk pertanyaan lain, silakan datang langsung ke kantor ya!";
+}
 
 // Fetch custom Q&A
 $custom_qa = $pdo->query("SELECT * FROM chatbot_qa ORDER BY id ASC")->fetchAll();
@@ -167,7 +170,9 @@ textarea { width: 100%; padding: 10px; border: 1px solid var(--line); border-rad
             </div>
 
             <div style="margin-top: 24px;">
-                <button type="submit" class="btn btn-primary" style="padding: 12px 24px; width: auto;"><i class="fas fa-save"></i> Simpan Pengaturan</button>
+                <button type="submit" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 8px; width: auto; padding: 12px 24px;">
+                    <i class="fa-solid fa-floppy-disk"></i> Simpan Pengaturan
+                </button>
             </div>
         </form>
     </div>

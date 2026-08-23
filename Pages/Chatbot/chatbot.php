@@ -51,7 +51,10 @@ if (!empty($header_chatbot)) {
       <div class="chat-window" id="chatWindow">
         <div class="chat-bubble bot">
           <?php 
-            $welcome_msg = $settings['chatbot_welcome_message'] ?? '';
+            $stmt = $pdo->prepare("SELECT key_value FROM settings WHERE key_name = 'chatbot_welcome_message'");
+            $stmt->execute();
+            $welcome_msg = $stmt->fetchColumn();
+            
             if (empty($welcome_msg)) {
                 $welcome_msg = "Tabik Pun! Selamat datang di Pusat Informasi Kelurahan " . (defined('NAMA_KELURAHAN') ? NAMA_KELURAHAN : 'Kangkung') . ". Saya adalah Asisten Cerdas yang siap membantu Bapak/Ibu. Ingin tahu soal surat pengantar, data penduduk, atau nama aparatur kami? 👇";
             }

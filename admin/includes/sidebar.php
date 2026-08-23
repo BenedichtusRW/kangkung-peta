@@ -48,6 +48,11 @@ $isProfileOpen = in_array($currentPage, ['sejarah.php', 'visi-misi.php', 'aparat
       <i class="fa-solid fa-map-location-dot"></i> Peta Kelurahan
     </a>
 
+    <!-- Chatbot -->
+    <a href="chatbot.php" class="nav-item <?= $currentPage === 'chatbot.php' ? 'active' : '' ?>">
+      <i class="fa-solid fa-robot"></i> Chatbot AI
+    </a>
+
     <!-- Statistik -->
     <a href="statistik.php" class="nav-item <?= $currentPage === 'statistik.php' ? 'active' : '' ?>">
       <i class="fa-solid fa-chart-pie"></i> Statistik Kelurahan
@@ -87,10 +92,7 @@ $isProfileOpen = in_array($currentPage, ['sejarah.php', 'visi-misi.php', 'aparat
       <i class="fa-solid fa-camera-retro"></i> Galeri
     </a>
 
-    <!-- Chatbot -->
-    <a href="chatbot.php" class="nav-item <?= $currentPage === 'chatbot.php' ? 'active' : '' ?>">
-      <i class="fa-solid fa-robot"></i> Chatbot AI
-    </a>
+    <!-- Chatbot (dipindah ke atas) -->
 
   </nav>
 

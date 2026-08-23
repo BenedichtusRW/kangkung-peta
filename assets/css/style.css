@@ -1934,11 +1934,9 @@ button {
   }
 
   .filter-bar {
-    justify-content: flex-start;
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    padding: 10px;
-    scrollbar-width: thin;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 12px;
   }
 
   .filter-chip {
@@ -1948,9 +1946,8 @@ button {
   }
 
   .gallery-filter {
-    justify-content: flex-start;
-    overflow-x: auto;
-    flex-wrap: nowrap;
+    justify-content: center;
+    flex-wrap: wrap;
     padding-bottom: 6px;
   }
 

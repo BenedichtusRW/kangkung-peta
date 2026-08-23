@@ -196,12 +196,19 @@ tbody tr:hover { background: var(--teal-100); }
 .stat-card .label { font-size: 11.5px; color: var(--ink-soft); font-weight: 600; margin-top: 2px; }
 
 @media (max-width: 800px) {
-  .admin-shell { grid-template-columns: 1fr; }
-  .admin-sidebar { flex-direction: row; align-items: center; overflow-x: auto; padding: 14px; }
-  .admin-brand { margin-bottom: 0; margin-right: 12px; }
-  .admin-nav { flex-direction: row; }
-  .admin-main { padding: 20px; }
+  .admin-shell { grid-template-columns: 1fr; padding: 12px; gap: 16px; }
+  .admin-sidebar { flex-direction: column; height: auto; position: relative; top: 0; padding: 20px; margin-bottom: 0; border-radius: 16px; }
+  .admin-brand { margin-bottom: 20px; }
+  .admin-nav { overflow-y: visible; padding-bottom: 0; }
+  .admin-sidebar-footer { margin-top: 16px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px; }
+  .admin-main { padding: 8px; }
+  .admin-topbar { flex-direction: column; align-items: flex-start; gap: 12px; }
   .form-grid { grid-template-columns: 1fr; }
+  .dashboard-stats { grid-template-columns: 1fr; }
+  .table-toolbar { flex-direction: column; align-items: flex-start; }
+  .table-toolbar > div { width: 100%; flex-direction: column; align-items: stretch; }
+  .table-toolbar input[type="search"] { max-width: 100%; }
+  table { display: block; overflow-x: auto; white-space: nowrap; }
 }
 
 /* ---------- Pengajuan berita ---------- */

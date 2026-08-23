@@ -188,8 +188,8 @@ unset($_SESSION['flash']);
             <div style="display: flex; flex-direction: column; gap: 10px;">
                 <form method="POST" enctype="multipart/form-data" style="margin:0;">
                     <input type="hidden" name="action" value="update_banner_kkn">
-                    <label class="btn btn-primary" style="cursor: pointer; display: inline-flex; align-items: center; gap: 8px;">
-                        <i class="fa-solid fa-camera"></i> Ganti Banner Tim KKN
+                    <label class="btn btn-primary" style="cursor: pointer; display: inline-flex; align-items: center; gap: 8px; width: 100%; justify-content: center;">
+                        <i class="fa-solid fa-camera"></i> Ganti Banner
                         <input type="file" name="banner_foto" accept=".jpg,.jpeg,.png,.webp" required class="cropper-upload-input" data-aspect-ratio="4/1" style="display: none;">
                     </label>
                 </form>

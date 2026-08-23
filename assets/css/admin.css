@@ -331,12 +331,19 @@ input[type="file"]#header_foto_input, input[type="file"]#slider_foto_input { dis
 }
 .gallery-item:hover .overlay-actions { opacity: 1; }
 .icon-btn {
-  width: 32px; height: 32px; border-radius: 50%; border: none;
+  width: 36px; height: 36px; border-radius: 50%; border: none;
   display: flex; align-items: center; justify-content: center;
   cursor: pointer; background: var(--white); box-shadow: 0 4px 10px rgba(0,0,0,0.15);
   color: var(--ink); transition: all 0.2s;
 }
-.icon-btn.delete { color: var(--red-600); }
+.icon-btn.edit {
+  background: #f59e0b;
+  color: #ffffff;
+}
+.icon-btn.delete {
+  background: #dc2626;
+  color: #ffffff;
+}
 .icon-btn:hover { transform: scale(1.1); }
 
 .galeri-card img { height: 70%; border-bottom: 1px solid var(--line); }

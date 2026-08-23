@@ -8,7 +8,7 @@ $activeNav   = 'profile';
 $pageTitle   = 'Data Aparatur';
 
 $pdo = getDB();
-$stmt = $pdo->query("SELECT * FROM aparatur ORDER BY id ASC");
+$stmt = $pdo->query("SELECT * FROM aparatur ORDER BY (CASE WHEN jabatan LIKE '%Lurah%' THEN 1 WHEN jabatan LIKE '%Sekretaris%' OR jabatan LIKE '%Seklur%' THEN 2 WHEN jabatan LIKE '%Kasi%' THEN 3 WHEN jabatan LIKE '%Kaur%' THEN 4 ELSE 5 END) ASC, id ASC");
 $aparatur = $stmt->fetchAll();
 
 $stmt = $pdo->prepare("SELECT key_value FROM settings WHERE key_name = 'header_aparatur'");

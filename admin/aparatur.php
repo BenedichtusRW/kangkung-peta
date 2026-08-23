@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$aparatur = $pdo->query("SELECT * FROM aparatur ORDER BY id ASC")->fetchAll();
+$aparatur = $pdo->query("SELECT * FROM aparatur ORDER BY (CASE WHEN jabatan LIKE '%Lurah%' THEN 1 WHEN jabatan LIKE '%Sekretaris%' OR jabatan LIKE '%Seklur%' THEN 2 WHEN jabatan LIKE '%Kasi%' THEN 3 WHEN jabatan LIKE '%Kaur%' THEN 4 ELSE 5 END) ASC, id ASC")->fetchAll();
 
 $stmtBanner = $pdo->query("SELECT key_value FROM settings WHERE key_name = 'header_aparatur'");
 $banner_aparatur = $stmtBanner->fetchColumn() ?: '';

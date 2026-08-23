@@ -52,7 +52,7 @@ if (count($berita) > 0) {
 }
 
 // D. Susunan Aparatur Kelurahan
-$stmt = $pdo->query("SELECT nama, jabatan FROM aparatur ORDER BY id ASC");
+$stmt = $pdo->query("SELECT nama, jabatan FROM aparatur ORDER BY (CASE WHEN jabatan LIKE '%Lurah%' THEN 1 WHEN jabatan LIKE '%Sekretaris%' OR jabatan LIKE '%Seklur%' THEN 2 WHEN jabatan LIKE '%Kasi%' THEN 3 WHEN jabatan LIKE '%Kaur%' THEN 4 ELSE 5 END) ASC, id ASC");
 $aparatur = $stmt->fetchAll();
 if (count($aparatur) > 0) {
     $context .= "SUSUNAN APARATUR KELURAHAN:\n";
@@ -63,7 +63,7 @@ if (count($aparatur) > 0) {
 }
 
 // E. Tim KKN Pembuat Website
-$stmt = $pdo->query("SELECT nama, jabatan FROM tim_kkn ORDER BY id ASC");
+$stmt = $pdo->query("SELECT nama, jabatan FROM tim_kkn ORDER BY (CASE WHEN jabatan LIKE '%Dosen%' OR jabatan LIKE '%DPL%' THEN 1 WHEN jabatan LIKE '%Kordes%' OR jabatan LIKE '%Ketua%' THEN 2 WHEN jabatan LIKE '%Sekretaris%' THEN 3 WHEN jabatan LIKE '%Bendahara%' THEN 4 ELSE 5 END) ASC, id ASC");
 $tim_kkn = $stmt->fetchAll();
 if (count($tim_kkn) > 0) {
     $context .= "TIM KKN (Pembuat Website):\n";

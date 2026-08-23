@@ -35,7 +35,7 @@ try {
 
 function sync_tim_kkn_json($pdo) {
     try {
-        $stmt = $pdo->query("SELECT id, nama, jabatan, foto FROM tim_kkn ORDER BY id ASC");
+        $stmt = $pdo->query("SELECT id, nama, jabatan, foto FROM tim_kkn ORDER BY (CASE WHEN jabatan LIKE '%Dosen%' OR jabatan LIKE '%DPL%' THEN 1 WHEN jabatan LIKE '%Kordes%' OR jabatan LIKE '%Ketua%' THEN 2 WHEN jabatan LIKE '%Sekretaris%' THEN 3 WHEN jabatan LIKE '%Bendahara%' THEN 4 ELSE 5 END) ASC, id ASC");
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $dataFile = __DIR__ . '/../data/tim-kkn.json';
         file_put_contents($dataFile, json_encode($rows, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
@@ -112,7 +112,7 @@ $banner_tim_kkn = $stmtBanner->fetchColumn();
 
 $tim_kkn = [];
 try {
-    $tim_kkn = $pdo->query("SELECT * FROM tim_kkn ORDER BY id ASC")->fetchAll();
+    $tim_kkn = $pdo->query("SELECT * FROM tim_kkn ORDER BY (CASE WHEN jabatan LIKE '%Dosen%' OR jabatan LIKE '%DPL%' THEN 1 WHEN jabatan LIKE '%Kordes%' OR jabatan LIKE '%Ketua%' THEN 2 WHEN jabatan LIKE '%Sekretaris%' THEN 3 WHEN jabatan LIKE '%Bendahara%' THEN 4 ELSE 5 END) ASC, id ASC")->fetchAll();
 } catch (Exception $e) {}
 
 if (empty($tim_kkn)) {

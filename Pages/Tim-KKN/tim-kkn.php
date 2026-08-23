@@ -55,7 +55,7 @@ try {
         }
     }
 
-    $stmt = $pdo->query("SELECT * FROM tim_kkn ORDER BY id ASC");
+    $stmt = $pdo->query("SELECT * FROM tim_kkn ORDER BY (CASE WHEN jabatan LIKE '%Dosen%' OR jabatan LIKE '%DPL%' THEN 1 WHEN jabatan LIKE '%Kordes%' OR jabatan LIKE '%Ketua%' THEN 2 WHEN jabatan LIKE '%Sekretaris%' THEN 3 WHEN jabatan LIKE '%Bendahara%' THEN 4 ELSE 5 END) ASC, id ASC");
     $tim = $stmt->fetchAll();
 } catch (Exception $e) {}
 

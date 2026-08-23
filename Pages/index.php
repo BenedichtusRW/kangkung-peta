@@ -88,10 +88,11 @@ if (!empty($header_beranda)) {
         <?php endforeach; ?>
       <?php endif; ?>
 
+      <button class="slider-arrow slider-arrow-prev" type="button" data-slider-prev aria-label="Foto sebelumnya">&larr;</button>
+      <button class="slider-arrow slider-arrow-next" type="button" data-slider-next aria-label="Foto berikutnya">&rarr;</button>
+
       <div class="slider-controls">
-        <button class="slider-arrow" type="button" data-slider-prev aria-label="Foto sebelumnya">&larr;</button>
         <div class="slider-dots" aria-label="Pilih foto"></div>
-        <button class="slider-arrow" type="button" data-slider-next aria-label="Foto berikutnya">&rarr;</button>
       </div>
     </div>
 </section>

@@ -1,0 +1,74 @@
+[
+    {
+        "kata_kunci": "hai, halo, helo, hello, hy, hi",
+        "jawaban": "Halo! Tabik Pun! Ada yang bisa saya bantu terkait layanan di Kelurahan Kangkung?"
+    },
+    {
+        "kata_kunci": "selamat pagi, pagi",
+        "jawaban": "Selamat pagi! Tabik Pun! Semoga hari Anda menyenangkan. Ada yang bisa saya bantu?"
+    },
+    {
+        "kata_kunci": "selamat siang, siang",
+        "jawaban": "Selamat siang! Tabik Pun! Tetap semangat menjalani aktivitas. Ada informasi yang Anda butuhkan?"
+    },
+    {
+        "kata_kunci": "selamat sore, sore",
+        "jawaban": "Selamat sore! Tabik Pun! Ada yang bisa saya bantu hari ini?"
+    },
+    {
+        "kata_kunci": "selamat malam, malam",
+        "jawaban": "Selamat malam! Tabik Pun! Meskipun sudah malam, Anda tetap bisa melihat informasi di website ini. Jika ada urusan darurat, silakan tinggalkan pesan atau cek jam layanan kami besok pagi."
+    },
+    {
+        "kata_kunci": "assalamualaikum, assalamu'alaikum, mikum, samlekum",
+        "jawaban": "Wa'alaikumussalam warahmatullahi wabarakatuh. Tabik Pun! Ada yang bisa saya bantu Bapak\/Ibu?"
+    },
+    {
+        "kata_kunci": "shalom, syalom",
+        "jawaban": "Shalom! Tabik Pun! Damai sejahtera untuk Anda. Ada yang bisa saya bantu?"
+    },
+    {
+        "kata_kunci": "om swastiastu, swastiastu",
+        "jawaban": "Om Swastiastu. Tabik Pun! Ada yang bisa saya bantu hari ini?"
+    },
+    {
+        "kata_kunci": "namo buddhaya",
+        "jawaban": "Namo Buddhaya. Tabik Pun! Ada yang bisa saya bantu Bapak\/Ibu?"
+    },
+    {
+        "kata_kunci": "salam kebajikan, rahayu",
+        "jawaban": "Salam Kebajikan, Rahayu. Tabik Pun! Ada yang bisa saya bantu?"
+    },
+    {
+        "kata_kunci": "terima kasih, makasih, trims, thank you, thanks",
+        "jawaban": "Sama-sama! Senang bisa membantu Bapak\/Ibu. Jangan ragu untuk mengunjungi Kelurahan Kangkung jika butuh bantuan fisik!"
+    },
+    {
+        "kata_kunci": "ktp, e-ktp, bikin ktp, buat ktp",
+        "jawaban": "Untuk pengajuan pembuatan KTP (E-KTP) baru, persyaratannya adalah: 1. Fotokopi Kartu Keluarga (KK), 2. Fotokopi Akta Kelahiran, 3. Telah berusia minimal 17 tahun, dan 4. Membawa Surat Pengantar asli dari RT\/RW."
+    },
+    {
+        "kata_kunci": "kk, kartu keluarga, bikin kk, pisah kk, pecah kk",
+        "jawaban": "Untuk pengurusan Kartu Keluarga (KK) baru atau perubahan data (seperti pisah KK), silakan siapkan dokumen berikut: Fotokopi Buku Nikah\/Akta Cerai, KTP asli, KK asli (yang lama), dan Surat Pengantar dari RT\/RW."
+    },
+    {
+        "kata_kunci": "akta kelahiran, akte lahir, bikin akta",
+        "jawaban": "Syarat pembuatan Akta Kelahiran: 1. Surat Keterangan Lahir asli dari Bidan\/RS\/Puskesmas, 2. Fotokopi KTP kedua orang tua, 3. Fotokopi Kartu Keluarga, dan 4. Fotokopi Buku Nikah orang tua. Proses diawali dengan meminta pengantar dari RT\/RW."
+    },
+    {
+        "kata_kunci": "surat pindah, pindah domisili, pindah jiwa",
+        "jawaban": "Untuk mengurus Surat Pindah Domisili, pastikan Anda membawa KK Asli, KTP Asli, pas foto terbaru (bila diperlukan), dan Surat Pengantar dari RT\/RW asal. Kami akan memproses surat pengantar pindahnya ke Kecamatan\/Capil."
+    },
+    {
+        "kata_kunci": "sktm, keterangan tidak mampu, surat miskin, kurang mampu",
+        "jawaban": "Syarat pembuatan Surat Keterangan Tidak Mampu (SKTM) untuk keperluan RS\/Sekolah: 1. Surat Pengantar RT\/RW, 2. Fotokopi KTP & KK yang bersangkutan, 3. Surat pernyataan tidak mampu bermaterai, dan 4. Lampirkan foto kondisi fisik rumah."
+    },
+    {
+        "kata_kunci": "sium, usaha, surat keterangan usaha, sku, izin usaha",
+        "jawaban": "Untuk membuat Surat Keterangan Usaha (SKU) keperluan bank atau pendaftaran, siapkan: 1. Fotokopi KTP Pemohon, 2. Fotokopi KK, 3. Foto tempat\/barang usaha, dan 4. Surat Pengantar dari RT\/RW setempat."
+    },
+    {
+        "kata_kunci": "nikah, surat nikah, na, n1, n2, n3, numpang nikah",
+        "jawaban": "Untuk mengurus surat pengantar nikah (N1, N2, N4 dst), siapkan: 1. Pengantar RT\/RW, 2. Fotokopi KTP dan KK calon mempelai, 3. Fotokopi KTP kedua orang tua, 4. Fotokopi Ijazah\/Akta Kelahiran, dan 5. Pas foto berwarna. Datang langsung ke kantor kelurahan pada jam kerja."
+    }
+]

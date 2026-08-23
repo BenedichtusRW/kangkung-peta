@@ -74,6 +74,12 @@ try {
         "CREATE TABLE IF NOT EXISTS settings (
             key_name VARCHAR(100) PRIMARY KEY,
             key_value TEXT
+        )",
+        "CREATE TABLE IF NOT EXISTS chatbot_qa (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            kata_kunci TEXT NOT NULL,
+            jawaban TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )"
     ];
 
@@ -135,6 +141,17 @@ try {
             $stmt->execute([$t['id'], $t['nama'], $t['jabatan'], $t['foto'] ?? '']);
         }
         echo "✅ " . count($tim_kkn) . " Tim KKN berhasil di-migrate.<br>";
+    }
+
+    // 6.5 Migrate Chatbot QA
+    $chatbot_qa = read_json(__DIR__ . '/data/chatbot_qa.json');
+    if (!empty($chatbot_qa)) {
+        $pdo->exec("TRUNCATE TABLE chatbot_qa");
+        $stmt = $pdo->prepare("INSERT INTO chatbot_qa (kata_kunci, jawaban) VALUES (?, ?)");
+        foreach ($chatbot_qa as $qa) {
+            $stmt->execute([$qa['kata_kunci'], $qa['jawaban']]);
+        }
+        echo "✅ " . count($chatbot_qa) . " Chatbot Q&A berhasil di-migrate.<br>";
     }
 
     // 7. Migrate Galeri

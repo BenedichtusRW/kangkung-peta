@@ -26,9 +26,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     } elseif ($action === 'save_chatbot_settings') {
         $welcome_msg = trim($_POST['welcome_message'] ?? '');
+        $fallback_msg = trim($_POST['fallback_message'] ?? '');
+        
         $stmt = $pdo->prepare("INSERT INTO settings (key_name, key_value) VALUES ('chatbot_welcome_message', ?) ON DUPLICATE KEY UPDATE key_value = VALUES(key_value)");
         $stmt->execute([$welcome_msg]);
+        
+        $stmt = $pdo->prepare("INSERT INTO settings (key_name, key_value) VALUES ('chatbot_fallback', ?) ON DUPLICATE KEY UPDATE key_value = VALUES(key_value)");
+        $stmt->execute([$fallback_msg]);
+        
         $_SESSION['flash'] = ['type' => 'success', 'message' => 'Pengaturan Chatbot berhasil disimpan.'];
+        header("Location: chatbot.php");
+        exit;
+    } elseif ($action === 'save_qa') {
+        $id = !empty($_POST['qa_id']) ? (int)$_POST['qa_id'] : null;
+        $kata_kunci = trim($_POST['kata_kunci'] ?? '');
+        $jawaban = trim($_POST['jawaban'] ?? '');
+        
+        if ($id) {
+            $stmt = $pdo->prepare("UPDATE chatbot_qa SET kata_kunci=?, jawaban=? WHERE id=?");
+            $stmt->execute([$kata_kunci, $jawaban, $id]);
+            $_SESSION['flash'] = ['type' => 'success', 'message' => "Q&A berhasil diperbarui."];
+        } else {
+            $stmt = $pdo->prepare("INSERT INTO chatbot_qa (kata_kunci, jawaban) VALUES (?, ?)");
+            $stmt->execute([$kata_kunci, $jawaban]);
+            $_SESSION['flash'] = ['type' => 'success', 'message' => "Q&A berhasil ditambahkan."];
+        }
+        header("Location: chatbot.php");
+        exit;
+    } elseif ($action === 'delete_qa') {
+        $id = (int)$_POST['id'];
+        $stmt = $pdo->prepare("DELETE FROM chatbot_qa WHERE id=?");
+        $stmt->execute([$id]);
+        $_SESSION['flash'] = ['type' => 'success', 'message' => "Q&A berhasil dihapus."];
         header("Location: chatbot.php");
         exit;
     }
@@ -43,6 +72,12 @@ $welcome_message = $stmtWelcome->fetchColumn();
 if (!$welcome_message) {
     $welcome_message = "Tabik Pun! Selamat datang di Pusat Informasi Kelurahan " . (defined('NAMA_KELURAHAN') ? NAMA_KELURAHAN : 'Kangkung') . ". Saya adalah Asisten Cerdas yang siap membantu Bapak/Ibu. Ingin tahu soal surat pengantar, data penduduk, atau nama aparatur kami? 👇";
 }
+
+$stmtFallback = $pdo->query("SELECT key_value FROM settings WHERE key_name = 'chatbot_fallback'");
+$fallback_msg = $stmtFallback->fetchColumn();
+
+// Fetch custom Q&A
+$custom_qa = $pdo->query("SELECT * FROM chatbot_qa ORDER BY id ASC")->fetchAll();
 
 $flash = $_SESSION['flash'] ?? null;
 unset($_SESSION['flash']);
@@ -115,7 +150,7 @@ textarea { width: 100%; padding: 10px; border: 1px solid var(--line); border-rad
     </div>
 
     <!-- Teks Welcome -->
-    <div class="admin-card">
+    <div class="admin-card" style="margin-bottom: 24px;">
         <form method="POST" action="">
             <input type="hidden" name="action" value="save_chatbot_settings">
             
@@ -125,14 +160,121 @@ textarea { width: 100%; padding: 10px; border: 1px solid var(--line); border-rad
                 <span class="help-text">Pesan ini akan muncul pertama kali saat warga membuka halaman Chatbot.</span>
             </div>
 
+            <div class="form-group" style="margin-bottom: 24px;">
+                <label style="font-weight: 600; display: block; margin-bottom: 8px;"><i class="fa-regular fa-face-frown"></i> Pesan Maaf / Tidak Mengerti (Fallback Message)</label>
+                <textarea name="fallback_message" rows="3" placeholder="Maaf, saya tidak mengerti maksud pertanyaan Anda..."><?= htmlspecialchars($fallback_msg ?? '') ?></textarea>
+                <span class="help-text">Pesan yang ditampilkan jika Chatbot tidak menemukan kecocokan pada pertanyaan yang diberikan. Biarkan kosong untuk menggunakan standar sistem.</span>
+            </div>
+
             <div style="margin-top: 24px;">
                 <button type="submit" class="btn btn-primary" style="padding: 12px 24px;"><i class="fas fa-save"></i> Simpan Pengaturan</button>
             </div>
         </form>
     </div>
 
+    <!-- Section: Q&A Custom -->
+    <div class="section-card">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <div>
+                <h2 style="font-size: 1.1rem; margin: 0 0 4px 0;"><i class="fa-solid fa-list-check" style="color: var(--teal-600);"></i> Kelola Pertanyaan & Jawaban (Q&A)</h2>
+                <p style="margin: 0; font-size: 0.85rem; color: var(--ink-soft);">Atur kata kunci dan jawaban kustom. Bot akan memeriksa kata kunci ini terlebih dahulu.</p>
+            </div>
+            <button class="btn btn-primary" onclick="openQaModal()"><i class="fa-solid fa-plus"></i> Tambah Q&A</button>
+        </div>
+
+        <div style="overflow-x:auto;">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th style="width:50px;">No</th>
+                        <th>Kata Kunci</th>
+                        <th>Jawaban</th>
+                        <th style="width:100px; text-align:right;">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (count($custom_qa) > 0): ?>
+                        <?php $no = 1; foreach ($custom_qa as $qa): ?>
+                        <tr>
+                            <td><?= $no++ ?></td>
+                            <td><strong style="color:var(--teal-800); background:#f1f5f9; padding:4px 8px; border-radius:4px; font-size:0.85rem;"><?= htmlspecialchars($qa['kata_kunci']) ?></strong></td>
+                            <td style="white-space: pre-wrap; font-size: 0.9rem;"><?= htmlspecialchars($qa['jawaban']) ?></td>
+                            <td style="text-align:right;">
+                                <button class="icon-btn edit" onclick='editQa(<?= json_encode($qa, JSON_HEX_APOS | JSON_HEX_TAG) ?>)' title="Edit"><i class="fa-solid fa-pen"></i></button>
+                                <form method="POST" style="display:inline;" onsubmit="return confirm('Hapus Q&A ini?');">
+                                    <input type="hidden" name="action" value="delete_qa">
+                                    <input type="hidden" name="id" value="<?= $qa['id'] ?>">
+                                    <button type="submit" class="icon-btn delete" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="4" style="text-align:center; padding: 24px; color: var(--ink-soft);">Belum ada Q&A kustom yang ditambahkan.</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
   </main>
 </div>
+
+<!-- Modal Q&A -->
+<div id="qaModal" class="admin-modal-overlay">
+  <div class="admin-modal-card" style="max-width: 500px;">
+    <div class="admin-modal-header">
+      <h2 id="qaModalTitle">Tambah Q&A Baru</h2>
+      <button class="admin-modal-close" onclick="closeQaModal()">&times;</button>
+    </div>
+    <div class="admin-modal-body">
+      <form method="POST">
+        <input type="hidden" name="action" value="save_qa">
+        <input type="hidden" name="qa_id" id="formQaId">
+        
+        <div class="field" style="margin-bottom: 16px;">
+          <label style="font-weight:600; margin-bottom:6px; display:block;">Kata Kunci</label>
+          <input type="text" name="kata_kunci" id="formKataKunci" placeholder="Misal: syarat ktp, bikin ktp" required style="width:100%; padding:10px; border:1px solid var(--line); border-radius:6px; font-family:inherit;">
+          <span class="help-text" style="font-size:0.8rem; color:var(--ink-soft); display:block; margin-top:4px;">Gunakan koma (,) jika ada beberapa kemungkinan kata kunci.</span>
+        </div>
+        
+        <div class="field" style="margin-bottom: 16px;">
+          <label style="font-weight:600; margin-bottom:6px; display:block;">Jawaban Bot</label>
+          <textarea name="jawaban" id="formJawaban" rows="5" required style="width:100%; padding:10px; border:1px solid var(--line); border-radius:6px; font-family:inherit;" placeholder="Jawaban yang akan diberikan oleh bot..."></textarea>
+        </div>
+        
+        <div style="margin-top:20px;">
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Simpan Q&A</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+function openQaModal() {
+    document.getElementById('qaModalTitle').innerText = 'Tambah Q&A Baru';
+    document.getElementById('formQaId').value = '';
+    document.getElementById('formKataKunci').value = '';
+    document.getElementById('formJawaban').value = '';
+    document.getElementById('qaModal').classList.add('show');
+    document.getElementById('qaModal').style.display = 'flex';
+}
+function closeQaModal() {
+    document.getElementById('qaModal').style.display = 'none';
+}
+function editQa(data) {
+    document.getElementById('qaModalTitle').innerText = 'Edit Q&A';
+    document.getElementById('formQaId').value = data.id;
+    document.getElementById('formKataKunci').value = data.kata_kunci;
+    document.getElementById('formJawaban').value = data.jawaban;
+    document.getElementById('qaModal').classList.add('show');
+    document.getElementById('qaModal').style.display = 'flex';
+}
+</script>
+
 <?php include __DIR__ . '/includes/cropper_modal.php'; ?>
 </body>
 </html>

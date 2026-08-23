@@ -73,6 +73,18 @@ if (count($tim_kkn) > 0) {
     $context .= "\n";
 }
 
+// F. Custom Q&A dari Database
+$stmt = $pdo->query("SELECT kata_kunci, jawaban FROM chatbot_qa ORDER BY id ASC");
+$custom_qa = $stmt->fetchAll();
+
+// G. Fallback Message
+$stmt = $pdo->prepare("SELECT key_value FROM settings WHERE key_name = 'chatbot_fallback'");
+$stmt->execute();
+$fallback_msg = $stmt->fetchColumn();
+if (empty($fallback_msg)) {
+    $fallback_msg = "Tabik Pun! Maaf Bapak/Ibu, saya adalah Asisten Virtual " . NAMA_KELURAHAN . ". Saya hanya bisa menjawab seputar jam layanan, jumlah penduduk, aparatur kelurahan, kontak, tim KKN, dan berita kelurahan. Untuk pertanyaan lain, silakan datang langsung ke kantor ya!";
+}
+
 // --- 2. PSEUDO-AI RULE-BASED MATCHING ---
 
 $lower_msg = strtolower($message);
@@ -89,15 +101,28 @@ function formatList($arr, $keyLabel, $valLabel) {
     return $res;
 }
 
-if (strpos($lower_msg, 'jam') !== false || strpos($lower_msg, 'buka') !== false || strpos($lower_msg, 'layanan') !== false) {
-    $reply = "Tabik Pun! Jam layanan Kantor " . NAMA_KELURAHAN . " adalah <b>" . JAM_LAYANAN . "</b>. Silakan datang pada jam kerja tersebut ya Bapak/Ibu.";
-} 
-elseif (strpos($lower_msg, 'penduduk') !== false || strpos($lower_msg, 'warga') !== false) {
-    $formatted_total = $total_penduduk ? number_format((int)$total_penduduk, 0, ',', '.') : 'Belum diketahui';
-    $reply = "Tabik Pun! Saat ini, " . NAMA_KELURAHAN . " memiliki total penduduk sebanyak <b>" . $formatted_total . " jiwa</b>.";
-} 
-elseif (strpos($lower_msg, 'lurah') !== false || strpos($lower_msg, 'aparatur') !== false || strpos($lower_msg, 'struktur') !== false) {
-    $reply = "Tabik Pun! Berikut adalah susunan aparatur " . NAMA_KELURAHAN . ":<br>";
+// Cek Custom Q&A terlebih dahulu
+foreach ($custom_qa as $qa) {
+    $kunci_array = array_map('trim', explode(',', strtolower($qa['kata_kunci'])));
+    foreach ($kunci_array as $k) {
+        if (!empty($k) && strpos($lower_msg, $k) !== false) {
+            $reply = $qa['jawaban'];
+            break 2; // Hentikan pengecekan jika sudah ada yang cocok
+        }
+    }
+}
+
+// Jika tidak ada di Custom Q&A, cek aturan bawaan (Dinamis)
+if (empty($reply)) {
+    if (strpos($lower_msg, 'jam') !== false || strpos($lower_msg, 'buka') !== false || strpos($lower_msg, 'layanan') !== false) {
+        $reply = "Tabik Pun! Jam layanan Kantor " . NAMA_KELURAHAN . " adalah <b>" . JAM_LAYANAN . "</b>. Silakan datang pada jam kerja tersebut ya Bapak/Ibu.";
+    } 
+    elseif (strpos($lower_msg, 'penduduk') !== false || strpos($lower_msg, 'warga') !== false) {
+        $formatted_total = $total_penduduk ? number_format((int)$total_penduduk, 0, ',', '.') : 'Belum diketahui';
+        $reply = "Tabik Pun! Saat ini, " . NAMA_KELURAHAN . " memiliki total penduduk sebanyak <b>" . $formatted_total . " jiwa</b>.";
+    } 
+    elseif (strpos($lower_msg, 'lurah') !== false || strpos($lower_msg, 'aparatur') !== false || strpos($lower_msg, 'struktur') !== false) {
+        $reply = "Tabik Pun! Berikut adalah susunan aparatur " . NAMA_KELURAHAN . ":<br>";
     $reply .= formatList($aparatur, 'jabatan', 'nama');
 } 
 elseif (strpos($lower_msg, 'berita') !== false || strpos($lower_msg, 'kabar') !== false || strpos($lower_msg, 'terbaru') !== false) {
@@ -121,11 +146,12 @@ elseif (strpos($lower_msg, 'kontak') !== false || strpos($lower_msg, 'telepon') 
 elseif (strpos($lower_msg, 'surat') !== false || strpos($lower_msg, 'pengantar') !== false || strpos($lower_msg, 'syarat') !== false) {
     $reply = "Tabik Pun! Untuk pembuatan surat pengantar atau administrasi lainnya, silakan datang langsung ke Kantor Kelurahan pada <b>" . JAM_LAYANAN . "</b> dengan membawa KTP dan KK asli serta fotokopi secukupnya.";
 } 
-elseif (strpos($lower_msg, 'website') !== false || strpos($lower_msg, 'situs') !== false || strpos($lower_msg, 'web') !== false || strpos($lower_msg, 'aplikasi') !== false || strpos($lower_msg, 'peta') !== false) {
-    $reply = "Tabik Pun! Website ini adalah platform Pusat Informasi dan Peta Interaktif " . NAMA_KELURAHAN . ". Di sini Bapak/Ibu bisa melihat letak fasilitas umum di peta, statistik kependudukan, berita terbaru, dan informasi aparatur kelurahan.";
-}
-else {
-    $reply = "Tabik Pun! Maaf Bapak/Ibu, saya adalah Asisten Virtual " . NAMA_KELURAHAN . ". Saya hanya bisa menjawab seputar jam layanan, jumlah penduduk, aparatur kelurahan, kontak, tim KKN, dan berita kelurahan. Untuk pertanyaan lain, silakan datang langsung ke kantor ya!";
+    elseif (strpos($lower_msg, 'website') !== false || strpos($lower_msg, 'situs') !== false || strpos($lower_msg, 'web') !== false || strpos($lower_msg, 'aplikasi') !== false || strpos($lower_msg, 'peta') !== false) {
+        $reply = "Tabik Pun! Website ini adalah platform Pusat Informasi dan Peta Interaktif " . NAMA_KELURAHAN . ". Di sini Bapak/Ibu bisa melihat letak fasilitas umum di peta, statistik kependudukan, berita terbaru, dan informasi aparatur kelurahan.";
+    }
+    else {
+        $reply = $fallback_msg;
+    }
 }
 
 echo json_encode(['status' => 'success', 'reply' => $reply]);

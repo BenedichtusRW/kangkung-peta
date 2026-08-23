@@ -171,7 +171,7 @@ unset($_SESSION['flash']);
       <div class="table-toolbar" style="display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap;">
         <div style="display: flex; gap: 12px; align-items: center; flex: 1;">
           <input type="search" id="tableSearch" placeholder="Cari nama tempat..." style="flex: 1; max-width: 300px;">
-          <button type="button" class="btn btn-primary" onclick="openModal()" style="padding: 9px 16px;">+ Tambah Tempat</button>
+          <button type="button" class="btn btn-primary" onclick="openModal()" style="padding: 9px 16px; width: auto;">+ Tambah Tempat</button>
         </div>
         <span style="font-size:12.5px;color:var(--ink-soft)"><?= count($pois) ?> data</span>
       </div>

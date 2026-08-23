@@ -3,15 +3,20 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 // Determine if a submenu should be open
 $isProfileOpen = in_array($currentPage, ['sejarah.php', 'visi-misi.php', 'aparatur.php', 'tim-kkn.php']);
 ?>
-<aside class="admin-sidebar">
-  <div class="admin-brand">
-    <div class="brand-avatar">
-      <img src="../assets/img/logo-kkn.png" onerror="this.style.display='none'">
+<aside class="admin-sidebar" id="adminSidebar">
+  <div class="admin-brand-wrapper">
+    <div class="admin-brand">
+      <div class="brand-avatar">
+        <img src="../assets/img/logo-kkn.png" onerror="this.style.display='none'">
+      </div>
+      <div class="brand-text">
+        <small>ADMIN KONTEN</small>
+        <strong><?= strtoupper(NAMA_KELURAHAN) ?></strong>
+      </div>
     </div>
-    <div class="brand-text">
-      <small>ADMIN KONTEN</small>
-      <strong><?= strtoupper(NAMA_KELURAHAN) ?></strong>
-    </div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Menu">
+      <i class="fa-solid fa-bars"></i>
+    </button>
   </div>
 
   <nav class="admin-nav">
@@ -119,5 +124,14 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  // Mobile Menu Toggle
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const adminSidebar = document.getElementById('adminSidebar');
+  if (mobileMenuBtn && adminSidebar) {
+    mobileMenuBtn.addEventListener('click', () => {
+      adminSidebar.classList.toggle('menu-open');
+    });
+  }
 });
 </script>

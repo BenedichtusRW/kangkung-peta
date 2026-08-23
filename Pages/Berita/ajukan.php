@@ -48,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+$forceSolidHeader = true;
 include __DIR__ . '/../includes/header.php';
 ?>
 

@@ -19,6 +19,7 @@ if (!$artikel) {
 
 $pageTitle = $artikel['judul'];
 
+$forceSolidHeader = true;
 include __DIR__ . '/../includes/header.php';
 ?>
 

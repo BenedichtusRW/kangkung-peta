@@ -39,6 +39,7 @@ $totalGender    = max($lakiLaki + $perempuan, 1);
 $pctLaki        = round($lakiLaki / $totalGender * 100, 1);
 $pctPerempuan   = round($perempuan / $totalGender * 100, 1);
 
+$forceSolidHeader = true;
 include __DIR__ . '/../includes/header.php';
 ?>
 

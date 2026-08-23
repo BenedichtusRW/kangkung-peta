@@ -83,6 +83,7 @@ if (!empty($header_sejarah)) {
     $bgStyle = 'background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url(\'../../' . $header_sejarah . '\') center/cover; color: #ffffff;';
 }
 
+$forceSolidHeader = true;
 include __DIR__ . '/../includes/header.php';
 
 ?>

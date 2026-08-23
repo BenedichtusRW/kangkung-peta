@@ -6,6 +6,7 @@ $navPrefix   = '../';
 $activeNav   = 'peta';
 $pageTitle   = 'Peta Kelurahan';
 
+$forceSolidHeader = true;
 include __DIR__ . '/../includes/header.php';
 ?>
 

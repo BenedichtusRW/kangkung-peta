@@ -12,6 +12,7 @@ $stmt = $pdo->query("SELECT * FROM galeri ORDER BY created_at DESC, id DESC");
 $galeri = $stmt->fetchAll();
 $kategoriList = array_values(array_unique(array_filter(array_column($galeri, 'kategori'))));
 
+$forceSolidHeader = true;
 include __DIR__ . '/../includes/header.php';
 ?>
 

@@ -6,6 +6,7 @@ $navPrefix   = '../';
 $activeNav   = 'chatbot';
 $pageTitle   = 'Chatbot AI';
 
+$forceSolidHeader = true;
 include __DIR__ . '/../includes/header.php';
 ?>
 

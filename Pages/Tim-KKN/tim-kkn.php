@@ -80,6 +80,7 @@ foreach ($tim as $t) {
     }
 }
 
+$forceSolidHeader = true;
 include __DIR__ . '/../includes/header.php';
 ?>
 

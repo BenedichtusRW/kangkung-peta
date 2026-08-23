@@ -162,7 +162,7 @@ unset($_SESSION['flash']);
                 <div class="person-card">
                     <img src="<?= $p['foto'] ? '../' . htmlspecialchars($p['foto']) : '../assets/img/default-avatar.jpg' ?>" class="person-photo" alt="Foto">
                     <div class="person-actions">
-                        <button class="icon-btn" onclick='editPerson(<?= json_encode($p, JSON_HEX_APOS | JSON_HEX_TAG) ?>)'><i class="fa-solid fa-pen"></i></button>
+                        <button class="icon-btn edit" onclick='editPerson(<?= json_encode($p, JSON_HEX_APOS | JSON_HEX_TAG) ?>)'><i class="fa-solid fa-pen"></i></button>
                         <form method="POST" style="display:inline;" onsubmit="return confirm('Hapus data ini?');">
                             <input type="hidden" name="action" value="delete_aparatur">
                             <input type="hidden" name="id" value="<?= $p['id'] ?>">

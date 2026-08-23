@@ -109,7 +109,7 @@ $activeTab = $_GET['tab'] ?? 'header';
   width: 100%; height: 60vh; max-height: 500px; background: #eee; border-radius: 8px; overflow: hidden;
 }
 </style>
-<link rel="icon" type="image/png" href="../assets/img/favicon.png">
+<link rel="icon" type="image/png" href="../assets/img/favicon.png?v=2">
 </head>
 <body>
 <div class="admin-shell">

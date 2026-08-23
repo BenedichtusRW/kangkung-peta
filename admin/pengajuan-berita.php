@@ -55,7 +55,7 @@ $flash = $_SESSION['flash'] ?? null; unset($_SESSION['flash']);
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 <link rel="stylesheet" href="../assets/css/admin.css?v=<?= time() ?>">
-<link rel="icon" type="image/png" href="../assets/img/favicon.png">
+<link rel="icon" type="image/png" href="../assets/img/favicon.png?v=2">
 </head>
 <body><div class="admin-shell"><?php include __DIR__ . '/includes/sidebar.php'; ?><main class="admin-main">
 <div class="admin-topbar"><div><h1>Pengajuan Berita Warga</h1><p>Tinjau berita dan foto sebelum diterbitkan ke halaman publik.</p></div><a href="../Pages/Berita/ajukan.php" class="btn btn-outline" target="_blank">Lihat Form Warga</a></div>

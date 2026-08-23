@@ -150,7 +150,7 @@ unset($_SESSION['flash']);
 .add-person:hover { background: var(--teal-200); }
 .add-person i { font-size: 32px; margin-bottom: 8px; }
 </style>
-<link rel="icon" type="image/png" href="../assets/img/favicon.png">
+<link rel="icon" type="image/png" href="../assets/img/favicon.png?v=2">
 </head>
 <body>
 <div class="admin-shell">

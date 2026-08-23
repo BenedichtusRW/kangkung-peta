@@ -96,7 +96,7 @@ unset($_SESSION['flash']);
 .modal-header h2 { margin: 0; font-size: 1.3rem; }
 .close-modal { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--ink-soft); }
 </style>
-<link rel="icon" type="image/png" href="../assets/img/favicon.png">
+<link rel="icon" type="image/png" href="../assets/img/favicon.png?v=2">
 </head>
 <body>
 <div class="admin-shell">

@@ -204,7 +204,12 @@ unset($_SESSION['flash']);
         
         <div class="field">
           <label>Foto Profil (Opsional saat edit)</label>
-          <input type="file" name="foto" id="formFoto" accept="image/*" style="width:100%; padding:10px; border:1px dashed var(--line); border-radius:6px;">
+          <input type="hidden" name="foto_existing" id="formFotoPath" value="">
+          <label class="btn btn-primary" style="cursor: pointer; display: inline-flex; align-items: center; gap: 8px; width: 100%; justify-content: center;">
+            <i class="fa-solid fa-camera"></i> Pilih / Ganti Foto Profil
+            <input type="file" name="foto" id="formFoto" accept=".jpg,.jpeg,.png,.webp" class="cropper-upload-input" data-aspect-ratio="1/1" style="display: none;">
+          </label>
+          <p id="formFotoInfo" style="margin:6px 0 0; font-size:0.8rem; color:var(--ink-soft); text-align:center;">Biarkan kosong untuk tidak mengubah foto</p>
         </div>
         
         <div style="margin-top:20px; display:flex; justify-content:flex-end;">
@@ -233,7 +238,13 @@ function editPerson(data) {
     document.getElementById('formId').value = data.id;
     document.getElementById('formNama').value = data.nama;
     document.getElementById('formJabatan').value = data.jabatan;
-    document.getElementById('formFotoPath').value = data.foto;
+    var fotoPath = document.getElementById('formFotoPath');
+    if (fotoPath) fotoPath.value = data.foto || '';
+    var fotoInfo = document.getElementById('formFotoInfo');
+    if (fotoInfo) {
+        fotoInfo.textContent = data.foto ? 'Foto saat ini: ' + data.foto.split('/').pop() : 'Belum ada foto, wajib upload foto baru';
+    }
+    document.getElementById('formFoto').required = false;
     document.getElementById('modalForm').classList.add('show');
     document.getElementById('modalForm').style.display = 'flex';
 }

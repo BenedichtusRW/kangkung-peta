@@ -177,9 +177,13 @@ $activeTab = $_GET['tab'] ?? 'header';
           <input type="hidden" name="action" value="update_pengumuman">
           <div class="field" style="margin-bottom: 16px;">
             <label style="font-weight: 700; font-size: 0.9rem; margin-bottom: 6px; display: block; color: var(--teal-900);">Isi Teks Pengumuman</label>
-            <textarea name="pengumuman_teks" rows="3" style="width: 100%; border: 1.5px solid #cbd5e1; border-radius: 8px; padding: 12px; font-family: inherit; font-size: 0.95rem;" placeholder="Contoh: Selamat Datang di Portal Resmi Kelurahan Kangkung..."><?= htmlspecialchars($settings['pengumuman_teks'] ?? '') ?></textarea>
+            <?php 
+              $defaultPengumuman = "Selamat Datang di Portal Resmi " . (defined('NAMA_KELURAHAN') ? NAMA_KELURAHAN : 'Kelurahan Kangkung') . " — Dapatkan kemudahan akses informasi layanan publik, peta wilayah interaktif, data statistik, dan informasi kegiatan warga secara digital.";
+              $teks = !empty($settings['pengumuman_teks']) ? $settings['pengumuman_teks'] : $defaultPengumuman;
+            ?>
+            <textarea name="pengumuman_teks" rows="3" style="width: 100%; border: 1.5px solid #cbd5e1; border-radius: 8px; padding: 12px; font-family: inherit; font-size: 0.95rem;" placeholder="Contoh: Selamat Datang di Portal Resmi Kelurahan Kangkung..."><?= htmlspecialchars($teks) ?></textarea>
           </div>
-          <button type="submit" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 8px;">
+          <button type="submit" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 8px; width: auto;">
             <i class="fa-solid fa-floppy-disk"></i> Simpan Teks Pengumuman
           </button>
         </form>

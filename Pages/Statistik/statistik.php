@@ -42,7 +42,7 @@ $pctPerempuan   = round($perempuan / $totalGender * 100, 1);
 include __DIR__ . '/../includes/header.php';
 ?>
 
-
+<style>
   .stat-dashboard {
     background: #f8fafc;
     padding: 48px 0 80px;

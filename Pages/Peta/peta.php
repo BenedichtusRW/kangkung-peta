@@ -36,7 +36,6 @@ if (!empty($header_peta)) {
     <div class="breadcrumb">
       <a href="<?= $navPrefix ?>index.php">Beranda</a> <span>/</span> <strong style="color: #ffffff;">Peta Kelurahan</strong>
     </div>
-    <span class="eyebrow">PETA INTERAKTIF</span>
     <h1>Peta Kelurahan <?= htmlspecialchars(explode(' ', NAMA_KELURAHAN)[1] ?? NAMA_KELURAHAN) ?></h1>
     <p>
       Temukan tugu, kantor pemerintahan, kuliner, jasa, tempat ibadah, sekolah, dan fasilitas kesehatan di area <?= htmlspecialchars(NAMA_KELURAHAN) ?>.

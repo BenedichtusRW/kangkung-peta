@@ -1,4 +1,19 @@
 <?php
+// ================= ENVIRONMENT SETUP =================
+// Ubah ke 'development' jika sedang masa perbaikan, 'production' jika sudah live
+define('ENVIRONMENT', 'production'); 
+
+if (ENVIRONMENT === 'production') {
+    ini_set('display_errors', 0);
+    ini_set('display_startup_errors', 0);
+    error_reporting(E_ALL);
+    ini_set('log_errors', 1); // Error akan disimpan di file log, tidak ditampilkan ke pengunjung
+} else {
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+}
+
 /**
  * config.php
  * Pengaturan umum situs Kelurahan Kangkung. Diikutkan (require) di setiap

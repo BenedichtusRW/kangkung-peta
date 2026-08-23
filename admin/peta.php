@@ -43,7 +43,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         header('Location: peta.php');
         exit;
     }
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
+    if ($_POST['action'] === 'update_banner_peta') {
+        $uploaded = handle_image_upload('banner_foto');
+        if ($uploaded) {
+            $stmt = $pdo->prepare("INSERT INTO settings (key_name, key_value) VALUES ('header_peta', ?) ON DUPLICATE KEY UPDATE key_value = VALUES(key_value)");
+            $stmt->execute([$uploaded]);
+            $_SESSION['flash'] = ['type' => 'success', 'message' => 'Foto banner Peta Kelurahan berhasil diperbarui.'];
+        }
+        header("Location: peta.php");
+        exit;
+    } elseif ($_POST['action'] === 'reset_banner_peta') {
+        $stmt = $pdo->prepare("INSERT INTO settings (key_name, key_value) VALUES ('header_peta', '') ON DUPLICATE KEY UPDATE key_value = VALUES(key_value)");
+        $stmt->execute();
+        $_SESSION['flash'] = ['type' => 'success', 'message' => 'Banner Peta Kelurahan dikembalikan ke background default.'];
+        header("Location: peta.php");
+        exit;
+    }
 }
+
+$stmtBanner = $pdo->query("SELECT key_value FROM settings WHERE key_name = 'header_peta'");
+$banner_peta = $stmtBanner->fetchColumn() ?: '';
 
 $stmt = $pdo->query("SELECT * FROM pois ORDER BY id DESC");
 $pois = $stmt->fetchAll();
@@ -83,6 +103,46 @@ unset($_SESSION['flash']);
     <?php if ($flash): ?>
       <div class="alert alert-<?= $flash['type'] ?>"><?= htmlspecialchars($flash['message']) ?></div>
     <?php endif; ?>
+
+    <!-- Banner Header -->
+    <div class="section-card" style="margin-bottom: 24px;">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px;">
+            <div>
+                <h2 style="font-size: 1.1rem; margin: 0 0 4px 0;"><i class="fa-solid fa-image" style="color: var(--teal-600);"></i> Banner Header Peta</h2>
+                <p style="margin: 0; font-size: 0.85rem; color: var(--ink-soft);">Ganti foto latar belakang header pada halaman Peta Kelurahan publik.</p>
+            </div>
+        </div>
+
+        <div style="margin-top: 16px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center;">
+            <div style="flex: 1; min-width: 260px; height: 130px; border-radius: 12px; overflow: hidden; background: #ecfdf5; border: 1px solid #e2e8f0; position: relative;">
+                <?php if (!empty($banner_peta)): ?>
+                    <img src="../<?= htmlspecialchars($banner_peta) ?>" style="width: 100%; height: 100%; object-fit: cover;" alt="Banner Peta">
+                <?php else: ?>
+                    <div style="height: 100%; display: flex; align-items: center; justify-content: center; color: #059669; font-weight: 600; font-size: 0.85rem; border: 2px dashed #a7f3d0;"><i class="fa-solid fa-check-circle" style="margin-right: 6px;"></i> Background Default (Hijau Kangkung)</div>
+                <?php endif; ?>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <form method="POST" enctype="multipart/form-data" style="margin:0;">
+                    <input type="hidden" name="action" value="update_banner_peta">
+                    <label class="btn btn-primary" style="cursor: pointer; display: inline-flex; align-items: center; gap: 8px; width: 100%; justify-content: center;">
+                        <i class="fa-solid fa-camera"></i> Ganti Banner
+                        <input type="file" name="banner_foto" accept=".jpg,.jpeg,.png,.webp" required onchange="this.form.submit()" style="display: none;">
+                    </label>
+                </form>
+                <?php if (!empty($banner_peta)): ?>
+                <form method="POST" style="margin:0;">
+                    <input type="hidden" name="action" value="reset_banner_peta">
+                    <button type="submit" class="btn btn-outline" style="color: #ef4444; border-color: #fca5a5; background: #fee2e2; width: 100%;">
+                        <i class="fa-solid fa-rotate-left"></i> Reset ke Default
+                    </button>
+                </form>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+
+    <!-- Peta Area -->
     <?php if (!empty($errors)): ?>
       <div class="alert alert-error">
         <?php foreach ($errors as $e): ?>

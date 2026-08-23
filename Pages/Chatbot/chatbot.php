@@ -50,7 +50,13 @@ if (!empty($header_chatbot)) {
 
       <div class="chat-window" id="chatWindow">
         <div class="chat-bubble bot">
-          Tabik Pun! Selamat datang di Pusat Informasi Kelurahan <?= htmlspecialchars(defined('NAMA_KELURAHAN') ? NAMA_KELURAHAN : 'Kangkung') ?>. Saya adalah Asisten Cerdas yang siap membantu Bapak/Ibu. Ingin tahu soal surat pengantar, data penduduk, atau nama aparatur kami? 👇
+          <?php 
+            $welcome_msg = $settings['chatbot_welcome_message'] ?? '';
+            if (empty($welcome_msg)) {
+                $welcome_msg = "Tabik Pun! Selamat datang di Pusat Informasi Kelurahan " . (defined('NAMA_KELURAHAN') ? NAMA_KELURAHAN : 'Kangkung') . ". Saya adalah Asisten Cerdas yang siap membantu Bapak/Ibu. Ingin tahu soal surat pengantar, data penduduk, atau nama aparatur kami? 👇";
+            }
+            echo nl2br(htmlspecialchars($welcome_msg));
+          ?>
         </div>
       </div>
 

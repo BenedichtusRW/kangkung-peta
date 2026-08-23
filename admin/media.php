@@ -148,15 +148,6 @@ $activeTab = $_GET['tab'] ?? 'header';
         <?php
         $banners = [
             'header_beranda' => 'Banner Beranda',
-            'header_peta' => 'Banner Peta Kelurahan',
-            'header_chatbot' => 'Banner Chatbot AI',
-            'header_statistik' => 'Banner Statistik',
-            'header_berita' => 'Banner Berita',
-            'header_galeri' => 'Banner Galeri',
-            'header_tim_kkn' => 'Banner Tim KKN',
-            'header_visi_misi' => 'Banner Visi & Misi',
-            'header_sejarah' => 'Banner Sejarah',
-            'header_aparatur' => 'Banner Data Aparatur',
         ];
         foreach ($banners as $key => $label): 
             $img = $settings[$key] ?? '';

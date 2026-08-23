@@ -82,27 +82,29 @@
   // Drag and Drop functionality
   document.querySelectorAll('.cropper-upload-input').forEach(function(input) {
     const label = input.closest('label');
-    if (label) {
-      label.addEventListener('dragover', function(e) {
+    const dropZone = input.closest('.section-card') || label;
+    
+    if (dropZone) {
+      dropZone.addEventListener('dragover', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        label.style.opacity = '0.7';
-        label.style.outline = '2px dashed var(--teal-600)';
-        label.style.outlineOffset = '4px';
+        dropZone.style.opacity = '0.7';
+        dropZone.style.outline = '2px dashed var(--teal-600)';
+        dropZone.style.outlineOffset = '4px';
       });
-      label.addEventListener('dragleave', function(e) {
+      dropZone.addEventListener('dragleave', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        label.style.opacity = '1';
-        label.style.outline = 'none';
-        label.style.outlineOffset = '0';
+        dropZone.style.opacity = '1';
+        dropZone.style.outline = 'none';
+        dropZone.style.outlineOffset = '0';
       });
-      label.addEventListener('drop', function(e) {
+      dropZone.addEventListener('drop', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        label.style.opacity = '1';
-        label.style.outline = 'none';
-        label.style.outlineOffset = '0';
+        dropZone.style.opacity = '1';
+        dropZone.style.outline = 'none';
+        dropZone.style.outlineOffset = '0';
         
         if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
           input.files = e.dataTransfer.files;

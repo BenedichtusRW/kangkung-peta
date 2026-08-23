@@ -42,8 +42,8 @@ $stats = [
       <h2>Selamat Melayani, Pengurus!</h2>
       <p>"Melayani dengan sepenuh hati untuk masyarakat yang lebih baik dan sejahtera."</p>
       <div class="dashboard-hero-actions">
-        <a href="berita.php" class="btn btn-primary" style="background: white; color: var(--teal-900); border: none;"><i class="fa-solid fa-plus"></i> TULIS BERITA BARU</a>
-        <a href="peta.php" class="btn btn-outline" style="border-color: rgba(255,255,255,0.4); color: white;"><i class="fa-regular fa-calendar-plus"></i> TAMBAH TEMPAT</a>
+        <a href="berita.php" class="btn" style="background: white; color: var(--teal-900); width: auto;"><i class="fa-solid fa-plus"></i> TULIS BERITA BARU</a>
+        <a href="peta.php" class="btn" style="background: transparent; border: 1.5px solid rgba(255,255,255,0.4); color: white; width: auto;"><i class="fa-solid fa-map-location-dot"></i> TAMBAH TEMPAT</a>
       </div>
     </div>
 

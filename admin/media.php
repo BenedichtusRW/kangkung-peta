@@ -77,29 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: media.php?tab=header');
         exit;
     }
-    // --- Slider ---
-    elseif ($action === 'upload_slider') {
-        $uploaded = handle_image_upload('slider_foto');
-        if ($uploaded) {
-            if (!isset($settings['slider_images'])) $settings['slider_images'] = [];
-            $settings['slider_images'][] = [
-                'id' => time() . rand(100, 999),
-                'url' => $uploaded
-            ];
-            updateSetting($pdo, 'slider_images', $settings['slider_images']);
-            $_SESSION['flash'] = ['type' => 'success', 'message' => 'Foto slider berhasil ditambahkan.'];
-        }
-        header('Location: media.php?tab=slider');
-        exit;
-    } elseif ($action === 'delete_slider' && !empty($_POST['id'])) {
-        $id = (int)$_POST['id'];
-        $settings['slider_images'] = array_values(array_filter($settings['slider_images'], fn($s) => (int)$s['id'] !== $id));
-        updateSetting($pdo, 'slider_images', $settings['slider_images']);
-        $_SESSION['flash'] = ['type' => 'success', 'message' => 'Foto slider berhasil dihapus.'];
-        header('Location: media.php?tab=slider');
-        exit;
     }
-}
 
 $flash = $_SESSION['flash'] ?? null;
 unset($_SESSION['flash']);
@@ -124,7 +102,7 @@ $activeTab = $_GET['tab'] ?? 'header';
     <div class="admin-topbar">
       <div>
         <h1>Media & Tampilan</h1>
-        <p>Kelola gambar Banner Utama dan Slider Beranda.</p>
+        <p>Kelola gambar Banner Utama dan Pengumuman Berjalan.</p>
       </div>
     </div>
 
@@ -132,14 +110,7 @@ $activeTab = $_GET['tab'] ?? 'header';
       <div class="alert alert-<?= $flash['type'] ?>"><?= htmlspecialchars($flash['message']) ?></div>
     <?php endif; ?>
 
-    <!-- TABS NAVIGATION -->
-    <div class="tabs-nav">
-      <button class="tab-btn <?= $activeTab === 'header' ? 'active' : '' ?>" onclick="switchTab('header')"><i class="fa-solid fa-panorama"></i> Header Utama</button>
-      <button class="tab-btn <?= $activeTab === 'slider' ? 'active' : '' ?>" onclick="switchTab('slider')"><i class="fa-solid fa-images"></i> Slider Beranda</button>
-    </div>
-
-    <!-- TAB 1: HEADER -->
-    <div id="tab-header" class="tab-content <?= $activeTab === 'header' ? 'active' : '' ?>">
+    <div style="margin-top: 24px;">
       <?php $img = $settings['header_beranda'] ?? ''; ?>
       <!-- Banner Header -->
       <div class="section-card" style="margin-bottom: 24px;">
@@ -199,58 +170,8 @@ $activeTab = $_GET['tab'] ?? 'header';
       </div>
     </div>
 
-    <!-- TAB 2: SLIDER -->
-    <div id="tab-slider" class="tab-content <?= $activeTab === 'slider' ? 'active' : '' ?>">
-      <div class="section-card">
-        <h2><i class="fa-solid fa-images"></i> Slider Beranda</h2>
-        <p>Kumpulan gambar berjalan otomatis di bawah halaman utama.</p>
-        
-        <div class="gallery-grid">
-            <!-- Add New Slider Card -->
-            <div class="gallery-item add-new">
-              <form method="POST" action="media.php" enctype="multipart/form-data">
-                  <input type="hidden" name="action" value="upload_slider">
-                  <label for="slider_foto_input" class="add-new-label">
-                      <i class="fa-solid fa-plus-circle"></i>
-                      <span>Tambah Slider</span>
-                  </label>
-                  <input type="file" id="slider_foto_input" name="slider_foto" accept=".jpg,.jpeg,.png,.webp" required onchange="this.form.submit()">
-              </form>
-            </div>
-
-            <?php foreach (array_reverse($settings['slider_images']) as $item): ?>
-                <div class="gallery-item">
-                    <img src="../<?= htmlspecialchars($item['url']) ?>" alt="Slider">
-                    <div class="overlay-actions">
-                        <form method="POST" action="media.php" onsubmit="return confirm('Hapus slider ini?');">
-                            <input type="hidden" name="action" value="delete_slider">
-                            <input type="hidden" name="id" value="<?= $item['id'] ?>">
-                            <button type="submit" class="icon-btn delete" title="Hapus"><i class="fa-solid fa-trash-can"></i></button>
-                        </form>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
-      </div>
-    </div>
-
   </main>
 </div>
-
-<script>
-function switchTab(tabId) {
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-    
-    document.querySelector(`.tab-btn[onclick="switchTab('${tabId}')"]`).classList.add('active');
-    document.getElementById(`tab-${tabId}`).classList.add('active');
-    
-    // Update URL without reload
-    const url = new URL(window.location);
-    url.searchParams.set('tab', tabId);
-    window.history.pushState({}, '', url);
-}
-</script>
 </body>
 </html>
 

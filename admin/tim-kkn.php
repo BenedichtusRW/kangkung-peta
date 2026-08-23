@@ -6,10 +6,72 @@ require_once __DIR__ . '/includes/functions.php';
 
 $pdo = getDB();
 
+// Pastikan tabel tim_kkn ada di database
+try {
+    $pdo->exec("CREATE TABLE IF NOT EXISTS tim_kkn (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        nama VARCHAR(255) NOT NULL,
+        jabatan VARCHAR(255) NOT NULL,
+        foto VARCHAR(255) DEFAULT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+
+    // Auto-seed data lengkap jika data di database kurang dari 21
+    $stmtCheck = $pdo->query("SELECT COUNT(*) FROM tim_kkn");
+    if ($stmtCheck->fetchColumn() < 21) {
+        $dataFile = __DIR__ . '/../data/tim-kkn.json';
+        if (is_file($dataFile)) {
+            $jsonTim = json_decode(file_get_contents($dataFile), true);
+            if (is_array($jsonTim) && count($jsonTim) >= 21) {
+                $pdo->exec("TRUNCATE TABLE tim_kkn");
+                $stmtInsert = $pdo->prepare("INSERT INTO tim_kkn (id, nama, jabatan, foto) VALUES (?, ?, ?, ?)");
+                foreach ($jsonTim as $t) {
+                    $stmtInsert->execute([$t['id'], $t['nama'], $t['jabatan'], $t['foto'] ?? '']);
+                }
+            }
+        }
+    }
+} catch (Exception $e) {}
+
+function sync_tim_kkn_json($pdo) {
+    try {
+        $stmt = $pdo->query("SELECT id, nama, jabatan, foto FROM tim_kkn ORDER BY id ASC");
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $dataFile = __DIR__ . '/../data/tim-kkn.json';
+        file_put_contents($dataFile, json_encode($rows, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
+    } catch (Exception $e) {}
+}
+
+function get_admin_photo_url(?string $path): string {
+    if (empty($path)) {
+        return '../assets/img/placeholder-default.jpg';
+    }
+    if (strpos($path, 'http://') === 0 || strpos($path, 'https://') === 0) {
+        return $path;
+    }
+    $clean = preg_replace('/^(\.\.\/)+/', '', $path);
+    return '../' . ltrim($clean, '/');
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
     
-    if ($action === 'save_tim') {
+    if ($action === 'update_banner_kkn') {
+        $uploaded = handle_image_upload('banner_foto');
+        if ($uploaded) {
+            $stmt = $pdo->prepare("INSERT INTO settings (key_name, key_value) VALUES ('header_tim_kkn', ?) ON DUPLICATE KEY UPDATE key_value = VALUES(key_value)");
+            $stmt->execute([$uploaded]);
+            $_SESSION['flash'] = ['type' => 'success', 'message' => 'Foto banner Tim KKN berhasil diperbarui.'];
+        }
+        header("Location: tim-kkn.php");
+        exit;
+    } elseif ($action === 'reset_banner_kkn') {
+        $stmt = $pdo->prepare("INSERT INTO settings (key_name, key_value) VALUES ('header_tim_kkn', '') ON DUPLICATE KEY UPDATE key_value = VALUES(key_value)");
+        $stmt->execute();
+        $_SESSION['flash'] = ['type' => 'success', 'message' => 'Banner Tim KKN dikembalikan ke background default.'];
+        header("Location: tim-kkn.php");
+        exit;
+    } elseif ($action === 'save_tim') {
         $id = !empty($_POST['id']) ? (int)$_POST['id'] : null;
         $nama = trim($_POST['nama'] ?? '');
         $jabatan = trim($_POST['jabatan'] ?? '');
@@ -30,19 +92,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([$nama, $jabatan, $uploaded]);
             $_SESSION['flash'] = ['type' => 'success', 'message' => "Data $nama berhasil ditambahkan."];
         }
+        sync_tim_kkn_json($pdo);
         header("Location: tim-kkn.php");
         exit;
     } elseif ($action === 'delete_tim') {
         $id = (int)$_POST['id'];
         $stmt = $pdo->prepare("DELETE FROM tim_kkn WHERE id=?");
         $stmt->execute([$id]);
+        sync_tim_kkn_json($pdo);
         $_SESSION['flash'] = ['type' => 'success', 'message' => "Data berhasil dihapus."];
         header("Location: tim-kkn.php");
         exit;
     }
 }
 
-$tim_kkn = $pdo->query("SELECT * FROM tim_kkn ORDER BY id ASC")->fetchAll();
+$stmtBanner = $pdo->prepare("SELECT key_value FROM settings WHERE key_name = 'header_tim_kkn'");
+$stmtBanner->execute();
+$banner_tim_kkn = $stmtBanner->fetchColumn();
+
+$tim_kkn = [];
+try {
+    $tim_kkn = $pdo->query("SELECT * FROM tim_kkn ORDER BY id ASC")->fetchAll();
+} catch (Exception $e) {}
+
+if (empty($tim_kkn)) {
+    $dataFile = __DIR__ . '/../data/tim-kkn.json';
+    if (is_file($dataFile)) {
+        $jsonTim = json_decode(file_get_contents($dataFile), true);
+        if (is_array($jsonTim)) {
+            $tim_kkn = $jsonTim;
+        }
+    }
+}
+
 $flash = $_SESSION['flash'] ?? null;
 unset($_SESSION['flash']);
 ?>
@@ -77,7 +159,7 @@ unset($_SESSION['flash']);
     <div class="admin-topbar">
       <div>
         <h1>Tim KKN / Relawan</h1>
-        <p>Kelola data mahasiswa KKN atau relawan yang sedang bertugas.</p>
+        <p>Kelola data mahasiswa KKN atau relawan serta foto banner halaman Tim KKN.</p>
       </div>
     </div>
 
@@ -85,7 +167,47 @@ unset($_SESSION['flash']);
       <div class="alert alert-<?= $flash['type'] ?>"><?= htmlspecialchars($flash['message']) ?></div>
     <?php endif; ?>
 
+    <!-- Card Kelola Banner Tim KKN -->
+    <div class="section-card" style="margin-bottom: 24px;">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px;">
+            <div>
+                <h2 style="font-size: 1.1rem; margin: 0 0 4px 0;"><i class="fa-solid fa-image" style="color: var(--teal-600);"></i> Banner Header Tim KKN</h2>
+                <p style="margin: 0; font-size: 0.85rem; color: var(--ink-soft);">Ganti foto latar belakang header pada halaman Tim KKN publik.</p>
+            </div>
+        </div>
+
+        <div style="margin-top: 16px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center;">
+            <div style="flex: 1; min-width: 260px; height: 130px; border-radius: 12px; overflow: hidden; background: #ecfdf5; border: 1px solid #e2e8f0; position: relative;">
+                <?php if (!empty($banner_tim_kkn)): ?>
+                    <img src="../<?= htmlspecialchars($banner_tim_kkn) ?>" style="width: 100%; height: 100%; object-fit: cover;" alt="Banner Tim KKN">
+                <?php else: ?>
+                    <div style="height: 100%; display: flex; align-items: center; justify-content: center; color: #059669; font-weight: 600; font-size: 0.85rem; border: 2px dashed #a7f3d0;"><i class="fa-solid fa-check-circle" style="margin-right: 6px;"></i> Background Default (Hijau Kangkung)</div>
+                <?php endif; ?>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <form method="POST" enctype="multipart/form-data" style="margin:0;">
+                    <input type="hidden" name="action" value="update_banner_kkn">
+                    <label class="btn btn-primary" style="cursor: pointer; display: inline-flex; align-items: center; gap: 8px;">
+                        <i class="fa-solid fa-camera"></i> Ganti Banner Tim KKN
+                        <input type="file" name="banner_foto" accept=".jpg,.jpeg,.png,.webp" required onchange="this.form.submit()" style="display: none;">
+                    </label>
+                </form>
+                <?php if (!empty($banner_tim_kkn)): ?>
+                <form method="POST" style="margin:0;">
+                    <input type="hidden" name="action" value="reset_banner_kkn">
+                    <button type="submit" class="btn btn-outline" style="color: #ef4444; border-color: #fca5a5; background: #fee2e2; width: 100%;">
+                        <i class="fa-solid fa-rotate-left"></i> Reset ke Default
+                    </button>
+                </form>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section Data Anggota -->
     <div class="section-card">
+        <h2 style="font-size: 1.1rem; margin: 0 0 16px 0;"><i class="fa-solid fa-users" style="color: var(--teal-600);"></i> Data Anggota Tim</h2>
         <div class="person-grid">
             <div class="person-card add-person" onclick="openModal()">
                 <i class="fa-solid fa-plus-circle"></i>
@@ -94,7 +216,7 @@ unset($_SESSION['flash']);
 
             <?php foreach ($tim_kkn as $p): ?>
                 <div class="person-card">
-                    <img src="<?= $p['foto'] ? '../' . htmlspecialchars($p['foto']) : '../assets/img/default-avatar.jpg' ?>" class="person-photo" alt="Foto">
+                    <img src="<?= get_admin_photo_url($p['foto'] ?? '') ?>" class="person-photo" alt="<?= htmlspecialchars($p['nama']) ?>" onerror="this.src='../assets/img/placeholder-default.jpg'">
                     <div class="person-actions">
                         <button class="icon-btn" onclick='editPerson(<?= json_encode($p, JSON_HEX_APOS | JSON_HEX_TAG) ?>)'><i class="fa-solid fa-pen"></i></button>
                         <form method="POST" style="display:inline;" onsubmit="return confirm('Hapus data ini?');">
@@ -174,4 +296,3 @@ function editPerson(data) {
 </script>
 </body>
 </html>
-

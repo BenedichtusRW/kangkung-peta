@@ -94,8 +94,31 @@ if (!empty($header_beranda)) {
         <button class="slider-arrow" type="button" data-slider-next aria-label="Foto berikutnya">&rarr;</button>
       </div>
     </div>
-  </div>
 </section>
+
+<!-- Running Text Announcement Ticker (Pengumuman Berjalan) -->
+<?php
+$stmtPengumuman = $pdo->prepare("SELECT key_value FROM settings WHERE key_name = 'pengumuman_teks'");
+$stmtPengumuman->execute();
+$pengumuman_teks = $stmtPengumuman->fetchColumn();
+
+$defaultPengumuman = "Selamat Datang di Portal Resmi " . (defined('NAMA_KELURAHAN') ? NAMA_KELURAHAN : 'Kelurahan Kangkung') . " — Dapatkan kemudahan akses informasi layanan publik, peta wilayah interaktif, data statistik, dan informasi kegiatan warga secara digital.";
+$teksPengumuman = !empty($pengumuman_teks) ? $pengumuman_teks : $defaultPengumuman;
+?>
+
+<div class="announcement-ticker-bar">
+  <div class="container announcement-inner">
+    <div class="announcement-badge">
+      <i class="fa-solid fa-bullhorn"></i>
+      <span>PENGUMUMAN</span>
+    </div>
+    <div class="announcement-track-wrap">
+      <div class="announcement-track">
+        <span><?= e($teksPengumuman) ?></span>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Section Jelajahi Layanan -->
 <section class="page-section" style="background-color: #f9fafb; padding: 60px 0;">

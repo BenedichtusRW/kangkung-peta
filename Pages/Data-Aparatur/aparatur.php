@@ -11,11 +11,20 @@ $pdo = getDB();
 $stmt = $pdo->query("SELECT * FROM aparatur ORDER BY id ASC");
 $aparatur = $stmt->fetchAll();
 
+$stmt = $pdo->prepare("SELECT key_value FROM settings WHERE key_name = 'header_aparatur'");
+$stmt->execute();
+$header_aparatur = $stmt->fetchColumn();
+$bgStyle = '';
+if (!empty($header_aparatur)) {
+    $header_aparatur = htmlspecialchars((string)$header_aparatur, ENT_QUOTES, 'UTF-8');
+    $bgStyle = 'background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url(\'../../' . $header_aparatur . '\') center/cover; color: #ffffff;';
+}
+
 include __DIR__ . '/../includes/header.php';
 ?>
 
 <!-- Hero Section -->
-<section class="page-hero">
+<section class="page-hero" style="<?= $bgStyle ?>">
   <div class="container">
     <div class="breadcrumb">
       <a href="<?= $navPrefix ?>index.php">Beranda</a> <span>/</span> <span>Profile</span> <span>/</span> <strong style="color: #ffffff;">Data Aparatur</strong>

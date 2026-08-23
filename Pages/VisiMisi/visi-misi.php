@@ -39,11 +39,20 @@ try {
     $misiArray = $defaultMisi;
 }
 
+$stmt = $pdo->prepare("SELECT key_value FROM settings WHERE key_name = 'header_visi_misi'");
+$stmt->execute();
+$header_visi_misi = $stmt->fetchColumn();
+$bgStyle = '';
+if (!empty($header_visi_misi)) {
+    $header_visi_misi = htmlspecialchars((string)$header_visi_misi, ENT_QUOTES, 'UTF-8');
+    $bgStyle = 'background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url(\'../../' . $header_visi_misi . '\') center/cover; color: #ffffff;';
+}
+
 $forceSolidHeader = true;
 include __DIR__ . '/../includes/header.php';
 ?>
 
-<section class="page-hero">
+<section class="page-hero" style="<?= $bgStyle ?>">
   <div class="container">
     <div class="breadcrumb">
       <a href="<?= $navPrefix ?>index.php">Beranda</a> <span>/</span> <span>Profile</span> <span>/</span> <strong style="color: #ffffff;">Visi &amp; Misi</strong>

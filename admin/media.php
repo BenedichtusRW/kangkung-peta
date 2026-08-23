@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // --- Header ---
     if ($action === 'update_header') {
         $page = $_POST['page'] ?? '';
-        $allowed = ['header_beranda', 'header_peta', 'header_chatbot', 'header_statistik', 'header_berita', 'header_galeri'];
+        $allowed = ['header_beranda', 'header_peta', 'header_chatbot', 'header_statistik', 'header_berita', 'header_galeri', 'header_tim_kkn', 'header_visi_misi', 'header_sejarah', 'header_aparatur'];
         if (in_array($page, $allowed)) {
             $uploaded = handle_image_upload('header_foto');
             if ($uploaded) {
@@ -47,7 +47,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'header_chatbot' => 'Chatbot AI',
                     'header_statistik' => 'Statistik Kelurahan',
                     'header_berita' => 'Berita',
-                    'header_galeri' => 'Galeri'
+                    'header_galeri' => 'Galeri',
+                    'header_tim_kkn' => 'Tim KKN',
+                    'header_visi_misi' => 'Visi & Misi',
+                    'header_sejarah' => 'Sejarah',
+                    'header_aparatur' => 'Data Aparatur',
                 ];
                 $labelName = $labels[$page] ?? 'Banner';
                 
@@ -58,12 +62,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     } elseif ($action === 'reset_header') {
         $page = $_POST['page'] ?? '';
-        $allowed = ['header_beranda', 'header_peta', 'header_chatbot', 'header_statistik', 'header_berita', 'header_galeri'];
+        $allowed = ['header_beranda', 'header_peta', 'header_chatbot', 'header_statistik', 'header_berita', 'header_galeri', 'header_tim_kkn', 'header_visi_misi', 'header_sejarah', 'header_aparatur'];
         if (in_array($page, $allowed)) {
             $settings[$page] = '';
             updateSetting($pdo, $page, '');
             $_SESSION['flash'] = ['type' => 'success', 'message' => "Banner dikembalikan ke warna default (Hijau)."];
         }
+        header('Location: media.php?tab=header');
+        exit;
+    } elseif ($action === 'update_pengumuman') {
+        $teks = trim($_POST['pengumuman_teks'] ?? '');
+        updateSetting($pdo, 'pengumuman_teks', $teks);
+        $_SESSION['flash'] = ['type' => 'success', 'message' => 'Teks pengumuman berjalan berhasil diperbarui.'];
         header('Location: media.php?tab=header');
         exit;
     }
@@ -143,6 +153,10 @@ $activeTab = $_GET['tab'] ?? 'header';
             'header_statistik' => 'Banner Statistik',
             'header_berita' => 'Banner Berita',
             'header_galeri' => 'Banner Galeri',
+            'header_tim_kkn' => 'Banner Tim KKN',
+            'header_visi_misi' => 'Banner Visi & Misi',
+            'header_sejarah' => 'Banner Sejarah',
+            'header_aparatur' => 'Banner Data Aparatur',
         ];
         foreach ($banners as $key => $label): 
             $img = $settings[$key] ?? '';
@@ -182,6 +196,23 @@ $activeTab = $_GET['tab'] ?? 'header';
         </div>
         <?php endforeach; ?>
         </div>
+      </div>
+
+      <!-- Card Teks Pengumuman Berjalan -->
+      <div class="section-card" style="margin-top: 24px;">
+        <h2><i class="fa-solid fa-bullhorn" style="color: var(--teal-600);"></i> Teks Pengumuman Berjalan (Ticker Beranda)</h2>
+        <p>Teks pengumuman running text yang berjalan otomatis di bagian atas beranda publik (seperti situs web resmi pemerintah).</p>
+
+        <form method="POST" action="media.php" style="margin-top: 16px;">
+          <input type="hidden" name="action" value="update_pengumuman">
+          <div class="field" style="margin-bottom: 16px;">
+            <label style="font-weight: 700; font-size: 0.9rem; margin-bottom: 6px; display: block; color: var(--teal-900);">Isi Teks Pengumuman</label>
+            <textarea name="pengumuman_teks" rows="3" style="width: 100%; border: 1.5px solid #cbd5e1; border-radius: 8px; padding: 12px; font-family: inherit; font-size: 0.95rem;" placeholder="Contoh: Selamat Datang di Portal Resmi Kelurahan Kangkung..."><?= htmlspecialchars($settings['pengumuman_teks'] ?? '') ?></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-floppy-disk"></i> Simpan Teks Pengumuman
+          </button>
+        </form>
       </div>
     </div>
 

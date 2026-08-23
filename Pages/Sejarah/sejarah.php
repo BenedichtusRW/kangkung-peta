@@ -74,12 +74,21 @@ try {
 |--------------------------------------------------------------------------
 */
 
+$stmt = $pdo->prepare("SELECT key_value FROM settings WHERE key_name = 'header_sejarah'");
+$stmt->execute();
+$header_sejarah = $stmt->fetchColumn();
+$bgStyle = '';
+if (!empty($header_sejarah)) {
+    $header_sejarah = htmlspecialchars((string)$header_sejarah, ENT_QUOTES, 'UTF-8');
+    $bgStyle = 'background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url(\'../../' . $header_sejarah . '\') center/cover; color: #ffffff;';
+}
+
 include __DIR__ . '/../includes/header.php';
 
 ?>
 
 <!-- HERO SECTION -->
-<section class="page-hero">
+<section class="page-hero" style="<?= $bgStyle ?>">
     <div class="container">
         <div class="breadcrumb">
             <a href="<?= htmlspecialchars($navPrefix) ?>index.php">Beranda</a>

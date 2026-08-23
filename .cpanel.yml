@@ -2,6 +2,7 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/petc6698/public_html/
-    - tar --exclude='./config_db.php' --exclude='./.git' -cf deploy.tar .
-    - tar -xf deploy.tar -C $DEPLOYPATH
-    - rm deploy.tar
+    - chmod 755 $DEPLOYPATH
+    - find . -mindepth 1 -maxdepth 1 ! -name 'config_db.php' ! -name '.git' -exec cp -R {} $DEPLOYPATH \;
+    - find $DEPLOYPATH -type d -exec chmod 755 {} \;
+    - find $DEPLOYPATH -type f -exec chmod 644 {} \;

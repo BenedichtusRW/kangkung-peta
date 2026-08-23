@@ -13,73 +13,11 @@ include __DIR__ . '/../includes/header.php';
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
 <style>
-/* Style Hero khusus agar Rata Tengah Presisi */
-.peta-hero {
-  padding-top: 120px !important;
-  padding-bottom: 40px !important;
-  text-align: center !important;
-  background-color: #064e3b; /* Hijau Kangkung */
-  color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.peta-hero .breadcrumb {
-  display: flex;
-  justify-content: center !important;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
-  font-size: 0.9rem;
-  color: #a7f3d0;
-  text-align: center !important;
-}
-
-.peta-hero .breadcrumb a {
-  color: #a7f3d0;
-  text-decoration: none;
-}
-
-.peta-hero .breadcrumb a:hover {
-  text-decoration: underline;
-}
-
-.peta-hero .eyebrow {
-  display: inline-block;
-  color: #f59e0b;
-  font-weight: 700;
-  font-size: 0.85rem;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-
-.peta-hero h1 {
-  font-size: 2.5rem;
-  font-weight: 800;
-  margin: 0 auto 12px auto;
-  color: #ffffff;
-  text-align: center !important;
-}
-
-.peta-hero p {
-  max-width: 680px;
-  margin: 0 auto;
-  font-size: 1rem;
-  line-height: 1.6;
-  color: #e2e8f0;
-  text-align: center !important;
-}
-
-/* Modal Detail Adjustments */
-.detail-overlay {
-  z-index: 1000;
-}
+  .detail-overlay {
+    z-index: 2000;
+  }
 </style>
 
-<!-- ===================== HERO ===================== -->
 <?php
 require_once __DIR__ . '/../../config_db.php';
 $pdo = getDB();
@@ -88,13 +26,13 @@ $stmt->execute();
 $header_peta = $stmt->fetchColumn();
 $bgStyle = '';
 if (!empty($header_peta)) {
-    // Escape string just in case
     $header_peta = htmlspecialchars((string)$header_peta, ENT_QUOTES, 'UTF-8');
-    $bgStyle = 'background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url(\'../../' . $header_peta . '\') center/cover; color: #ffffff;';
+    $bgStyle = 'background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url(\'../../' . $header_peta . '\') center/cover; color: #ffffff;';
 }
 ?>
+
 <section class="peta-hero" style="<?= $bgStyle ?>">
-  <div class="container">
+  <div class="container" data-aos="fade-down" data-aos-duration="800">
     <div class="breadcrumb">
       <a href="<?= $navPrefix ?>index.php">Beranda</a> <span>/</span> <strong style="color: #ffffff;">Peta Kelurahan</strong>
     </div>

@@ -31,119 +31,16 @@ foreach ($tim as $t) {
 include __DIR__ . '/../includes/header.php';
 ?>
 
-<style>
-  /* Perbaikan Spasi Hero agar tidak menabrak Navbar Fixed */
-  .page-hero {
-    padding-top: 120px !important;
-    padding-bottom: 40px !important;
-    text-align: center;
-    background-color: #064e3b; /* Hijau Kangkung */
-    color: #ffffff;
-  }
-  
-  .page-hero .breadcrumb {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 16px;
-    font-size: 0.9rem;
-    color: #a7f3d0;
-  }
-
-  .page-hero .breadcrumb a {
-    color: #a7f3d0;
-    text-decoration: none;
-  }
-
-  .page-hero .breadcrumb a:hover {
-    text-decoration: underline;
-  }
-
-  .page-hero h1 {
-    font-size: 2.5rem;
-    font-weight: 800;
-    margin: 0 0 12px 0;
-    color: #ffffff;
-  }
-
-  .page-hero p {
-    max-width: 650px;
-    margin: 0 auto;
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #e2e8f0;
-  }
-
-  .center-section {
-    text-align: center !important;
-    margin-bottom: 32px;
-  }
-  .center-section .eyebrow {
-    display: inline-block;
-    letter-spacing: 1px;
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-  .center-section h2 {
-    margin: 0 auto;
-    font-size: 2rem;
-    font-weight: 700;
-  }
-  
-  .people-card {
-    text-align: center;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-    background: #fff;
-    transition: transform 0.2s ease;
-  }
-  .people-card:hover {
-    transform: translateY(-4px);
-  }
-  .people-card .photo {
-    width: 100%;
-    height: 240px;
-    object-fit: cover;
-    object-position: top;
-  }
-  .people-card .info {
-    padding: 16px;
-    text-align: center;
-  }
-  .people-card .name {
-    font-weight: 700;
-    font-size: 1.05rem;
-    color: #111827;
-    margin-bottom: 4px;
-  }
-  .people-card .role {
-    font-size: 0.875rem;
-    color: #059669;
-    font-weight: 600;
-  }
-  .people-card .dept {
-    font-size: 0.75rem;
-    color: #6b7280;
-    margin-top: 4px;
-  }
 </style>
 
-<!-- Section Hero (Rata Tengah Presisi) -->
-<section class="page-hero" style="text-align: center !important; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-  <div class="container" style="text-align: center !important; width: 100%;">
-    
-    <div class="breadcrumb" style="justify-content: center !important; text-align: center !important; margin: 0 auto 12px auto;">
+<!-- Section Hero -->
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb">
       <a href="<?= $navPrefix ?>index.php">Beranda</a> <span>/</span> <span>Profile</span> <span>/</span> <strong style="color: #fff;">Tim KKN</strong>
     </div>
-
-    <h1 style="text-align: center !important; width: 100%; margin: 0 auto 12px auto;">Tim KKN UIN RIL</h1>
-
-    <p style="text-align: center !important; max-width: 650px; margin: 0 auto;">
-      Mahasiswa KKN UIN Raden Intan Lampung Kelompok 31 yang bertugas membangun portal digital dan program kerja di <?= defined('NAMA_KELURAHAN') ? NAMA_KELURAHAN : 'Kelurahan Kangkung' ?>.
-    </p>
-
+    <h1>Tim KKN UIN RIL</h1>
+    <p>Mahasiswa KKN UIN Raden Intan Lampung Kelompok 31 yang bertugas membangun portal digital dan program kerja di <?= defined('NAMA_KELURAHAN') ? NAMA_KELURAHAN : 'Kelurahan Kangkung' ?>.</p>
   </div>
 </section>
 <!-- Section Anggota Tim -->

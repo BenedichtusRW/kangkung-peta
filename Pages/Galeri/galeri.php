@@ -15,193 +15,6 @@ $kategoriList = array_values(array_unique(array_filter(array_column($galeri, 'ka
 include __DIR__ . '/../includes/header.php';
 ?>
 
-<<<<<<< HEAD
-<style>
-  /* Style Hero Khusus Presisi Center */
-  .page-hero {
-    padding-top: 120px !important;
-    padding-bottom: 40px !important;
-    text-align: center !important;
-    background-color: #064e3b; /* Hijau Kangkung */
-    color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .page-hero .breadcrumb {
-    display: flex;
-    justify-content: center !important;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
-    font-size: 0.9rem;
-    color: #a7f3d0;
-    text-align: center !important;
-  }
-
-  .page-hero .breadcrumb a {
-    color: #a7f3d0;
-    text-decoration: none;
-  }
-
-  .page-hero .breadcrumb a:hover {
-    text-decoration: underline;
-  }
-
-  .page-hero h1 {
-    font-size: 2.5rem;
-    font-weight: 800;
-    margin: 0 auto 12px auto;
-    color: #ffffff;
-    text-align: center !important;
-  }
-
-  .page-hero p {
-    max-width: 650px;
-    margin: 0 auto;
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #e2e8f0;
-    text-align: center !important;
-  }
-
-  /* Filter Chips Bar */
-  .gallery-filter {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 36px;
-  }
-
-  .filter-chip {
-    background: #f1f5f9;
-    color: #334155;
-    border: 1px solid #cbd5e1;
-    padding: 8px 18px;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-
-  .filter-chip:hover {
-    background: #e2e8f0;
-  }
-
-  .filter-chip.active {
-    background: #059669;
-    color: #ffffff;
-    border-color: #059669;
-    box-shadow: 0 4px 10px rgba(5, 150, 105, 0.2);
-  }
-
-  /* Gallery Grid & Items */
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 24px;
-  }
-
-  .gallery-item {
-    position: relative;
-    border-radius: 12px;
-    overflow: hidden;
-    background: #f1f5f9;
-    aspect-ratio: 4 / 3;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-  }
-
-  .gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-
-  .gallery-item:hover img {
-    transform: scale(1.08);
-  }
-
-  .gallery-item .caption {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 16px;
-    background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
-    color: #ffffff;
-    font-size: 0.95rem;
-    font-weight: 600;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .gallery-item:hover .caption {
-    opacity: 1;
-  }
-
-  /* Lightbox Overlay */
-  .lightbox-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(15, 23, 42, 0.9);
-    z-index: 9999;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    backdrop-filter: blur(4px);
-  }
-
-  .lightbox-overlay.open {
-    display: flex;
-  }
-
-  .lightbox-content {
-    max-width: 900px;
-    width: 100%;
-    text-align: center;
-    position: relative;
-  }
-
-  .lightbox-content img {
-    max-width: 100%;
-    max-height: 75vh;
-    border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-  }
-
-  .lightbox-caption {
-    color: #ffffff;
-    margin-top: 16px;
-    font-size: 1.1rem;
-    font-weight: 600;
-  }
-
-  .lightbox-close {
-    position: absolute;
-    top: -40px;
-    right: 0;
-    background: transparent;
-    border: none;
-    color: #ffffff;
-    font-size: 2.5rem;
-    cursor: pointer;
-    line-height: 1;
-  }
-</style>
-
-<!-- Hero Section -->
-<section class="page-hero">
-=======
 <?php
 $stmt = $pdo->prepare("SELECT key_value FROM settings WHERE key_name = 'header_galeri'");
 $stmt->execute();
@@ -209,11 +22,12 @@ $header_galeri = $stmt->fetchColumn();
 $bgStyle = '';
 if (!empty($header_galeri)) {
     $header_galeri = htmlspecialchars((string)$header_galeri, ENT_QUOTES, 'UTF-8');
-    $bgStyle = 'background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url(\'../../' . $header_galeri . '\') center/cover; color: #ffffff;';
+    $bgStyle = 'background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url(\'../../' . $header_galeri . '\') center/cover; color: #ffffff;';
 }
 ?>
+
+<!-- Hero Section -->
 <section class="page-hero" style="<?= $bgStyle ?>">
->>>>>>> e8b5ffee368934b8f0a1fe53437987be8017a4f8
   <div class="container">
     <div class="breadcrumb">
       <a href="<?= $navPrefix ?>index.php">Beranda</a> <span>/</span> <strong style="color: #ffffff;">Galeri</strong>
@@ -257,7 +71,18 @@ if (!empty($header_galeri)) {
   </div>
 </section>
 
-<!-- Lightbox Modal Overlay -->
+<section class="submission-cta" style="background: var(--surface-muted); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-bottom: 40px; margin-top: 20px;">
+  <div class="container" style="flex-direction: column; align-items: stretch; gap: 0;">
+    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px;">
+      <div style="flex: 1; min-width: 280px;">
+        <span class="eyebrow" style="color: var(--teal-700);">Kabar & Informasi</span>
+        <h2 style="color: var(--teal-900); margin-bottom: 8px;">Ingin tahu cerita di balik dokumentasi ini?</h2>
+        <p style="color: var(--ink-soft); margin: 0;">Baca rincian acara, pengumuman, dan kabar terbaru lainnya di halaman Berita & Kegiatan.</p>
+      </div>
+      <a href="../Berita/berita.php" class="btn btn-primary" style="white-space: nowrap;">Baca Berita &rarr;</a>
+    </div>
+  </div>
+</section>
 <div class="lightbox-overlay" id="lightboxOverlay">
   <div class="lightbox-content">
     <button class="lightbox-close" id="lightboxClose" aria-label="Tutup Modal">&times;</button>

@@ -42,19 +42,36 @@ $pctPerempuan   = round($perempuan / $totalGender * 100, 1);
 include __DIR__ . '/../includes/header.php';
 ?>
 
-<<<<<<< HEAD
 <style>
-  /* Style Hero khusus agar Rata Tengah Presisi */
   .page-hero {
     padding-top: 120px !important;
     padding-bottom: 40px !important;
     text-align: center !important;
-    background-color: #064e3b; /* Hijau Kangkung */
+    background-color: #064e3b;
     color: #ffffff;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-hero::after {
+    content: "";
+    position: absolute;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    right: -90px;
+    top: -110px;
+    background: rgba(214, 162, 76, 0.14);
+    pointer-events: none;
+  }
+
+  .page-hero .container {
+    position: relative;
+    z-index: 1;
   }
 
   .page-hero .breadcrumb {
@@ -64,12 +81,12 @@ include __DIR__ . '/../includes/header.php';
     gap: 8px;
     margin-bottom: 12px;
     font-size: 0.9rem;
-    color: #a7f3d0;
+    color: #d1fae5;
     text-align: center !important;
   }
 
   .page-hero .breadcrumb a {
-    color: #a7f3d0;
+    color: #d1fae5;
     text-decoration: none;
   }
 
@@ -78,11 +95,12 @@ include __DIR__ . '/../includes/header.php';
   }
 
   .page-hero h1 {
-    font-size: 2.5rem;
+    font-size: clamp(2.1rem, 4vw, 3.2rem);
     font-weight: 800;
     margin: 0 auto 12px auto;
     color: #ffffff;
     text-align: center !important;
+    line-height: 1.2;
   }
 
   .page-hero p {
@@ -94,7 +112,11 @@ include __DIR__ . '/../includes/header.php';
     text-align: center !important;
   }
 
-  /* Grid Custom Responsive */
+  .stat-dashboard {
+    background: #f8fafc;
+    padding: 48px 0 80px;
+  }
+
   .stat-grid-counter {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -111,15 +133,97 @@ include __DIR__ . '/../includes/header.php';
 
   .stat-card-rt {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 24px;
+  }
+
+  .stat-counter-card,
+  .stat-panel,
+  .rt-card {
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 900px) {
+    .stat-grid-two {
+      grid-template-columns: 1fr;
+    }
+
+    .stat-dashboard {
+      padding-top: 40px;
+      padding-bottom: 56px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .page-hero {
+      padding-top: 100px !important;
+      padding-bottom: 28px !important;
+    }
+
+    .page-hero .breadcrumb {
+      flex-wrap: wrap;
+      row-gap: 4px;
+      font-size: 0.8rem;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(2rem, 9vw, 2.7rem);
+    }
+
+    .page-hero p {
+      font-size: 0.96rem;
+    }
+
+    .stat-grid-counter {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .stat-counter-card {
+      padding: 16px 12px !important;
+    }
+
+    .counter-val {
+      font-size: 22px !important;
+    }
+
+    .stat-panel {
+      padding: 20px !important;
+    }
+
+    .stat-card-rt {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .rt-card {
+      overflow: hidden;
+    }
+
+    .rt-card .rt-header {
+      padding: 16px !important;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .rt-card .rt-body,
+    .rt-card .rt-footer {
+      padding: 16px !important;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .stat-grid-counter {
+      grid-template-columns: 1fr;
+    }
+
+    .page-hero .breadcrumb {
+      font-size: 0.75rem;
+    }
   }
 </style>
 
-<!-- Hero Section -->
-<section class="page-hero">
-=======
-<!-- =================== HERO =================== -->
 <?php
 $stmt = $pdo->prepare("SELECT key_value FROM settings WHERE key_name = 'header_statistik'");
 $stmt->execute();
@@ -127,11 +231,11 @@ $header_statistik = $stmt->fetchColumn();
 $bgStyle = '';
 if (!empty($header_statistik)) {
     $header_statistik = htmlspecialchars((string)$header_statistik, ENT_QUOTES, 'UTF-8');
-    $bgStyle = 'background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url(\'../../' . $header_statistik . '\') center/cover; color: #ffffff;';
+    $bgStyle = 'background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url(\'../../' . $header_statistik . '\') center/cover; color: #ffffff;';
 }
 ?>
+
 <section class="page-hero" style="<?= $bgStyle ?>">
->>>>>>> e8b5ffee368934b8f0a1fe53437987be8017a4f8
   <div class="container">
     <div class="breadcrumb">
       <a href="<?= $navPrefix ?>index.php">Beranda</a> <span>/</span> <strong style="color: #ffffff;">Statistik Kelurahan</strong>
@@ -143,11 +247,8 @@ if (!empty($header_statistik)) {
   </div>
 </section>
 
-<!-- Dashboard Section -->
-<section style="background: #f8fafc; padding: 48px 0 80px;">
+<section class="stat-dashboard">
   <div class="container">
-    
-    <!-- 1. COUNTER CARDS -->
     <div class="stat-grid-counter">
       <?php
         $counters = [
@@ -160,7 +261,7 @@ if (!empty($header_statistik)) {
         ];
         foreach ($counters as $c):
       ?>
-      <div style="background:#fff; padding:20px; border-radius:12px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.03); border: 1px solid #e2e8f0;">
+      <div class="stat-counter-card" style="background:#fff; padding:20px; border-radius:12px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.03); border: 1px solid #e2e8f0;">
         <div style="font-size:24px; color:<?= $c['color'] ?>; margin-bottom:10px;"><i class="fa-solid <?= $c['icon'] ?>"></i></div>
         <div class="counter-val" data-target="<?= $c['val'] ?>" style="font-size:26px; font-weight:800; color:#0f172a; margin-bottom:4px; font-family:'Sora', sans-serif;">
             0
@@ -172,20 +273,17 @@ if (!empty($header_statistik)) {
       <?php endforeach; ?>
     </div>
 
-    <!-- 2. GENDER & PEKERJAAN BARS -->
     <div class="stat-grid-two">
-        
-        <!-- Gender -->
-        <div style="background:#fff; padding:32px; border-radius:16px; box-shadow:0 4px 12px rgba(0,0,0,0.03); border:1px solid #e2e8f0;">
+        <div class="stat-panel" style="background:#fff; padding:32px; border-radius:16px; box-shadow:0 4px 12px rgba(0,0,0,0.03); border:1px solid #e2e8f0;">
             <div class="section-head compact" style="margin-bottom: 24px;">
                 <span style="font-size: 0.85rem; font-weight: 700; color: #059669; text-transform: uppercase; letter-spacing: 1px;">Komposisi Penduduk</span>
                 <h3 style="font-size:20px; font-weight:800; color:#0f172a; margin-top:4px;">Sebaran Jenis Kelamin</h3>
             </div>
             
             <div style="margin-bottom:24px;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-weight:600;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-weight:600; gap:12px;">
                     <span style="color:#0f172a;">Laki-laki</span>
-                    <span style="color:#0284c7; font-weight:700;"><?= number_format($lakiLaki,0,',','.') ?> (<?= $pctLaki ?>%)</span>
+                    <span style="color:#0284c7; font-weight:700; white-space:nowrap;"><?= number_format($lakiLaki,0,',','.') ?> (<?= $pctLaki ?>%)</span>
                 </div>
                 <div style="background:#f1f5f9; border-radius:8px; height:12px; overflow:hidden;">
                     <div style="width:<?= $pctLaki ?>%; background:#0284c7; height:100%; border-radius:8px;"></div>
@@ -193,9 +291,9 @@ if (!empty($header_statistik)) {
             </div>
 
             <div>
-                <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-weight:600;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-weight:600; gap:12px;">
                     <span style="color:#0f172a;">Perempuan</span>
-                    <span style="color:#db2777; font-weight:700;"><?= number_format($perempuan,0,',','.') ?> (<?= $pctPerempuan ?>%)</span>
+                    <span style="color:#db2777; font-weight:700; white-space:nowrap;"><?= number_format($perempuan,0,',','.') ?> (<?= $pctPerempuan ?>%)</span>
                 </div>
                 <div style="background:#f1f5f9; border-radius:8px; height:12px; overflow:hidden;">
                     <div style="width:<?= $pctPerempuan ?>%; background:#db2777; height:100%; border-radius:8px;"></div>
@@ -203,22 +301,25 @@ if (!empty($header_statistik)) {
             </div>
         </div>
 
-        <!-- Pekerjaan -->
-        <div style="background:#fff; padding:32px; border-radius:16px; box-shadow:0 4px 12px rgba(0,0,0,0.03); border:1px solid #e2e8f0;">
+        <div class="stat-panel" style="background:#fff; padding:32px; border-radius:16px; box-shadow:0 4px 12px rgba(0,0,0,0.03); border:1px solid #e2e8f0;">
             <div class="section-head compact" style="margin-bottom: 24px;">
-                <span style="font-size: 0.85rem; font-weight: 700; color: #059669; text-transform: uppercase; letter-spacing: 1px;">Mata Pencaharian</span>
-                <h3 style="font-size:20px; font-weight:800; color:#0f172a; margin-top:4px;">Jenis Pekerjaan Warga</h3>
+                <span style="font-size: 0.85rem; font-weight: 700; color: #059669; text-transform: uppercase; letter-spacing: 1px;">Pekerjaan</span>
+                <h3 style="font-size:20px; font-weight:800; color:#0f172a; margin-top:4px;">Jenis Pekerjaan</h3>
             </div>
-            
-            <?php 
-            $maxPekerjaan = max(array_column($jenisPekerjaan ?: [['jumlah'=>1]], 'jumlah')) ?: 1;
-            foreach ($jenisPekerjaan as $pek): 
+            <?php
+                $maxPekerjaan = 1;
+                foreach ($jenisPekerjaan as $pek) {
+                    $maxPekerjaan = max($maxPekerjaan, (int)$pek['jumlah']);
+                }
+                if ($maxPekerjaan < 1) $maxPekerjaan = 1;
+            ?>
+            <?php foreach ($jenisPekerjaan as $pek):
                 $barW = round($pek['jumlah'] / $maxPekerjaan * 100);
             ?>
             <div style="margin-bottom:16px;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-weight:600; font-size:14px;">
-                    <span style="color:#334155;"><?= htmlspecialchars($pek['nama']) ?></span>
-                    <span style="color:#059669; font-weight:700;"><?= number_format($pek['jumlah'],0,',','.') ?></span>
+                <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-weight:600; font-size:14px; gap:12px;">
+                    <span style="color:#334155; word-break:break-word;"><?= htmlspecialchars($pek['nama']) ?></span>
+                    <span style="color:#059669; font-weight:700; white-space:nowrap;"><?= number_format($pek['jumlah'],0,',','.') ?></span>
                 </div>
                 <div style="background:#f1f5f9; border-radius:6px; height:8px; overflow:hidden;">
                     <div style="width:<?= $barW ?>%; background:linear-gradient(90deg,#059669,#10b981); height:100%;"></div>
@@ -226,16 +327,14 @@ if (!empty($header_statistik)) {
             </div>
             <?php endforeach; ?>
         </div>
-
     </div>
 
-    <!-- 3. DATA PER RT -->
     <?php if (!empty($dataRT)): ?>
     <div style="margin-top: 56px;">
         <div style="margin-bottom:32px; text-align:center;">
             <span style="font-size: 0.85rem; font-weight: 700; color: #059669; text-transform: uppercase; letter-spacing: 1px;">Sebaran Wilayah</span>
-            <h2 style="font-size: 2rem; font-weight: 800; color: #0f172a; margin: 4px 0;">Data Penduduk Per RT</h2>
-            <p style="color: #64748b;">Rincian data kependudukan berdasarkan Lingkungan dan RT.</p>
+            <h2 style="font-size: clamp(1.6rem, 3vw, 2rem); font-weight: 800; color: #0f172a; margin: 4px 0;">Data Penduduk Per RT</h2>
+            <p style="color: #64748b; margin: 0 auto; max-width: 620px;">Rincian data kependudukan berdasarkan Lingkungan dan RT.</p>
         </div>
 
         <div class="stat-card-rt">
@@ -244,10 +343,8 @@ if (!empty($header_statistik)) {
             $pctL = round($rt['laki'] / max($rt['total'],1) * 100);
             $pctP = round($rt['perempuan'] / max($rt['total'],1) * 100);
         ?>
-        <div style="background:#fff; border-radius:16px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.03); border:1px solid #e2e8f0;">
-            
-            <!-- RT Header -->
-            <div style="background:#064e3b; padding:20px; color:#fff; display:flex; justify-content:space-between; align-items:center;">
+        <div class="rt-card" style="background:#fff; border-radius:16px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.03); border:1px solid #e2e8f0;">
+            <div class="rt-header" style="background:#064e3b; padding:20px; color:#fff; display:flex; justify-content:space-between; align-items:center; gap:12px;">
                 <div>
                     <div style="font-size:11px; font-weight:700; color:#a7f3d0; text-transform:uppercase;">LK <?= htmlspecialchars($rt['lk']) ?></div>
                     <div style="font-size:22px; font-weight:800; font-family:'Sora', sans-serif;">RT <?= htmlspecialchars($rt['rt']) ?></div>
@@ -258,8 +355,7 @@ if (!empty($header_statistik)) {
                 </div>
             </div>
 
-            <!-- Gender Mini Bar -->
-            <div style="padding:20px; border-bottom:1px solid #f1f5f9;">
+            <div class="rt-body" style="padding:20px; border-bottom:1px solid #f1f5f9;">
                 <div style="display:flex; gap:8px; margin-bottom:12px;">
                     <div style="flex:1; background:#f1f5f9; border-radius:4px; height:8px; overflow:hidden;">
                         <div style="width:<?= $pctL ?>%; background:#0284c7; height:100%;"></div>
@@ -268,22 +364,21 @@ if (!empty($header_statistik)) {
                         <div style="width:<?= $pctP ?>%; background:#db2777; height:100%;"></div>
                     </div>
                 </div>
-                <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:600;">
-                    <span style="color:#0284c7;">L: <?= number_format($rt['laki'],0,',','.') ?></span>
-                    <span style="color:#db2777;">P: <?= number_format($rt['perempuan'],0,',','.') ?></span>
+                <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:600; gap:12px;">
+                    <span style="color:#0284c7; white-space:nowrap;">L: <?= number_format($rt['laki'],0,',','.') ?></span>
+                    <span style="color:#db2777; white-space:nowrap;">P: <?= number_format($rt['perempuan'],0,',','.') ?></span>
                 </div>
             </div>
 
-            <!-- Pekerjaan Top -->
-            <div style="padding:20px;">
+            <div class="rt-footer" style="padding:20px;">
                 <div style="font-size:11px; font-weight:700; text-transform:uppercase; color:#64748b; margin-bottom:14px;">Top Pekerjaan</div>
                 <?php foreach ($rt['pekerjaan'] as $pek):
                     $barW = round($pek['jumlah'] / $maxJumlahPek * 100);
                 ?>
                 <div style="margin-bottom:10px;">
-                    <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:600; margin-bottom:4px;">
-                        <span style="color:#334155;"><?= htmlspecialchars($pek['nama']) ?></span>
-                        <span style="color:#059669;"><?= number_format($pek['jumlah'],0,',','.') ?></span>
+                    <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:600; margin-bottom:4px; gap:12px;">
+                        <span style="color:#334155; word-break:break-word;"><?= htmlspecialchars($pek['nama']) ?></span>
+                        <span style="color:#059669; white-space:nowrap;"><?= number_format($pek['jumlah'],0,',','.') ?></span>
                     </div>
                     <div style="background:#f1f5f9; border-radius:4px; height:6px; overflow:hidden;">
                         <div style="width:<?= $barW ?>%; background:linear-gradient(90deg,#059669,#10b981); height:100%;"></div>
@@ -291,42 +386,39 @@ if (!empty($header_statistik)) {
                 </div>
                 <?php endforeach; ?>
             </div>
-            
         </div>
         <?php endforeach; ?>
         </div>
     </div>
     <?php endif; ?>
-
   </div>
 </section>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', () => {
     const counters = document.querySelectorAll('.counter-val[data-target]');
     const numObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
         const el = entry.target;
         const target = parseInt(el.dataset.target);
-        if(isNaN(target)) return;
+        if (isNaN(target)) return;
         const duration = 1600;
         const step = target / (duration / 16);
         let current = 0;
         const timer = setInterval(() => {
           current += step;
-          if (current >= target) { 
-            current = target; 
-            clearInterval(timer); 
+          if (current >= target) {
+            current = target;
+            clearInterval(timer);
           }
           el.textContent = Math.floor(current).toLocaleString('id-ID');
         }, 16);
         numObserver.unobserve(el);
       });
     }, { threshold: 0.2 });
-    
-    counters.forEach(c => numObserver.observe(c));
-});
-</script>
 
+    counters.forEach(c => numObserver.observe(c));
+  });
+</script>
 <?php include __DIR__ . '/../includes/footer.php'; ?>

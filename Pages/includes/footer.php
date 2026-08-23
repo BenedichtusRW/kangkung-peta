@@ -1,19 +1,5 @@
 <footer class="site-footer">
-
-    <div
-        class="container footer-grid"
-        style="
-            display: grid;
-            grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(150px, 0.7fr);
-            gap: 50px;
-            width: 100%;
-            max-width: 1180px;
-            margin: 0 auto;
-            box-sizing: border-box;
-            padding-left: 24px;
-            padding-right: 24px;
-        "
-    >
+  <div class="container footer-grid">
 
         <div style="min-width: 0;">
 

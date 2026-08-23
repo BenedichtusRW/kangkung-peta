@@ -247,10 +247,21 @@
   color: var(--teal-900);
 }
 
-@media(max-width: 500px){
+@media (max-width: 500px) {
+  .chatbot-widget {
+    bottom: 20px;
+    right: 16px;
+  }
+
   .chatbot-container {
-    width: calc(100vw - 40px);
-    right: -10px;
-    bottom: 70px;
+    width: calc(100vw - 32px);
+    right: 0;
+    bottom: 72px;
+    max-height: calc(100vh - 100px);
+  }
+
+  .chatbot-body {
+    height: 320px;
+    padding: 14px;
   }
 }

@@ -33,102 +33,21 @@ $slides = $stmt->fetchAll();
 $stmt = $pdo->query("SELECT * FROM pois");
 $pois = $stmt->fetchAll();
 
+$forceSolidHeader = true;
 include __DIR__ . '/includes/header.php';
 ?>
 
-<style>
-/* CSS Modern Quicklinks / Services */
-.quicklinks-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-  margin-top: 24px;
-}
-
-.quicklink-card-modern {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
-  padding: 24px;
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  text-decoration: none;
-  color: inherit;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
-  position: relative;
-  overflow: hidden;
-}
-
-.quicklink-card-modern::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: linear-gradient(90deg, #059669, #10b981);
-  opacity: 0;
-  transition: opacity 0.25s ease;
-}
-
-.quicklink-card-modern:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px -8px rgba(5, 150, 105, 0.15);
-  border-color: #a7f3d0;
-}
-
-.quicklink-card-modern:hover::before {
-  opacity: 1;
-}
-
-.icon-box {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  background: #ecfdf5;
-  color: #059669;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: all 0.25s ease;
-}
-
-.quicklink-card-modern:hover .icon-box {
-  background: #059669;
-  color: #ffffff;
-}
-
-.icon-box svg {
-  width: 24px;
-  height: 24px;
-  stroke-width: 2;
-}
-
-.card-content h3 {
-  margin: 0 0 4px 0;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #111827;
-}
-
-.card-content p {
-  margin: 0;
-  font-size: 0.825rem;
-  color: #6b7280;
-  line-height: 1.4;
-}
-</style>
-
 <?php
+$stmt = $pdo->prepare("SELECT key_value FROM settings WHERE key_name = 'header_beranda'");
+$stmt->execute();
+$header_beranda = $stmt->fetchColumn();
+
 $bgStyle = '';
-if (!empty($statistik['header_beranda'])) {
-    $bgStyle = 'background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url(\'' . e($assetPrefix . $statistik['header_beranda']) . '\') center/cover; color: #ffffff;';
+if (!empty($header_beranda)) {
+    $bgStyle = 'background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url(\'../' . e($header_beranda) . '\') center/cover; color: #ffffff;';
 }
 ?>
-<section class="hero-home" style="padding-top: 100px; <?= $bgStyle ?>">
+<section class="hero-home" style="<?= $bgStyle ?>">
   <div class="container hero-home-grid">
     <div class="hero-copy" data-reveal>
       <span class="eyebrow">Portal Digital Warga</span>
@@ -137,6 +56,7 @@ if (!empty($statistik['header_beranda'])) {
       <div class="hero-actions">
         <a href="Peta/peta.php" class="btn btn-primary">Jelajahi Peta</a>
         <a href="Chatbot/chatbot.php" class="btn btn-on-dark">Tanya Asisten</a>
+        <a href="Galeri/galeri.php" class="btn btn-on-dark">Lihat Galeri</a>
       </div>
     </div>
 
@@ -187,46 +107,7 @@ if (!empty($statistik['header_beranda'])) {
     </div>
     
     <div class="quicklinks-grid" data-reveal>
-      
-      <a href="VisiMisi/visi-misi.php" class="quicklink-card-modern">
-        <div class="icon-box">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-        </div>
-        <div class="card-content">
-          <h3>Visi &amp; Misi</h3>
-          <p>Arah kebijakan dan cita-cita pembangunan wilayah.</p>
-        </div>
-      </a>
 
-      <a href="Sejarah/sejarah.php" class="quicklink-card-modern">
-        <div class="icon-box">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        </div>
-        <div class="card-content">
-          <h3>Sejarah</h3>
-          <p>Asal-usul dan rekam jejak perkembangan wilayah.</p>
-        </div>
-      </a>
-
-      <a href="Data-Aparatur/aparatur.php" class="quicklink-card-modern">
-        <div class="icon-box">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-        </div>
-        <div class="card-content">
-          <h3>Aparatur</h3>
-          <p>Struktur organisasi dan pengurus kelurahan.</p>
-        </div>
-      </a>
-
-      <a href="Tim-KKN/tim-kkn.php" class="quicklink-card-modern">
-        <div class="icon-box">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 01-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
-        </div>
-        <div class="card-content">
-          <h3>Tim KKN</h3>
-          <p>Profil mahasiswa pengabdi Kelompok 31 UIN RIL.</p>
-        </div>
-      </a>
 
       <a href="Peta/peta.php" class="quicklink-card-modern">
         <div class="icon-box">

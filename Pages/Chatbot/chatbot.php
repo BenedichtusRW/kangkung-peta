@@ -9,99 +9,6 @@ $pageTitle   = 'Chatbot AI';
 include __DIR__ . '/../includes/header.php';
 ?>
 
-<<<<<<< HEAD
-<style>
-  /* Style Hero khusus agar Rata Tengah Presisi */
-  .page-hero {
-    padding-top: 120px !important;
-    padding-bottom: 40px !important;
-    text-align: center !important;
-    background-color: #064e3b; /* Hijau Kangkung */
-    color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .page-hero .breadcrumb {
-    display: flex;
-    justify-content: center !important;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
-    font-size: 0.9rem;
-    color: #a7f3d0;
-    text-align: center !important;
-  }
-
-  .page-hero .breadcrumb a {
-    color: #a7f3d0;
-    text-decoration: none;
-  }
-
-  .page-hero .breadcrumb a:hover {
-    text-decoration: underline;
-  }
-
-  .page-hero h1 {
-    font-size: 2.5rem;
-    font-weight: 800;
-    margin: 0 auto 12px auto;
-    color: #ffffff;
-    text-align: center !important;
-  }
-
-  .page-hero p {
-    max-width: 650px;
-    margin: 0 auto;
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #e2e8f0;
-    text-align: center !important;
-  }
-
-  /* Custom Chatbot Animations & Elements */
-  .typing-indicator-full {
-    display: inline-flex;
-    gap: 4px;
-    align-items: center;
-    padding: 12px 20px !important;
-  }
-
-  .typing-indicator-full .dot {
-    width: 6px;
-    height: 6px;
-    background: var(--teal-700, #0f766e);
-    border-radius: 50%;
-    animation: typingBounce 1.4s infinite;
-    opacity: 0.6;
-  }
-
-  .typing-indicator-full .dot:nth-child(2) { animation-delay: 0.2s; }
-  .typing-indicator-full .dot:nth-child(3) { animation-delay: 0.4s; }
-
-  @keyframes typingBounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
-  }
-
-  .chat-bubble.bot a {
-    color: var(--teal-900, #134e4a);
-    font-weight: 700;
-    text-decoration: none;
-    display: inline-block;
-    margin-top: 4px;
-  }
-
-  .chat-bubble.bot a:hover {
-    text-decoration: underline;
-  }
-</style>
-
-<!-- Hero Section -->
-<section class="page-hero">
-=======
 <?php
 require_once __DIR__ . '/../../config_db.php';
 $pdo = getDB();
@@ -111,17 +18,20 @@ $header_chatbot = $stmt->fetchColumn();
 $bgStyle = '';
 if (!empty($header_chatbot)) {
     $header_chatbot = htmlspecialchars((string)$header_chatbot, ENT_QUOTES, 'UTF-8');
-    $bgStyle = 'background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url(\'../../' . $header_chatbot . '\') center/cover; color: #ffffff;';
+    $bgStyle = 'background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url(\'../../' . $header_chatbot . '\') center/cover; color: #ffffff;';
 }
 ?>
+
+<!-- Hero Section -->
 <section class="page-hero" style="<?= $bgStyle ?>">
->>>>>>> e8b5ffee368934b8f0a1fe53437987be8017a4f8
   <div class="container">
     <div class="breadcrumb">
       <a href="<?= $navPrefix ?>index.php">Beranda</a> <span>/</span> <strong style="color: #ffffff;">Chatbot AI</strong>
     </div>
     <h1>Chatbot Informasi Kelurahan</h1>
     <p>Tanya seputar layanan, jam operasional, kontak, atau data kelurahan — dijawab otomatis.</p>
+  </div>
+</section>
   </div>
 </section>
 

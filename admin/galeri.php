@@ -37,6 +37,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['flash'] = ['type' => 'success', 'message' => 'Foto berhasil dihapus dari galeri publik.'];
         header('Location: galeri.php');
         exit;
+    } elseif ($action === 'edit_galeri') {
+        $id = (int)$_POST['id'];
+        $judul = trim($_POST['judul'] ?? 'Tanpa Judul');
+        $kategori = trim($_POST['kategori'] ?? 'kegiatan');
+        
+        $newImage = null;
+        if (!empty($_FILES['galeri_foto']['tmp_name'])) {
+            $newImage = handle_image_upload('galeri_foto');
+        }
+        
+        if ($newImage) {
+            $stmt = $pdo->prepare("UPDATE galeri SET judul = ?, kategori = ?, gambar = ? WHERE id = ?");
+            $stmt->execute([$judul, $kategori, $newImage, $id]);
+        } else {
+            $stmt = $pdo->prepare("UPDATE galeri SET judul = ?, kategori = ? WHERE id = ?");
+            $stmt->execute([$judul, $kategori, $id]);
+        }
+        
+        $_SESSION['flash'] = ['type' => 'success', 'message' => 'Info foto galeri berhasil diperbarui.'];
+        header('Location: galeri.php');
+        exit;
     }
 }
 
@@ -74,7 +95,7 @@ unset($_SESSION['flash']);
         <h1>Galeri Publik</h1>
         <p style="color:var(--ink-soft); margin-top:4px; font-size:13.5px;">Koleksi foto kegiatan dan infrastruktur kelurahan di halaman Galeri.</p>
       </div>
-      <button class="btn-add-foto" onclick="document.getElementById('modalAddGaleri').classList.add('show')">
+      <button class="btn-add-foto" onclick="document.getElementById('modalAddGaleri').classList.add('open')">
         <i class="fa-solid fa-plus"></i> TAMBAH FOTO
       </button>
     </div>
@@ -88,8 +109,11 @@ unset($_SESSION['flash']);
           <?php foreach ($gallery as $g): ?>
               <div class="gallery-item galeri-card">
                   <img src="../<?= htmlspecialchars($g['gambar']) ?>" alt="Galeri">
-                  <div class="overlay-actions">
-                      <form method="POST" action="galeri.php" onsubmit="return confirm('Hapus foto dari galeri?');">
+                  <div class="overlay-actions" style="display:flex; gap: 6px;">
+                      <button type="button" class="icon-btn edit" title="Edit" style="background:#f59e0b; color:white; border:none; width:36px; height:36px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;" data-id="<?= $g['id'] ?>" data-judul="<?= htmlspecialchars($g['judul'], ENT_QUOTES, 'UTF-8') ?>" data-kategori="<?= htmlspecialchars($g['kategori'], ENT_QUOTES, 'UTF-8') ?>">
+                          <i class="fa-solid fa-pen"></i>
+                      </button>
+                      <form method="POST" action="galeri.php" onsubmit="return confirm('Hapus foto dari galeri?');" style="margin:0;">
                           <input type="hidden" name="action" value="delete_galeri">
                           <input type="hidden" name="id" value="<?= $g['id'] ?>">
                           <button type="submit" class="icon-btn delete" title="Hapus"><i class="fa-solid fa-trash-can"></i></button>
@@ -111,7 +135,7 @@ unset($_SESSION['flash']);
   <div class="admin-modal-card" style="max-width: 400px;">
     <div class="admin-modal-header">
       <h2>Tambah Foto Galeri</h2>
-      <button class="admin-modal-close" onclick="document.getElementById('modalAddGaleri').classList.remove('show')">&times;</button>
+      <button class="admin-modal-close" onclick="document.getElementById('modalAddGaleri').classList.remove('open')">&times;</button>
     </div>
     <div class="admin-modal-body">
       <form method="POST" action="galeri.php" enctype="multipart/form-data">
@@ -143,7 +167,63 @@ unset($_SESSION['flash']);
       </form>
     </div>
   </div>
+  </div>
 </div>
+
+<!-- Modal Edit Galeri -->
+<div id="modalEditGaleri" class="admin-modal-overlay">
+  <div class="admin-modal-card" style="max-width: 400px;">
+    <div class="admin-modal-header">
+      <h2>Edit Foto Galeri</h2>
+      <button class="admin-modal-close" onclick="document.getElementById('modalEditGaleri').classList.remove('open')">&times;</button>
+    </div>
+    <div class="admin-modal-body">
+      <form method="POST" action="galeri.php" enctype="multipart/form-data">
+        <input type="hidden" name="action" value="edit_galeri">
+        <input type="hidden" name="id" id="edit_id" value="">
+        
+        <div class="field">
+          <label>Judul / Deskripsi Singkat</label>
+          <input type="text" name="judul" id="edit_judul" required placeholder="Contoh: Kegiatan Posyandu">
+        </div>
+        
+        <div class="field">
+          <label>Kategori</label>
+          <select name="kategori" id="edit_kategori">
+            <option value="kegiatan">Kegiatan</option>
+            <option value="infrastruktur">Infrastruktur</option>
+            <option value="prestasi">Prestasi</option>
+            <option value="lainnya">Lainnya</option>
+          </select>
+        </div>
+        
+        <div class="field">
+          <label>Ganti File Foto (Opsional)</label>
+          <input type="file" name="galeri_foto" accept=".jpg,.jpeg,.png,.webp" style="width:100%; padding:10px; border:1px dashed var(--line); border-radius:6px;">
+          <small style="color:var(--ink-soft); display:block; margin-top:4px;">Biarkan kosong jika tidak ingin mengganti foto saat ini.</small>
+        </div>
+        
+        <div style="margin-top:20px; display:flex; justify-content:flex-end;">
+            <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.icon-btn.edit').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        var id = this.getAttribute('data-id');
+        var judul = this.getAttribute('data-judul');
+        var kategori = this.getAttribute('data-kategori');
+        document.getElementById('edit_id').value = id;
+        document.getElementById('edit_judul').value = judul;
+        document.getElementById('edit_kategori').value = kategori;
+        document.getElementById('modalEditGaleri').classList.add('open');
+    });
+});
+</script>
 
 </body>
 </html>

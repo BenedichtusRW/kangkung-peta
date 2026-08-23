@@ -113,8 +113,8 @@ unset($_SESSION['flash']);
             </div>
         </div>
 
-        <div style="margin-top: 16px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center;">
-            <div style="flex: 1; min-width: 260px; height: 130px; border-radius: 12px; overflow: hidden; background: #ecfdf5; border: 1px solid #e2e8f0; position: relative;">
+        <div style="margin-top: 16px; display: flex; flex-wrap: wrap; gap: 16px; align-items: stretch;">
+            <div style="flex: 1; min-width: 260px; aspect-ratio: 4 / 1; border-radius: 12px; overflow: hidden; background: #ecfdf5; border: 1px solid #e2e8f0; position: relative;">
                 <?php if (!empty($banner_peta)): ?>
                     <img src="../<?= htmlspecialchars($banner_peta) ?>" style="width: 100%; height: 100%; object-fit: cover;" alt="Banner Peta">
                 <?php else: ?>
@@ -127,7 +127,7 @@ unset($_SESSION['flash']);
                     <input type="hidden" name="action" value="update_banner_peta">
                     <label class="btn btn-primary" style="cursor: pointer; display: inline-flex; align-items: center; gap: 8px; width: 100%; justify-content: center;">
                         <i class="fa-solid fa-camera"></i> Ganti Banner
-                        <input type="file" name="banner_foto" accept=".jpg,.jpeg,.png,.webp" required onchange="this.form.submit()" style="display: none;">
+                        <input type="file" name="banner_foto" accept=".jpg,.jpeg,.png,.webp" required class="cropper-upload-input" data-aspect-ratio="4/1" style="display: none;">
                     </label>
                 </form>
                 <?php if (!empty($banner_peta)): ?>
@@ -353,6 +353,7 @@ unset($_SESSION['flash']);
     if (e.target === modal) closeModal();
   });
 </script>
+
+<?php include __DIR__ . '/includes/cropper_modal.php'; ?>
 </body>
 </html>
-

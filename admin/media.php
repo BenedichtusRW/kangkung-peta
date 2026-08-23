@@ -152,7 +152,7 @@ $activeTab = $_GET['tab'] ?? 'header';
                       <input type="hidden" name="page" value="header_beranda">
                       <label class="btn btn-primary" style="cursor: pointer; display: inline-flex; align-items: center; gap: 8px; width: 100%; justify-content: center;">
                           <i class="fa-solid fa-camera"></i> Ganti Banner
-                          <input type="file" id="heroImageInput" accept=".jpg,.jpeg,.png,.webp" style="display: none;">
+                          <input type="file" name="header_foto" id="heroImageInput" accept=".jpg,.jpeg,.png,.webp" class="cropper-upload-input" data-aspect-ratio="21/9" style="display: none;">
                       </label>
                   </form>
                   <?php if (!empty($img)): ?>
@@ -189,114 +189,7 @@ $activeTab = $_GET['tab'] ?? 'header';
   </main>
 </div>
 
-<!-- Modal Cropper -->
-<div class="cropper-modal-overlay" id="cropperModal">
-  <div class="cropper-modal-content">
-    <h3 style="margin: 0; font-family: var(--font-display); color: var(--teal-900);">Sesuaikan Ukuran Banner</h3>
-    <p style="margin: 0; font-size: 0.9rem; color: var(--ink-soft);">Geser dan perbesar gambar untuk menyesuaikan area banner. Area di dalam kotak terang akan menjadi banner website.</p>
-    
-    <div class="cropper-img-container">
-      <img id="cropperImage" src="" alt="Cropper Image" style="max-width: 100%;">
-    </div>
-    
-    <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 8px;">
-      <button type="button" class="btn btn-outline" id="btnCancelCrop">Batal</button>
-      <button type="button" class="btn btn-primary" id="btnSaveCrop" style="display: inline-flex; align-items: center; gap: 8px;">
-        <i class="fa-solid fa-crop-simple"></i> Potong & Simpan
-      </button>
-    </div>
-  </div>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
-<script>
-  let cropper;
-  const imageInput = document.getElementById('heroImageInput');
-  const cropperModal = document.getElementById('cropperModal');
-  const cropperImage = document.getElementById('cropperImage');
-  const btnCancelCrop = document.getElementById('btnCancelCrop');
-  const btnSaveCrop = document.getElementById('btnSaveCrop');
-
-  imageInput.addEventListener('change', function(e) {
-    const files = e.target.files;
-    if (files && files.length > 0) {
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        cropperImage.src = event.target.result;
-        cropperModal.classList.add('active');
-        
-        if (cropper) {
-          cropper.destroy();
-        }
-        
-        cropper = new Cropper(cropperImage, {
-          aspectRatio: 21 / 9,
-          viewMode: 1,
-          autoCropArea: 1,
-          dragMode: 'move',
-          background: false,
-        });
-      };
-      reader.readAsDataURL(files[0]);
-    }
-  });
-
-  function closeCropper() {
-    cropperModal.classList.remove('active');
-    imageInput.value = ''; // Reset input file
-    if (cropper) {
-      cropper.destroy();
-      cropper = null;
-    }
-  }
-
-  btnCancelCrop.addEventListener('click', closeCropper);
-
-  btnSaveCrop.addEventListener('click', function() {
-    if (!cropper) return;
-    
-    // Tampilkan loading (ubah teks tombol)
-    const originalText = btnSaveCrop.innerHTML;
-    btnSaveCrop.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengunggah...';
-    btnSaveCrop.disabled = true;
-
-    // Ambil hasil crop dalam bentuk blob kualitas 80% (jpeg)
-    cropper.getCroppedCanvas({
-      width: 1920,
-      imageSmoothingEnabled: true,
-      imageSmoothingQuality: 'high',
-    }).toBlob(function(blob) {
-      if (!blob) {
-        alert("Gagal memproses gambar.");
-        btnSaveCrop.innerHTML = originalText;
-        btnSaveCrop.disabled = false;
-        return;
-      }
-      
-      const formData = new FormData();
-      formData.append('action', 'update_header');
-      formData.append('page', 'header_beranda');
-      formData.append('header_foto', blob, 'cropped_banner.jpg');
-      
-      fetch('media.php', {
-        method: 'POST',
-        body: formData
-      })
-      .then(response => {
-        // Karena PHP membalas dengan header Location (redirect), fetch akan mengikutinya.
-        // Kita cukup me-reload halaman untuk menampilkan flash message dan banner baru.
-        window.location.reload();
-      })
-      .catch(error => {
-        console.error('Upload error:', error);
-        alert('Terjadi kesalahan saat mengunggah foto.');
-        btnSaveCrop.innerHTML = originalText;
-        btnSaveCrop.disabled = false;
-      });
-      
-    }, 'image/jpeg', 0.85);
-  });
-</script>
+<?php include __DIR__ . '/includes/cropper_modal.php'; ?>
 </body>
 </html>
 

@@ -55,7 +55,7 @@ try {
     ");
 
     $stmt->execute([
-        'key_name' => 'sejarah'
+        'key_name' => 'sejarah_teks'
     ]);
 
     $row = $stmt->fetch();

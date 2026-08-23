@@ -89,23 +89,17 @@ include __DIR__ . '/../includes/header.php';
 
 <!-- HERO SECTION -->
 <section class="page-hero" style="<?= $bgStyle ?>">
-    <div class="container">
-        <div class="breadcrumb">
-            <a href="<?= htmlspecialchars($navPrefix) ?>index.php">Beranda</a>
-            <span>/</span>
-            <span>Profile</span>
-            <span>/</span>
-            <strong style="color: #ffffff;">Sejarah Kelurahan</strong>
-        </div>
-
-        <h1>Sejarah Kelurahan Kangkung</h1>
-
-        <p>
-            Perjalanan terbentuknya 
-            <?= htmlspecialchars(defined('NAMA_KELURAHAN') ? NAMA_KELURAHAN : 'Kelurahan Kangkung') ?> 
-            hingga menjadi bagian penting dari kawasan pesisir Kota Bandar Lampung.
-        </p>
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="<?= htmlspecialchars($navPrefix) ?>index.php">Beranda</a>
+      <span>/</span>
+      <span>Profile</span>
+      <span>/</span>
+      <strong style="color: #ffffff;">Sejarah Kelurahan</strong>
     </div>
+    <h1>Sejarah Kelurahan Kangkung</h1>
+    <p>Perjalanan terbentuknya <?= htmlspecialchars(defined('NAMA_KELURAHAN') ? NAMA_KELURAHAN : 'Kelurahan Kangkung') ?> hingga menjadi bagian penting dari kawasan pesisir Kota Bandar Lampung.</p>
+  </div>
 </section>
 
 <!-- CONTENT SECTION -->

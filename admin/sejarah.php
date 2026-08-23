@@ -83,7 +83,7 @@ unset($_SESSION['flash']);
     <?php endif; ?>
 
     <!-- Banner Header -->
-    <div class="section-card" style="margin-bottom: 24px; max-width: 800px;">
+    <div class="section-card" style="margin-bottom: 24px;">
         <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px;">
             <div>
                 <h2 style="font-size: 1.1rem; margin: 0 0 4px 0;"><i class="fa-solid fa-image" style="color: var(--teal-600);"></i> Banner Header Sejarah</h2>
@@ -121,7 +121,7 @@ unset($_SESSION['flash']);
     </div>
 
     <!-- Teks Sejarah -->
-    <div class="admin-card" style="max-width: 800px;">
+    <div class="admin-card">
         <form method="POST" action="">
             <input type="hidden" name="action" value="save_sejarah">
             
